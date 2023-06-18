@@ -101,7 +101,7 @@ where $B$ represents the number of targets, $T$ denotes the sequence length, and
 
 ```horizon```      :  Indicate the number of predicted points within the upcoming windows.
 
-The illustration for this function and handling behavior can be seen in the Figure 1 below.
+The illustration for this function and handling behavior can be seen in the Figure 3 below.
 
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/7fdbb055-b443-40fe-90ee-8a5387f8ee44" alt="windowed_image">
@@ -162,21 +162,8 @@ Then we calculated the MSE and MAE loss values for this dataset with the model. 
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/adfb4343-8749-447d-bc66-3f2a1eba0287" alt="windowed_image">
   <br>
-  <em>Table 1: Metric scores for different models and ours for Etth1 dataset </em>
+  <em>Figure 6: Metric scores for different models and ours for Etth1 dataset </em>
 </p>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 #### 3.3.1.2 Results on SMAP
@@ -185,7 +172,7 @@ Then we calculated the MSE and MAE loss values for this dataset with the model. 
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/52931384/0ce06ec2-bad6-4f4d-8e2f-e1ae2c07f910" alt="windowed_image">
   <br>
-  <em>Figure 5: The anomaly sequences of SMAP dataset </em>
+  <em>Figure 7: The anomaly sequences of SMAP dataset </em>
 </p>
 
 And the following chart shows us the anomaly sequences that are found by our model.
@@ -193,13 +180,14 @@ And the following chart shows us the anomaly sequences that are found by our mod
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/52931384/d93044e6-8685-480d-8345-c7683fdcac42" alt="windowed_image">
   <br>
-  <em>Figure 6: The anomaly sequences of our model  </em>
+  <em>Figure 8: The anomaly sequences of our model  </em>
 </p>
 
 As you can see our model's accuracies ranges from 0.2 to 0.6; our mean accuracies 0.4 overall. 
 # 4. Conclusion
+This study aimed to replicate the detection model proposed in the referenced article. The paper introduces an effective approach for predicting time-based data and identifying anomalies within the predicted data. However, during our replication attempt, we encountered certain ambiguities and omissions in the article. Specifically, the article fails to provide information regarding the shifting (stride) value for the window algorithm, which plays a crucial role in model training. Consequently, we introduced additional code to incorporate this method and assessed its impact on the results. Additionally, to enhance computational efficiency, we opted for smaller shifting values, such as 5, as mentioned earlier.
 
-@TODO: Discuss the paper in relation to the results in the paper and your results.
+Furthermore, while the paper suggests the use of its model for both future prediction and anomaly detection in the predicted data, it does not explicitly clarify whether a single model was employed for both tasks or if separate models were trained. To address this uncertainty, we devised a solution by implementing two distinct models for prediction and anomaly detection.
 
 # 5. References
 

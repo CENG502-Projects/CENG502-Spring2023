@@ -1,0 +1,4 @@
+numpy
+scipy
+torch
+gym[atari, accept-rom-license]

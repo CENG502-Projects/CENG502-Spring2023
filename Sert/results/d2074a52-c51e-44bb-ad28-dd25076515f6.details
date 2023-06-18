@@ -1,0 +1,1 @@
+{"Embedding Size": 128, "Beta": 0.1, "Margin": 1, "Batch Size": 256, "Max Step": 64, "Epochs": 150, "Use VINS": 1}

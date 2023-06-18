@@ -8,4 +8,4 @@ We hope that this will be an important contribution to those trying to implement
 
 | Paper | Implemented by | Implementation Link | 
 | ----- | -------------- | ------------------- |
-| <title> | <Names | <folder link> |
+| Sandler et al., ["Fine-tuning Image Transformers using Learnable Memory"](https://arxiv.org/abs/2203.15243), CVPR 2022. | İlker Işık, Ege Berk Büyükbaş | [BuyukbasIsik](https://github.com/necrashter/transformers-learnable-memory) |

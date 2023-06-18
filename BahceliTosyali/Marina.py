@@ -62,39 +62,37 @@ def normalize_data(data_, desired_mean, desired_std):
     return data
   
 # CALCULATING MSE
-def calculate_mse(model, testloader):
-    model.eval()
+def calculate_mse(model_, testloader_):
     mse = 0.0
 
     with torch.no_grad():
-        for data in testloader:
+        for data in testloader_:
             inputs, labels = data
             inputs = inputs.to(device)
             labels = labels.to(device)
-            outputs = model(inputs)
+            outputs = model_(inputs)
 
             mse += torch.mean((outputs - labels) ** 2).item()
 
-    mse /= len(testloader)
+    mse /= len(testloader_)
 
     return mse
 
 import torch
 
-def calculate_mae(model, testloader):
-    model.eval()
+def calculate_mae(model_, testloader_):
     mae = 0.0
 
     with torch.no_grad():
-        for data in testloader:
+        for data in testloader_:
             inputs, labels = data
             inputs = inputs.to(device)
             labels = labels.to(device)
-            outputs = model(inputs)
+            outputs = model_(inputs)
 
             mae += torch.mean(torch.abs(outputs - labels)).item()
 
-    mae /= len(testloader)
+    mae /= len(testloader_)
 
     return mae
 
@@ -188,9 +186,9 @@ def trials_MARINA_Etth1(INPUT_LENGTH,zeta,shift):
 # that we added in order to ease the performance. 
 
 INTERMEDIATE_LENGTH = 24
-INPUT_LENGTH        = 100
-zeta                = 24
-shifting            = 5
+INPUT_LENGTH        = 150
+zeta                = 10
+shifting            = INPUT_LENGTH
 windowedTrain,futuredTrain,windowedVal,futuredVal,windowedTest,futuredTest = trials_MARINA_Etth1(INPUT_LENGTH,zeta,shifting)
 
 ###############################################################################################################
@@ -323,13 +321,13 @@ futuredTestT   = torch.tensor(futuredTest).float()
 BATCH_SIZE          = 5       
 
 trainset            = MarinaDataset_Etth(windowedTrainT,futuredTrainT)
-trainloader         = torch.utils.data.DataLoader(trainset, batch_size=BATCH_SIZE,shuffle=True)
+trainloader1         = torch.utils.data.DataLoader(trainset, batch_size=BATCH_SIZE,shuffle=True)
 
 validset            = MarinaDataset_Etth(windowedValT,futuredValT)
-validloader         = torch.utils.data.DataLoader(validset, batch_size=BATCH_SIZE,shuffle=True)
+validloader1         = torch.utils.data.DataLoader(validset, batch_size=BATCH_SIZE,shuffle=True)
 
 testset             = MarinaDataset_Etth(windowedTestT,futuredTestT)
-testloader          = torch.utils.data.DataLoader(testset, batch_size=1)
+testloader1          = torch.utils.data.DataLoader(testset, batch_size=1)
 
 ###############################################################################################################
 # FORECASTING HYPERPARAMETERS
@@ -347,83 +345,88 @@ forecast_n_units = n_units  # Number of units in each layer of ForecastingSubBlo
 spatial_n_layers = 1  # Number of layers in SpatialModule
 spatial_n_units = n_units  # Number of units in each layer of SpatialModule
 
-model = modeMARINA(input_n_layers, input_n_units, cascade_n_layers, cascade_n_units, forecast_n_layers, forecast_n_units, spatial_n_layers, spatial_n_units)
+model_forecast = modeMARINA(input_n_layers, input_n_units, cascade_n_layers, cascade_n_units, forecast_n_layers, forecast_n_units, spatial_n_layers, spatial_n_units)
 
 ###############################################################################################################
 # TRAIN THE MODEL FOR FORECASTING
 
-model           = model.to(device)
+model_forecast  = model_forecast.to(device)
 lr              = 0.0002
 criterion       = nn.MSELoss()
-optimizer = optim.Adam(model.parameters(), lr=lr)  # Add weight decay parameter
-min_valid_loss  = np.inf
-epoch           = 30       # From the figure 7 in the paper.
-loss_history    = []
-valid_loss_history = []
+optimizer       = optim.Adam(model_forecast.parameters(), lr=lr)  # Add weight decay parameter
 
-start_time = time.time() # Setting starting point for finding the execution time
+def train_model(model,criterion,optimizer,trainloader,validloader):
+    min_valid_loss  = np.inf
+    epoch           = 30       # From the figure 7 in the paper.
+    loss_history    = []
+    valid_loss_history = []
 
-for epoch in range(epoch):  # loop over the dataset multiple times
-    running_loss = 0.0
-    model.train()
+    start_time = time.time() # Setting starting point for finding the execution time
 
-    for i, data in enumerate(trainloader, 0):
-        inputs, labels = data
-        inputs = inputs.to(device)
-        labels = labels.to(device)
-        optimizer.zero_grad()
-        outputs = model(inputs)
-        outputs = outputs.to(device)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
+    for epoch in range(epoch):  # loop over the dataset multiple times
+        running_loss = 0.0
+        model.train()
 
-    valid_loss = 0.0
-    model.eval()
-    with torch.no_grad():
-        for i, data in enumerate(validloader, 0):
+        for i, data in enumerate(trainloader, 0):
             inputs, labels = data
             inputs = inputs.to(device)
             labels = labels.to(device)
+            optimizer.zero_grad()
             outputs = model(inputs)
             outputs = outputs.to(device)
             loss = criterion(outputs, labels)
-            valid_loss += loss.item()
+            loss.backward()
+            optimizer.step()
+            running_loss += loss.item()
 
-    loss_history.append(running_loss / len(trainloader))
-    valid_loss_history.append(valid_loss /len(validloader))
-    print(f'\n\nEpoch {epoch+1:2d} \t Training Loss: {running_loss / len(trainloader):.6f} \t Validation Loss: {valid_loss / len(validloader):.6f}')
+        valid_loss = 0.0
+        model.eval()
+        with torch.no_grad():
+            for i, data in enumerate(validloader, 0):
+                inputs, labels = data
+                inputs = inputs.to(device)
+                labels = labels.to(device)
+                outputs = model(inputs)
+                outputs = outputs.to(device)
+                loss = criterion(outputs, labels)
+                valid_loss += loss.item()
 
-    if min_valid_loss > valid_loss:
-        print(f'\t\t Validation Loss Decreased ({min_valid_loss/len(validloader):.6f} --> {valid_loss/len(validloader):.6f})')
-        min_valid_loss = valid_loss
-        # Saving State Dict
-        # torch.save(model.state_dict(),'saved_model.pth')
+        loss_history.append(running_loss / len(trainloader))
+        valid_loss_history.append(valid_loss /len(validloader))
+        print(f'\n\nEpoch {epoch+1:2d} \t Training Loss: {running_loss / len(trainloader):.6f} \t Validation Loss: {valid_loss / len(validloader):.6f}')
 
-print('Finished Training')
+        if min_valid_loss > valid_loss:
+            print(f'\t\t Validation Loss Decreased ({min_valid_loss/len(validloader):.6f} --> {valid_loss/len(validloader):.6f})')
+            min_valid_loss = valid_loss
+            # Saving State Dict
+            # torch.save(model.state_dict(),'saved_model.pth')
 
-end_time = time.time()
-execution_time = end_time - start_time
-print(f"Total Execution Time: {execution_time:.2f} seconds")
+    print('Finished Training')
 
-# Plotting the loss history
-plt.plot(loss_history, label='Training Loss')
-plt.plot(valid_loss_history, label='Validation Loss')
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
-plt.title('Training Loss History')
-plt.grid(True)
-plt.legend()  # Add legend
-plt.show()
+    end_time = time.time()
+    execution_time = end_time - start_time
+    print(f"Total Execution Time: {execution_time:.2f} seconds")
+
+    # Plotting the loss history
+    plt.plot(loss_history, label='Training Loss')
+    plt.plot(valid_loss_history, label='Validation Loss')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.title('Training Loss History')
+    plt.grid(True)
+    plt.legend()  # Add legend
+    plt.show()
+    return
+
+train_model(model_forecast,criterion,optimizer,trainloader1,validloader1)
 
 # CALCULATE THE MSE 
-model.eval()
-mse_score = calculate_mse(model, testloader)
+model_forecast.eval()
+mse_score = calculate_mse(model_forecast, testloader1)
 print(f"MSE: {mse_score:.6f}")
 
 # CALCULATE THE MAE 
-mae_score = calculate_mae(model, testloader)
+mae_score = calculate_mae(model_forecast, testloader1)
 print(f"MAE: {mae_score:.6f}")
 
 
@@ -600,20 +603,20 @@ BATCH_SIZE                  = 128
 lr                          = 0.005
 
 trainset            = MarinaDataset_Smap(trainSet,train_futured)
-trainloader         = torch.utils.data.DataLoader(trainset, batch_size=BATCH_SIZE,shuffle=True)      
+trainloader2        = torch.utils.data.DataLoader(trainset, batch_size=BATCH_SIZE,shuffle=True)      
  
 validset            = MarinaDataset_Smap(validSet,val_futured)
-validloader         = torch.utils.data.DataLoader(validset, batch_size=BATCH_SIZE,shuffle=True)
+validloader2        = torch.utils.data.DataLoader(validset, batch_size=BATCH_SIZE,shuffle=True)
 
 testset            = MarinaDataset_Smap(testSet,test_futured)
-testloader         = torch.utils.data.DataLoader(testset, batch_size=1)
+testloader2        = torch.utils.data.DataLoader(testset, batch_size=1)
 
 
 ###############################################################################################################
 # ANOMALY HYPERPARAMETERS
 n_units        = 50
 
-input_n_layers = 4  # Number of layers in InputSubBlock
+input_n_layers = 3  # Number of layers in InputSubBlock
 input_n_units = n_units  # Number of units in each layer of InputSubBlock
 
 cascade_n_layers = 2  # Number of layers in CascadeSubBlock
@@ -630,84 +633,34 @@ model_Anomaly = modeMARINA(input_n_layers, input_n_units, cascade_n_layers, casc
 ###############################################################################################################
 # TRAINING MODEL FOR ANOMALY DETECTION
 
-model           = model_Anomaly
-model           = model.to(device)
 criterion       = nn.MSELoss()
-optimizer       = optim.Adam(model.parameters(), lr=lr)
-min_valid_loss  = np.inf
-epoch           = 30       # From the figure 7 in the paper.
-loss_history    = []
+optimizer       = optim.Adam(model_Anomaly.parameters(), lr=lr)
 
-start_time = time.time() # Setting starting point for finding the execution time
+train_model(model_Anomaly,criterion,optimizer,trainloader2,validloader2)
 
-for epoch in range(epoch):  # loop over the dataset multiple times
-    running_loss = 0.0
-    model.train()
-    
-    for i, data in enumerate(trainloader, 0):
-        inputs, labels = data
-        inputs = inputs.to(device)
-        labels = labels.to(device)
-        optimizer.zero_grad()
-        outputs = model(inputs)
-        outputs = outputs.to(device)
-        loss = criterion(outputs, labels)
-        loss.backward()
-        optimizer.step()
-        running_loss += loss.item()
-        
-    valid_loss = 0.0
-    model.eval()
-    
-    with torch.no_grad():
-        for i, data in enumerate(validloader, 0):
-            inputs, labels = data
-            inputs = inputs.to(device)
-            labels = labels.to(device)
-            outputs = model(inputs)
-            outputs = outputs.to(device)
-            loss = criterion(outputs, labels)
-            valid_loss += loss.item()
-    
-    loss_history.append(running_loss / len(trainloader))
-    print(f'Epoch {epoch+1:2d} \t Training Loss: {running_loss / len(trainloader):.6f} \t Validation Loss: {valid_loss / len(validloader):.6f}')
-
-    if min_valid_loss > valid_loss:
-        print(f'\t\t Validation Loss Decreased ({min_valid_loss/len(validloader):.6f} --> {valid_loss/len(validloader):.6f})')
-        min_valid_loss = valid_loss
-        # Saving State Dict
-        # torch.save(model.state_dict(),'saved_model.pth')
-    
-print('Finished Training')
-
-end_time = time.time()
-execution_time = end_time - start_time
-print(f"Total Execution Time: {execution_time:.2f} seconds")
-
-# Plotting the loss history
-plt.plot(loss_history)
-plt.xlabel('Epoch')
-plt.ylabel('Loss')
-plt.title('Training Loss History')
-plt.grid(True)
-plt.show()
-
-model.eval()
-mse_score = calculate_mse(model, testloader)
+# CALCULATE THE MSE 
+model_Anomaly.eval()
+mse_score = calculate_mse(model_Anomaly, testloader2)
 print(f"MSE: {mse_score:.6f}")
 
-#anomalies = {key: default_value for key in keys}
+# CALCULATE THE MAE 
+mae_score = calculate_mae(model_Anomaly, testloader2)
+print(f"MAE: {mae_score:.6f}")
+
+
+
+
+
 anomalies = {}
 i = 0
 ii = 0
 threshold = 0.85
 with torch.no_grad():
-    for data in testloader:
-        if ii < 8640:
+    for data in testloader2:
             inputs, labels = data
             inputs = inputs.to(device)
             labels = labels.to(device)
-            outputs = model(inputs)
+            outputs = model_Anomaly(inputs)
             #compare output with labels using frobenius norm
             frob_error  =  torch.sqrt(torch.abs(torch.sum(outputs ** 2 - labels ** 2)))
             #this if else is for catching the beginning and end of the sequences
@@ -724,7 +677,7 @@ with torch.no_grad():
 
 import optuna
 
-def objective(trial):
+def objective(trial,trainloader_,valid_loader_):
     # Define the hyperparameters to optimize
     BATCH_SIZE = trial.suggest_categorical('BATCH_SIZE', [64, 128])  # Remove the third argument
 
@@ -753,7 +706,7 @@ def objective(trial):
         running_loss = 0.0
         model.train()
 
-        for i, data in enumerate(trainloader, 0):
+        for i, data in enumerate(trainloader_, 0):
             inputs, labels = data
             inputs = inputs.to(device)
             labels = labels.to(device)
@@ -768,7 +721,7 @@ def objective(trial):
         valid_loss = 0.0
         model.eval()
         with torch.no_grad():
-            for i, data in enumerate(validloader, 0):
+            for i, data in enumerate(valid_loader_, 0):
                 inputs, labels = data
                 inputs = inputs.to(device)
                 labels = labels.to(device)
@@ -777,7 +730,7 @@ def objective(trial):
                 loss = criterion(outputs, labels)
                 valid_loss += loss.item()
 
-        loss_history.append(running_loss / len(trainloader))
+        loss_history.append(running_loss / len(trainloader_))
         #print(f'Epoch {epoch+1:2d} \t Training Loss: {running_loss / len(trainloader):.6f} \t Validation Loss: {valid_loss / len(validloader):.6f}')
 
         if min_valid_loss > valid_loss:
@@ -788,7 +741,7 @@ def objective(trial):
 
 # Define the Optuna study and optimize the objective function
 study = optuna.create_study(direction='minimize')
-study.optimize(objective, n_trials=25)
+study.optimize(lambda trial: objective(trial, trainloader1, validloader1), n_trials=25)
 
 # Print the best hyperparameters and the best validation loss
 best_params = study.best_params

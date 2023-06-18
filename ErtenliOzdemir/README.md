@@ -69,7 +69,9 @@ As there were no details regarding the bandit algorithm and the RND implementati
 
 ## 3.2. Running the code
 
-Our code is structured as depicted below:
+Our codebase is structured as depicted below:
+
+```
 .
 ├── resources/ (Image files)
 ├── actor.py (Actor/agent implementation with decisions regarding exploration/exploitation mechanisms)
@@ -85,6 +87,7 @@ Our code is structured as depicted below:
 ├── test.py (Main file for running evaluation)
 ├── train.py (Main file for running training)
 └── README.md (The main readme file)
+```
 
 1. Create a conda virtual environment and activate it.
 

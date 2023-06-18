@@ -9,3 +9,4 @@ We hope that this will be an important contribution to those trying to implement
 | Paper | Implemented by | Implementation Link | 
 | ----- | -------------- | ------------------- |
 | Sandler et al., ["Fine-tuning Image Transformers using Learnable Memory"](https://arxiv.org/abs/2203.15243), CVPR 2022. | İlker Işık, Ege Berk Büyükbaş | [BuyukbasIsik](https://github.com/necrashter/transformers-learnable-memory) |
+| Li et al., ["Spatial-Channel Token Distillation for Vision MLPs"](https://proceedings.mlr.press/v162/li22c.html), ICML2022. | Devrim Çavuşoğlu   | [Project-Cavusoglu](https://github.com/CENG502-Projects/CENG502-Spring2023/tree/main/Cavusoglu) |

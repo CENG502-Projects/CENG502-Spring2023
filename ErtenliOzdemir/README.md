@@ -114,6 +114,8 @@ In this part, the evaluation results for our implementation are given. To illust
 
 In the paper, the authors do experiments on various games and take the mean-median scores belonging to each game type. Since we did our experiments on only the Frostbite game, Fig. 3 does not contain mean and median values. Similar to the paper, the worst performance belongs to the case where we use a pure explore mode for the entire experiment denoted by XU-experiment-level-X. Interestingly, randomly switching between explore/exploit modes at the start of each episode provides the highest score here (color red), beating most commonly used epsilon-greedy strategy illustrated with the color green. Finally, we see our informed switching variant fails to match the scores in the paper. We believe this may have been because there were some missing information regarding informed switching and we are using a fixed probability for switching rather than a bandit algorithm.
 
+<br>
+
 <figure>
   <p align="center">
     <img
@@ -125,6 +127,8 @@ In the paper, the authors do experiments on various games and take the mean-medi
 <br>
 
 Fig. 4. compares and contrasts the different approaches. We have 6 approaches in total. In all 6 cases, explore/exploit ratio is kept around 1:10. The first number in the parentheses indicate the explore mode duration. The second item in the parantheses describes the mode of swtiching. The third item describes the target rate for informed switching or the probability of switching to explore mode (tried values: 0.01, 0.001) and the duration of exploration (tried values: 10, 100). The final item is the mode with which each episode starts. In this case, all different approaches use exploitation mode to start. Our maximum numbers are lower than what is presented in the paper due to our limited computational budget however, we see that probabilistic switching provides a benefit compared to switching fixed intervals for the entire training. This stochasticity allows the model to explore/exploit in different states as opposed to maybe getting to the explore mode at the same state each time. Unfortunately, our informed switching results do not match that of the paper but our blind switching mechanisms come very close and display a similar pattern.
+
+<br>
 
 <figure>
   <p align="center">
@@ -138,6 +142,8 @@ Fig. 4. compares and contrasts the different approaches. We have 6 approaches in
 
 Fig. 5. compares informed switching and blind switching. During the early stages of training, informed switching outperforms blind switching. However, the performance falls off after half the training is complete. We again explain these results with the missing details regarding the bandit and homeostasis algorithms. 
 
+<br>
+
 <figure>
   <p align="center">
     <img
@@ -150,6 +156,8 @@ Fig. 5. compares informed switching and blind switching. During the early stages
 
 In Fig. 6., we experiment with the effect of the start mode. The paper only shows 2 cases per game but we show 4 different cases for Frostbite. Interestingly, for Frostbite, starting each episode with exploration leads to the agent performing consistently worse across all strategies. This may be due to the  earlier steps in Frostbite being more important to get a good position in the late game.  
 
+<br>
+
 <figure>
   <p align="center">
     <img
@@ -161,6 +169,8 @@ In Fig. 6., we experiment with the effect of the start mode. The paper only show
 <br>
 
 Fig. 7. compares our probabilistic switching method with the fixed duration switching. The probabilistic switching achieves a higher maximum return value but is noisier.
+
+<br>
 
 <figure>
   <img

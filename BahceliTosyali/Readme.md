@@ -120,14 +120,18 @@ suggesting. Following temporal correlation, we put our outpur of datas into spat
 networks are given in the following figure. 
 
 <p align="center"> 
-  <img src="https://github.com/Batucan2601/MARINA/assets/52931384/a4fea3d8-a23d-463a-85be-436c1a8dd5cd" alt="windowed_image">
+  <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/88089192/21ad7e85-3db4-4883-8c26-d717fce4ef85" alt="windowed_image" width="450">
   <br>
-  <em>Figure 4: The chart for parameters in the neural network </em>
+  <em>Figure 4.1: The chart for parameters in the neural network for long sequence forecasting model </em>
 </p>
 
+<p align="center"> 
+  <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/88089192/1730d020-0221-4c1a-b8bc-15fddd67403f" alt="windowed_image" width="450">
+  <br>
+  <em>Figure 4.2: The chart for parameters in the neural network for anomaly detection model </em>
+</p>
 
 For tests we used Frobenius norm (L2 norm) as suggested without any changes.
-
 ## 3.2. Running the code
 Directory structure:
 

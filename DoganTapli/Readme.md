@@ -39,12 +39,24 @@ The proposed DAP approach offers a significant contribution to the field of adve
 
 ## 2.1. The original method
 
-The proposed DAP approach involves utilizing a convolutional neural network to encode states into a one-dimensional feature, and a fully-connected network to encode policies into a one-dimensional feature. These two features are concatenated and then processed by an LSTM for capturing sequential features. Finally, two branches implemented as fully-connected networks are utilized to output switch and lure policies, respectively. The switch policy determines whether the attacker should launch an attack, while the lure policy determines which action the attacker induces the victim to take.
+The original method known as Decoupled Adversarial Policy (DAP) aims to target Deep Reinforcement Learning (DRL) systems. DAP employs a two-part approach, separating the adversarial policy into two sub-policies: the switch policy and the lure policy. The switch policy assesses whether the attacker should initiate an attack, while the lure policy determines the specific action the attacker persuades the victim to perform. By manipulating the victim's actions, the attacker effectively misguides the DRL system, leading to deceptive outcomes.
+
+To introduce the proposed DAP approach, a convolutional neural network is employed to encode states into a compact one-dimensional feature representation. Additionally, a fully-connected network is utilized to encode policies into another one-dimensional feature representation. These two features are concatenated and passed through an LSTM (Long Short-Term Memory) network to capture sequential patterns. The final stage comprises two branches implemented as fully-connected networks, which generate the switch and lure policies, respectively. The switch policy determines whether launching an attack is warranted, while the lure policy specifies the action the attacker should entice the victim into executing.
+
+In summary, the initial technique called Decoupled Adversarial Policy (DAP) is devised to target Deep Reinforcement Learning (DRL) systems. It involves separating the adversarial policy into two sub-policies: the switch policy and the lure policy. Manipulating the victim's actions through the lure policy enables the attacker to deceive the DRL system. The proposed DAP approach incorporates a convolutional neural network, a fully-connected network, and an LSTM to encode states, policies, and sequential features. Finally, two branches in the form of fully-connected networks generate the switch and lure policies, respectively, determining the attacker's actions and the victim's responses.
 - [ ] @TODO: Explain the original method.
 
 ## 2.2. Our interpretation 
 
 The original paper provides a clear explanation of the proposed method. However, some technical details were not fully explained, such as the architecture of the neural network used to encode the states and policies. We interpreted these details based on our understanding of the related literature and the experimental results presented in the paper.
+
+In our interpretation, we focused on understanding the technical details of the method that were not explicitly explained in the original paper. For example, the paper mentions the use of a convolutional neural network (CNN) to encode states and a fully-connected network to encode policies. However, the specific architecture and configuration of these networks were not provided. To address this, we interpreted that the CNN is used to extract spatial features from the states, while the fully-connected network captures the policy information. These features are then concatenated and processed by an LSTM to capture sequential features. Finally, two branches implemented as fully-connected networks are utilized to output the switch and lure policies, respectively.
+
+Furthermore, we interpreted that the switch policy determines whether an attack should be launched based on the current state and policy information, while the lure policy determines the specific action to induce the victim to take. The lure policy is crucial in strategically influencing the victim's actions to achieve the attacker's objectives. By understanding these interpretations, we gain a clearer understanding of the method's architecture and its underlying mechanisms.
+
+Additionally, we considered the implications of the DAP approach in terms of its effectiveness and practicality. We interpreted that the DAP approach offers advantages over existing methods by requiring fewer perturbation injection times to attack DRL systems, thus enhancing its secrecy. This interpretation is based on the experimental results presented in the paper, which demonstrate the efficiency and effectiveness of the DAP approach compared to comparative methods.
+
+Overall, our interpretation of the method focused on filling in the technical details that were not explicitly explained in the original paper. By understanding these details, we gain a more comprehensive understanding of the proposed approach and its potential implications. This interpretation allows us to replicate and evaluate the method accurately, contributing to the reproducibility and reliability of the research.
 - [ ] @TODO: Explain the parts that were not clearly explained in the original paper and how you interpreted them.
 
 # 3. Experiments and results
@@ -77,5 +89,8 @@ In conclusion, the paper presents a novel Decoupled Adversarial Policy (DAP) app
 @TODO: Provide your references here.
 
 # Contact
+
+- Adnan Harun Dogan: [Github](https://github.com/adnanhd) [Twitter](https://twitter.com/adnanharundogan) [Google Scholar](https://scholar.google.com/citations?user=QGaRpqYAAAAJ&hl=en)
+- Merve Tapli: Github
 
 @TODO: Provide your names & email addresses and any other info with which people can contact you.

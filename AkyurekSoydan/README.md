@@ -10,7 +10,7 @@ In this paper, authors aim to address a few-shot segmentation (FSS) problem. The
 ## 1.1. Paper summary
 
 
-The objective of few-shot segmentation (FSS) is to segment objects in a given query image with the support of a few sample images. The major complication of FSS is the utilization of the limited information the support images incorporate. Some of the methods in the literature adopt prototypical learning or affinity learning strategies. Prototypical learning methods use masked average pooling to achieve a single prototype  to anticipate outperforming with noisy pixels while the affinity learning methods attempt to leverage pixel-to-pixel similarity between support and query features for segmentation. The proposed method in the paper (**AAFormer**) integrates the adaptive prototypes as agents into affinity-based FSS via a transformer encoder-decoder architecture. The transformers architecture has three main parts. The first part is the **Representation Encoder** which is very similar to the encoder part of the standard [transformer](https://arxiv.org/abs/1706.03762) structure which employs the self-attention mechanism for the query and support features separately and outputs the encoded support and query features to be fed to the **Agent Learning Decoder**. This is one of the two decoders in the model which injects the support information into learning agents to direct the information gathered with support images to the query image. The other decoder is the **Agent Matching Decoder** which yields the retrieved features after crossing the agent tokens with support and query features and aligning the outputs of them. [1]  
+The objective of few-shot segmentation (FSS) is to segment objects in a given query image with the support of a few sample images. The major complication of FSS is the utilization of the limited information the support images incorporated. Some of the methods in the literature adopt prototypical learning or affinity learning strategies. Prototypical learning methods use masked average pooling to achieve a single prototype  to anticipate outperforming with noisy pixels while the affinity learning methods attempt to leverage pixel-to-pixel similarity between support and query features for segmentation. The proposed method in the paper (**AAFormer**) integrates the adaptive prototypes as agents into affinity-based FSS via a transformer encoder-decoder architecture. The transformers architecture has three main parts. The first part is the **Representation Encoder** which is very similar to the encoder part of the standard transformer [4] structure which employs the self-attention mechanism for the query and support features separately and outputs the encoded support and query features to be fed to the **Agent Learning Decoder**. This is one of the two decoders in the model which injects the support information into learning agents to direct the information gathered with support images to the query image. The other decoder is the **Agent Matching Decoder** which yields the retrieved features after crossing the agent tokens with support and query features and aligning the outputs of them. [1]  
 
 # 2. The method and our interpretation
 
@@ -58,7 +58,7 @@ Throughout our source code, we have discussed our interpretation and assumptions
 
 We have implemented the setup of the original paper as closely as we could. The settings we have changed can be reviewed from the source code comments in detail. The paper uses 473 image resolution; however, we set the resolution to a lower value, i.e. 128 for our experiments. We provide our hyperparameters explicitly in `main.ipynb` and their values provided by the original paper and state the hyperparameters that are not mentioned in the paper. In addition to Dice Loss used by the original paper, we have also experimented with Binary Cross Entropy (BCE) Loss that is not used by the paper. 
 
-We use `ResNet-50` as our backbone, where we also provide other ResNet options such as `ResNet-101`. The original paper uses the both in their ablation studies. For the datasets, we only experiment with $PASCAL-5^i$ which has 4 folds for cross-validation where $i$ denote the fold index, and every fold has 5 classes. We only experimented with the "fold0", i.e. we used $PASCAL 5^0$ (refer to Table 1's notation in original paper). We have experimented with 3-shot and 5-shot settings for $PASCAL-5^0$ Dataset. We also added an overfitting option to dataloaders that takes only one n-shot sample, and we run the overfitting experiment with 1-shot setting.
+We use `ResNet-50` as our backbone, where we also provide other ResNet options such as `ResNet-101`. The original paper uses the both in their ablation studies. For the datasets, we only experiment with $PASCAL-5^i$ which has 4 folds for cross-validation where $i$ denote the fold index, and every fold has 5 classes. We only experimented with the "fold0", i.e. we used $PASCAL 5^0$ (refer to Table 1's notation in original paper). We have experimented with **3-shot** and **5-shot** settings for $PASCAL-5^0$ Dataset. We also added an **overfitting option** to dataloaders that takes only one n-shot sample, and we run the overfitting experiment with 1-shot setting.
 
 ## 3.2. Running the code
 
@@ -123,6 +123,14 @@ The few-shot segmentation problem is an interesting and challenging problem, and
 
 [3] R ́emi Flamary, Nicolas Courty, Alexandre Gramfort, Mokhtar Z. Alaya, Aur ́elie Boisbunon, Stanislas Chambon, Laetitia Chapel, Adrien Corenflos, Kilian Fatras, Nemo Fournier, L ́eo
 Gautheron, Nathalie T.H. Gayraud, Hicham Janati, Alain Rakotomamonjy, Ievgen Redko, Antoine Rolet, Antony Schutz, Vivien Seguy, Danica J. Sutherland, Romain Tavenard, Alexander Tong, and Titouan Vayer. Pot: Python optimal transport. Journal of Machine Learning Research, 22(78):1–8, 2021.
+
+[4] Vaswani, Ashish, et al. "Attention is all you need." Advances in neural information processing systems 30 (2017). 
+
+[5] Wang, Kaixin, et al. "Panet: Few-shot image semantic segmentation with prototype alignment." proceedings of the IEEE/CVF international conference on computer vision. 2019.
+
+[6] Zhang, Xiaolin, et al. "Sg-one: Similarity guidance network for one-shot semantic segmentation." IEEE transactions on cybernetics 50.9 (2020): 3855-3865.
+
+[7] Zhang, Chi, et al. "Canet: Class-agnostic segmentation networks with iterative refinement and attentive few-shot learning." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2019.
 
 # Contact
 

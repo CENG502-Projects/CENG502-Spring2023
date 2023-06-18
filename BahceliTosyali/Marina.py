@@ -186,9 +186,9 @@ def trials_MARINA_Etth1(INPUT_LENGTH,zeta,shift):
 # that we added in order to ease the performance. 
 
 INTERMEDIATE_LENGTH = 24
-INPUT_LENGTH        = 150
-zeta                = 10
-shifting            = INPUT_LENGTH
+INPUT_LENGTH        = 100
+zeta                = 1
+shifting            = 5
 windowedTrain,futuredTrain,windowedVal,futuredVal,windowedTest,futuredTest = trials_MARINA_Etth1(INPUT_LENGTH,zeta,shifting)
 
 ###############################################################################################################

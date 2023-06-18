@@ -142,11 +142,12 @@ Directory structure:
 │   │       │   test/
 │   │       │   train/
 │   └── labeled_anomalies.csv
-├── Marina.ipynb
+├── sample_output.ipynb
+├── Marina.py
 ├── README.md
 └── marina.pdf
 ```
-- One should use ```Marina.ipynb``` for training and testing the data. 
+- One should use ```Marina.ipynb``` for training and testing the data. For ones who wants to see a simple output of the code can visit ```sample_output``` file. 
 
 
 ## 3.3. Results

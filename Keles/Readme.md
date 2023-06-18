@@ -34,7 +34,7 @@ Figure 2. Comparison of pruning in CNN's and ViT's. Source [1].
 
 In CNN's pruning channels is common. Pruning channels in ViT's dont work well mainly becouse in ViT's each of the patches correspond to one another in different layers. Authors propose a method where we prune the ViT's in a top down manner. We start from the last layer and selectively eliminate a number of pathces in each layer, while preserving the patches in the previous layer for each layer.
 
-Starting from the last layer of the model, we calculate significance scores for each of the patches in a layer. We select the top r patches with the highest significance scores and preserved them, while discarding the rest. We keep track of the patches to be preserved using a matrix m, with shape [num_layers, num_patches]. Each element along the first dimension represents the patches to be preserved in the corresponding layer. We want to minimize the number of patches in the models while preserving the accuracy. To preserve the models accuracy, we calculate an error between the output features of the pruned and initial model. We want to minimize this error while maximizing the number of pruned patches to increase efficiency.
+Starting from the last layer of the model, we calculate significance scores for each of the patches in a layer. We select the top r patches with the highest significance scores and preserved them, while discarding the rest. We keep track of the patches to be preserved using a matrix m, with shape [num_layers, num_patches]. Each element along the first dimension represents the patches to be preserved in the corresponding layer. We want to minimize the number of patches in the models while preserving the accuracy. To preserve the models accuracy, we calculate an error between the output features of the pruned and initial model and minimize the error by fine tuning the pruned layer for a few epochs. We want to minimize this error while maximizing the number of pruned patches to increase efficiency.
 
 To obtain the masks ml for each layer, we calculate a significance score. The impact of the $t$-th layer's patch on the final error $E_L$ can be reflected by a significance metric $s_t \in \mathbb{R}^N$. For the $i$-th patch in the $t$-th layer, we have
 
@@ -110,7 +110,7 @@ If you want to apply this method to another model, simply have a look at the mod
 ## 3.3. Results
 
 There are two metrics we are interested in this project, one is number of FLOPs and the other is how much accuracy can we maintain from the original model.
-We have reduced the number of FLOPs by %a.aa. We think that we can further reduce the number of FLOPs by optimizing our implementation.
+We have reduced the number of FLOPs by %17 to %40 for different values of r and r'. We think that we can further reduce the number of FLOPs by optimizing our implementation.
 
 ![image](https://github.com/CanKeles5/CENG502-Spring2023/assets/52157220/06fb0338-ad23-4af8-b757-00802f353436)
 Table 1. Results from the paper. Source [1].

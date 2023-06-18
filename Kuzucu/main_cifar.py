@@ -40,8 +40,6 @@ torch.manual_seed(args.seed)
 torch.cuda.manual_seed_all(args.seed)
 
 
-# Disentangling the predictive entropy into its epistemic and aleatoric components
-# directly follows from Kendall & Gal (2017). See the references section for more info.
 def get_mc_dropout_uncertainty(model, eval_loader):
     epistemic_unc = np.array([])
 

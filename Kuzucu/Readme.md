@@ -123,7 +123,7 @@ Figure 3. The pseudocode for the AUL module of the proposed framework
 
 ![Screenshot 2023-06-19 at 00 27 16](https://github.com/selimkuzucu/ULC-CENG502/assets/56355561/d2215987-08b2-4c96-a012-b88fa593d1a6)
 
-Figure 4. Objectives for labeled and unlabeled samples respectively from DivideMix[REF]
+Figure 4. Objectives for labeled and unlabeled samples respectively from DivideMix [2]
 
 
 

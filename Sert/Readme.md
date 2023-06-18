@@ -2,14 +2,14 @@
 
 This readme file is an outcome of the CENG502 (Spring 2023) project for reproducing a paper without an implementation. See CENG502 (Spring 20223) Project List for a complete list of all paper reproduction projects.
 
-## 1. Introduction
+## 1. Introduction
 The paper is published in ICLR 2022 and introduces a performant sampling procedure called Vital Negative Sampler (VINS). In this project, our goal is to implement VINS and train it on Yelp dataset We aim to achieve reported performance in the paper.
 
 ### 1.1. Paper summary
 Over the recent years, many approaches have been proposed to mine negative samples without data imbalance. Such methods may be:
 - User-independent: UNI (Rendle et al., 2009), POP (Mikolov et al., 2013) where negative samples are sampled from a static distribution
 - User-dependent: DNS (Zhang et al., 2013) greedily selects the best item (j) with similarity score $x_{uj}$ to user u.
-- Edge-dependtent: WARP (Weston et al., 2011) selects the negative item j constrained that it is ranked higher than the positive item i to user u, $ x_{uj} + \epsilon \geq x_{ui}$ . 
+- Edge-dependtent: WARP (Weston et al., 2011) selects the negative item j constrained that it is ranked higher than the positive item i to user u, $x_{uj} + \epsilon \geq x_{ui}$ . 
 
 where similarity score is calculated as the dot product of user and item embedding vectors: $x_{ij} = U_{i} I_{j}$
 
@@ -19,7 +19,7 @@ VINS builds up on WARP by taking popularity of selected items to account.
 
 ### 2.1. The original method
 
-In VINS, a negative item prototype is selected with reject probability $ 1 - \min \big( \frac{\pi(j)}{\pi(i)}, 1 \big )$. $\pi(i)=d_i^\beta$ and $\beta \in [0, 1]$. $d_i$ is the degree of the item and beta is a hyperparameter between zero and one. Then, this process is repeated $\kappa$ times until the sampled prototype has higher rank value compared to the positive item for user u.
+In VINS, a negative item prototype is selected with reject probability $1 - \min \big( \frac{\pi(j)}{\pi(i)}, 1 \big )$. $\pi(i)=d_i^\beta$ and $\beta \in [0, 1]$. $d_i$ is the degree of the item and beta is a hyperparameter between zero and one. Then, this process is repeated $\kappa$ times until the sampled prototype has higher rank value compared to the positive item for user u.
 
 By sampling negatives items more popular than the positive item and taking rank position into account, VINS achieves state-of-the-art performance compared to other methods.
 
@@ -82,7 +82,7 @@ Our beta sweep shows that extreme values of $\beta$ work more performant.
 
 In order to measure the effect of VINS, we trained a baseline model where we sample each negative item randomly. Then measured percent improvement on both F1@10 and NDCG@10 when using VINS compared to the baseline model according to the formula below where $i$ indicates the epoch index:
 
-$ \text{Improvement}_i = 100 * \frac{F_{vins, i} - F_{baseline, i}}{F_{baseline, i}} $
+$$ \text{Improvement}_i = 100 * \frac{F_{vins, i} - F_{baseline, i}}{F_{baseline, i}} $$
 
 **Our results clearly show the effectiveness of VINS on the baseline. We see that at 6th epoch, VINS performed 60 to 80% better compared to random sampling measured by F1@10 and 40-70% better when measured by NDCG@10.**
 

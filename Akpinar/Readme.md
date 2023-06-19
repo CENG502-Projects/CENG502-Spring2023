@@ -9,13 +9,14 @@ In this paper, authors aim to address the peaky behavior problem of CTC. They of
 ## 1.1. Paper summary
 A well-liked goal function in sequence recognition called Connectionist Temporal Classification (CTC) supervises unsegmented sequence data by repeatedly matching the sequence and its related labeling. The peaky behavior of CTC is frequently attributed to its blank class, which is also critical to the alignment process. In this paper, they propose an objective function called RadialCTC that maintains the CTC's iterative alignment mechanism while constricting sequence characteristics to a hypersphere. With a clear geometric interpretation and a more expedient alignment procedure, the learnt features of each non-blank class are dispersed on a radial arc from the center of the blank class. Additionally, RadialCTC can alter the blank class's logit to regulate the peaky behavior.
 
-##1.1.1. Contributions
+1.1.1. Contributions
 
 -Putting out the RadialCTC, which keeps the CTC's iterative alignment mechanism while constraining sequence characteristics to a hypersphere. The characteristics of non-blank classes are dispersed around the center of the blank class in radial arcs.
 -Proposing a straightforward angular perturbation term that can consistently supervise all sequence data while taking the sequence-wise angular distribution into account in order to control the peaky behavior.
 -Conducting thoughtful experiments about the interaction between localization and recognition. The usefulness of RadialCTC, which delivers competitive performance on two sequence recognition applications and may also offer configurable event boundaries, is demonstrated by experimental data.
 
-##1.1.2. Important consepts
+1.1.2. Important consepts
+
 CTC is proposed to provide supervision for unsegmented sequence data, which has shown advantages in many sequence recognition tasks. A controversial characteristic of CTC is its spike phenomenon. Networks trained with CTC will conservatively predict a series of spikes.
 Liu et al. [23] propose a entropy-based regularization method to penalize the peaky distribution and encourage exploration. 
 Min et al. [29] propose a visual alignment constraint to enhance feature extraction before the powerful temporal module. Adding constraints on the CTC-based framework can alleviate the overfitting problem. However, the peaky behavior still exists, and it is hard to provide clear event boundaries.

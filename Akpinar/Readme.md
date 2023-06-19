@@ -213,20 +213,45 @@ I added angular ragularization.
 
 ## 3.1. Experimental setup
 
-@TODO: Describe the setup of the original paper and whether you changed any settings.
+I used the LeNet++ setup but I change some part that I mention above to be able to use for our dataset.
+
+Datasets:
+
+Seq-MNIST. Seq-MNIST maintains the distribution balance from MNIST. They also simulate an unbalanced training set by sampling images at the rate of 0.1 for classes 0 to 4 and remaining unchanged for others.
+
+Phoenix14. As a popular CSLR dataset, Phoenix14 [17] contains about 12.5 hours of video data collected from weather forecast broadcast and is divided into three parts: 5,672 sentence for training, 540 for development (Dev), and 629 for testing (Test). It also provides a signer-independent setting where data of 8 signers are chosen for training and leave out data of signer05 for evaluation.
+
+Scene Text Recognition Datasets. Following the standard experimental setting, we use the synthetic Synth90k as training data and test our methods on four real-world benchmarks (ICDAR-2003 (IC03), ICDAR-2013 (IC13), IIIT5k-word(IIIT5k) and Street View Text(SVT)) without fine-tuning.
+
+For Seq-MNIST and scene text recognition datasets, we use sequence accuracy as the evaluation metric. Word error rate (WER) is adopted as the evaluation metric of CSLR as previous work does. We adopt the mean Average Precious (mAP) to evaluate the localization performance.
+
+For Seq-MNIST implementation:
+Adadelta optimizer is used for 30-epoch training with an initial learning rate of 1.0. Each iteration processes 64 sequences and no augmentation technique is applied during training. For the hyperparameter choice, they adopt λ1 = 1.0, β = 0.2π and λ2 = 1.0 as the default setting.
+
+For Phoenix14 implementation:
+
+They select ResNet18 as the FFE. The glosswise temporal layer and two BiLSTM layers with 2×512 dimensional hidden states are adopted for temporal modeling. They adopt Synchronized Cross-GPU Batch Normalization (syncBN) to gather statistics from all devices, which can accelerate the training process. Therefore, they shorten the training time and
+train all models for 40 epochs with a batch size of 2. Adam optimizer is used with an initial learning rate of 1e-4, which decays by a factor of 5 after epochs 25 and 35. The training set is augmented with random crop (224x224), horizontal flip (50%), and random temporal scaling (±20%). They replace the extra CTC (visual enhancement loss in ) with the proposed RadialCTC to show its effectiveness as intermediate supervision without using the visual alignment loss for simplicity. For the hyperparameter choice, we adopt λ1 = 1.0, β = 0.2π and λ2 = 0.1 as the default setting.
+
+For  Scene Text Recognition implementation:
+
+They adopt CRNN as their baseline model. CRNN is optimized by CTC loss and has three components, including the convolution module, the recurrent module, and the decoder. The convolution
+module converts resized image (1 × 32 × 100) to a feature sequence of size 512 × 1 × 26, where 512 is the dimension of output features. The recurrent layer has two BiLSTM layers with 2 × 256 hidden states and two fully-connected layers. It predicts a probability distribution among 37 predefined classes for each frame in the feature sequence. After that, the decoder converts the predictions into a label sequence. They train the model for 30 epochs with a batch size of 512 under the supervision of RadialCTC loss. Adam optimizer is used with β1 set to 0.5 and an initial learning rate of 1e-3 decaying with a rate of 0.2 after epoch 10 and epoch 20. For the hyperparameter choice, we adopt λ1 = 1.0, β = 0.2π and λ2 = 0.1 as the default setting.
+
 
 ## 3.2. Running the code
 
 
-Our main file is `radialCTC.ipynb` where we declare step by step code cells to run our code. 
+Our main file is `radialCTC.ipynb` where we declare step-by-step code cells to run our code. 
 
 ## 3.3. Results
 
-@TODO: Present your results and compare them to the original paper. Please number your figures & tables as if this is a paper.
+I could not finish the results part due to the complication with the calculation of the z value. 
 
 # 4. Conclusion
 
-@TODO: Discuss the paper in relation to the results in the paper and your results.
+Connectionist Temporal Classification (CTC), a popular goal function in sequence recognition, manages unsegmented sequence data by continually matching the sequence and its associated labeling. The blank class of CTC, which is also essential to the alignment process, is sometimes blamed for the peaky behavior of the latter. In this study, they put forth the RadialCTC objective function, which preserves the iterative alignment process of the CTC while limiting sequence features to a hypersphere. The learned features of each non-blank class are scattered on a radial arc from the center of the blank class with a clear geometric interpretation and a quicker alignment method. RadialCTC may also change the logit of the blank class to control the peaky behavior.
+I could not compare the results due to having difficulties as I mention above.
 
 # 5. References
 

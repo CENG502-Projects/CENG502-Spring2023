@@ -33,13 +33,13 @@ The problem addressed in the paper can be mathematically formulated as follows:
 ![primal_dual](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/32d89eb0-5f48-4b41-a352-2ed5b7c3d871)
 
 The formulation captures the objective of maximizing a monotone k-submodular function subject to constraints on the size of the selected subset. The paper discusses the details of the formulation and provides insights into its properties and potential algorithmic approaches for solving it. 
-- xe,i ∈ {0, 1} that indicates whether element e is assigned label i. 
-- yA ∈ {0, 1} that indicates whether A is the selected k-tuple. 
-- The first set of constraints enforce that e receives label i if and only if e ∈ Ai for the selected labeling. 
+- x_{e,i} ∈ {0, 1} that indicates whether element e is assigned label i. 
+- y_A ∈ {0, 1} that indicates whether A is the selected k-tuple. 
+- The first set of constraints enforce that e receives label i if and only if e ∈ A_i for the selected labeling. 
 - The second set of constraints enforce that we select exactly one k-tuple. 
 - The third set of constraints enforce that each element receives at most one label. 
 - The fourth set of constraints enforce the size constraints for the labels. 
-By relaxing the integrality constraints x_{e,i}, Y_**A** ∈ {0, 1} to xe,i, Y_**A** ∈ (0, 1), we obtain the LP relaxation for the problem
+By relaxing the integrality constraints x_{e,i}, Y_A ∈ {0, 1} to x_{e,i} , Y_A ∈ (0, 1), we obtain the LP relaxation for the problem
 
 # 2. The method and my interpretation
 
@@ -49,7 +49,7 @@ This section describes the original method presented in the paper "Streaming Alg
 
 ### 2.1.1 K-Submodularity Definition
 
-In the paper, the concept of submodularity plays a fundamental role. A function f: (2+1)^V^ -> R, where V is a finite ground set, is said to be k-submodular if it satisfies the diminishing returns property. Specifically, for any sets A, B subset of V, where |A| <= |B|, and any element e not in B, the following inequality holds:
+In the paper, the concept of submodularity plays a fundamental role. A function f: (2+1)^V -> R, where V is a finite ground set, is said to be k-submodular if it satisfies the diminishing returns property. Specifically, for any sets A, B subset of V, where |A| <= |B|, and any element e not in B, the following inequality holds:
 
 $f(A ∪ {e}) - f(A) >= f(B ∪ {e}) - f(B)$
 
@@ -63,13 +63,13 @@ Pairwise Monotone
 
 ![orthant_submodular](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/40e42f3c-5a2d-4d9b-af35-e0d67fd8ed81)
 
- for all $X, Y ∈ (k+1)^V^$ such that X \prec Y, $e \notin supp(Y)$ and $i ∈ (k)$
+ for all $X, Y ∈ (k+1)^V$ such that X \preccurlyeq Y, $e \notin supp(Y)$ and $i ∈ (k)$
 
 ### 2.1.2 Marginal Gain Definition
 
 The concept of marginal gain plays a crucial role in the algorithm. The marginal gain of adding an element v to a current solution set S is defined as the increase in the objective function value:
 
-$\delta_{e,i} f(v) = f(S_1 ∪ S_2 ... S_i ∪ {e}... ∪ S_k) - f(S_1 ∪ S_2 ... S_i ∪ S_k)$
+$\Delta_{e,i} f(v) = f(S_1 ∪ S_2 ... S_i ∪ {e}... ∪ S_k) - f(S_1 ∪ S_2 ... S_i ∪ S_k)$
 
 It quantifies the utility or contribution of an element towards improving the objective function value when added to the current solution set.
 
@@ -78,6 +78,7 @@ It quantifies the utility or contribution of an element towards improving the ob
 This section provides an overview of the approximation guarantees for maximizing submodular functions subject to cardinality constraints. The table below summarizes some of the notable approximation guarantee algorithms in the literature.
 
 ![approximation_table_2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/0405c199-8f79-41e0-8b68-4c8aac7f0e83)
+*Figure N Comparison of Algorithms* 
 
 Proof of the approximation bound can be found in [paper](https://proceedings.mlr.press/v162/ene22a/ene22a.pdf)
 
@@ -88,6 +89,7 @@ The paper proposes a novel streaming algorithm for maximizing a monotone k-submo
 Algorithm details are as follows:
 
 ![primal_dual_algorithm](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/2a97554e-5f37-4d36-a44b-feb3b3bbb458)
+*Figure N Pseudocode of Algorithm*
 
 Method uses primal-dual variables to increase the treshold of accepting an item as the marjinal gain decreases over time.
 
@@ -111,7 +113,7 @@ There are two experiments in paper: Influence maximization and sensor placement 
 **1. Influence Maximization with *k* topics:** In this experiment, we aim to maximize influence in a social network with multiple topics of interest. The objective is to identify a set of influential nodes that can maximize the spread of information or influence across the network for each topic. The experiment involves the following steps:
 
 1. Constructing directed network graph from undirected edges in Facebook SNAP dataset.
-2. Approximating the influence function proposed by [Borgs et al, 2014](https://arxiv.org/pdf/1212.0884.pdf) with approximation guarentee lowerbound number of simulations O(nk^2log(n)log(k)) where k is number of topics and n is number of nodes in grapgh using k-Independent Cascade Process proposed by [Ohsaka & Yoshida, 2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf)
+2. Approximating the influence function proposed by [Borgs et al, 2014](https://arxiv.org/pdf/1212.0884.pdf) with approximation guarentee lowerbound number of simulations $O(n k^2 log(n) log(k))$ where k is number of topics and n is number of nodes in grapgh using k-Independent Cascade Process proposed by [Ohsaka & Yoshida, 2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf)
 3. Applying the proposed influence maximization algorithm, leveraging the k-submodular framework, to identify the most influential nodes for each topic.
 4. Comparing the performance of the algorithm with k-greedy algorithm proposed by [Ohsaka & Yoshida, 2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf).
 5. Evaluating the values of the methods ranging between different budget constraints.
@@ -120,6 +122,7 @@ Although the therotical number of simulations required stated at [Borgs et al, 2
 
 ![build_hypergraph](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/811e5f3e-b03e-4127-9ca1-9b132d982dd2)
 *Figure N Simulation Process of Approximating Influence Function*
+
 
 Process uses Independent Cascade Process which can be seen in figure below:
 
@@ -183,7 +186,7 @@ Setup Component | The authors | Us
 ------------ | ------------- | -------------
 B | 1-30 | 1-10
 K | 3,10 | 3 
-D | B*(2^1/B^-1) | B*(2^1/B^-1)
+D | B*( 2^(1/B) -1) | B( (2^1/B) -1)
 R | - | 100
 C | 0.5D | 0.5D
 
@@ -192,7 +195,7 @@ Where B is the budget for all types, R represents the number of simulations proc
 Experiment results are as follows:
 
 *Figure 2: Author's Results on Influence Maximization*
-![inf_result](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/d8d0e5fe-46de-43b9-bb1e-3c3d1a28c46e)
+![Picture1](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/9cb41674-267f-45bd-89d3-69f845f93edf)
 
 *Figure 1: My Results on Influence Maximization*
 ![inf_max_result](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/ff7834db-204c-4920-992c-e626c086ba5a)
@@ -206,13 +209,13 @@ Setup Component | The authors | Us
 ------------ | ------------- | -------------
 B | 1-30 | 1-30
 K | 3 | 3 
-D | B(2 ^1/B^ -1) | B(2 ^1/B^ -1)
+D |  B*( 2^(1/B) -1) |  B*( 2^(1/B) -1)
 C | 0.5D | 0.5D
 
 Since the computational resource is enough the reproduce the problem, I used same parameters with author. In this experiment I get similar results as shown below:
 
 *Figure 3: Author's Results on Sensor Placement Problem*
-![sensor_placement](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/b33e29c4-2ef3-4880-93a8-5052d78813ea)
+![Picture2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/c19606b7-b2a6-45cb-a5bb-d55e0e7c08df)
 
 *Figure 1: My Results on Sensor Placement Problem*
 
@@ -230,11 +233,11 @@ In the Sensor Placement problem, we also achieved similar results to those prese
 
 Overall, our implementation confirmed the key findings of the paper and highlighted the effectiveness of the proposed algorithm for both the Influence Maximization and Sensor Placement problems. The project underscores the significance of efficient algorithms for submodular maximization in practical applications such as social network analysis and sensor deployment.
 
-To wrap up, we enjoyed reproducing this paper and learned a lot during the process. We would like to thank the authors for writing such a great and mostly clear paper and Sinan Hoca for equipping us with the skills to take on this project.
+To wrap up, I enjoyed reproducing this paper and learned a lot during the process. We would like to thank the authors for writing such a great and mostly clear paper and Sinan Hoca for equipping us with the skills to take on this project.
 
 # 5. References
 
--Christian Borgs, Michael Brautbar, Jennifer Chayes, and Brendan Lucier, ["Maximizing Social Influence in Nearly Optimal Time," in Proceedings of the Twenty-Fifth Annual ACM-SIAM Symposium on Discrete Algorithms, 2014, pp. 946-957.](https://arxiv.org/pdf/1212.0884.pdf)
+- Christian Borgs, Michael Brautbar, Jennifer Chayes, and Brendan Lucier, ["Maximizing Social Influence in Nearly Optimal Time," in Proceedings of the Twenty-Fifth Annual ACM-SIAM Symposium on Discrete Algorithms, 2014, pp. 946-957.](https://arxiv.org/pdf/1212.0884.pdf)
 
 - Chandra Chekuri and Kent Quanrud, ["Submodular Optimization with Submodular Cover and Submodular Knapsack Constraints," SIAM Journal on Computing (SICOMP), vol. 47, no. 1, pp. 175-203, 2018.](https://proceedings.neurips.cc/paper/2013/file/a1d50185e7426cbb0acad1e6ca74b9aa-Paper.pdf)
 
@@ -254,4 +257,4 @@ Mehmet Barutcu - mehmetbarutcu00@gmail.com
 
 # License
 
-All original code we wrote in this repository is licensed under the MIT License. Everything except for all pictures in the images directory are borrowed from the paper is my original work. These images belong to their copyright holders. They are provided in this repository for educational purposes only, which constitute fair use under the US copyright law.
+All original code I wrote in this repository is licensed under the MIT License. Everything except for all pictures in the images directory are borrowed from the paper is my original work. These images belong to their copyright holders. They are provided in this repository for educational purposes only, which constitute fair use under the US copyright law.

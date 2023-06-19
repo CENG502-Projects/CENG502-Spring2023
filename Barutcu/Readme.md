@@ -4,7 +4,7 @@ This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.
 
 # 1. Introduction
 
-This project aims to reproduce the results of the paper titled "Streaming Algorithm for Monotone k-Submodular Maximization with Cardinality Constraints," published in [ICML] in [2022].
+This project aims to reproduce the results of the paper titled "Streaming Algorithm for Monotone k-Submodular Maximization with Cardinality Constraints," published in ICML, 2022.
 
 The main goal of the paper is to present an efficient streaming algorithm for solving the problem of maximizing a monotone k-submodular function subject to cardinality constraints. The problem involves selecting a subset of elements from a larger set to maximize a specific objective function while adhering to constraints on the size or cardinality of the selected subset.
 
@@ -137,7 +137,7 @@ In this experiment, we focus on the problem of sensor placement in a given envir
 5. Evaluating the values of the methods ranging between different budget constraints.
 
 ## 3.2. Running the code
-
+```
 Directory structure
 └── Edit me to generate/
     ├── datasets/
@@ -155,6 +155,7 @@ Directory structure
     ├── influence_maximization.ipynb
     ├── sensor_placement.ipynb
     └── requirements.txt
+```
 
 - Files in datasets folder contains facebook and Intel Lab datasets in txt format
 - Images folder contains copy right images used in this readme file
@@ -162,13 +163,13 @@ Directory structure
 - influence_maximization.ipynb file contains the influence maximization experiment with data preprocessing functions and k-greedy algorithm implementation
 - sensor_placement.ipynb file contains the sensor placement experiment with data preprocessing functions k-greedy algorithm implementation
 
-###3.2.1 Create Environment
+### 3.2.1 Create Environment
 **conda create (env_name)**
 
-###3.2.2 Install Dependencies
+### 3.2.2 Install Dependencies
 **pip install -r requirements.txt**
 
-###3.2.3 Running the Experiments
+### 3.2.3 Running the Experiments
 Cells in jupyter notebooks can sequencially be run to reproduce the results.
 
 ## 3.3. Results

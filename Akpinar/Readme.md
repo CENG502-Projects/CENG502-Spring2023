@@ -50,16 +50,28 @@ The main goal of deep feature learning is to learn discriminative feature space 
 ![Figure 7](./image/dist_center.png)
 <img width="720" alt="dist_center" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/dist_center.PNG">
 
-![Figure8](./image/radial_fba.png)
-<img width="400" alt="radial_fba" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_fba.PNG">
+![Figure8](./image/vanilla_fba.png)
+<img width="400" alt="vanilla_fba" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/vanilla_fba.PNG">
 
 
 ![Figure 9](./image/ang_per_grp.png)
 <img width="720" alt="ang_per_grp" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ang_per_grp.PNG">
 
+![Figure 10](./image/m.png)
+<img width="256" alt="m" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/m.PNG">
 
+![Figure 11](./image/z.png)
+<img width="720" alt="z" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/z.PNG">
 
-@TODO: Explain the original method.
+![Figure 12](./image/radial_fba.png)
+<img width="720" alt="radial_fba" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_fba.PNG">
+
+![Figure 12](./image/radial_fba.png)
+<img width="720" alt="radial_fba" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_fba.PNG">
+
+![Figure 12](./image/radial_loss.png)
+<img width="720" alt="radial_loss" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_loss.PNG">
+
 
 ## 2.2. Our interpretation 
 

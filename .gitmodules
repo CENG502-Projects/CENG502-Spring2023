@@ -1,3 +1,6 @@
 [submodule "BuyukbasIsik"]
 	path = BuyukbasIsik
 	url = https://github.com/necrashter/transformers-learnable-memory
+[submodule "AytekinGuder"]
+	path = AytekinGuder
+	url = https://github.com/erceguder/LoGo

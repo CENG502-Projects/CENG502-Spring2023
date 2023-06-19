@@ -31,15 +31,16 @@ The proposed streaming algorithm in the paper makes several key contributions to
 The problem addressed in the paper can be mathematically formulated as follows:
 
 ![primal_dual](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/32d89eb0-5f48-4b41-a352-2ed5b7c3d871)
+*Figure 1: Primal Dual Formulation of LP Programming*
 
 The formulation captures the objective of maximizing a monotone k-submodular function subject to constraints on the size of the selected subset. The paper discusses the details of the formulation and provides insights into its properties and potential algorithmic approaches for solving it. 
-- x_{e,i} ∈ {0, 1} that indicates whether element e is assigned label i. 
-- y_A ∈ {0, 1} that indicates whether A is the selected k-tuple. 
-- The first set of constraints enforce that e receives label i if and only if e ∈ A_i for the selected labeling. 
+- $x_{e,i}$ ∈ {0, 1} that indicates whether element e is assigned label i. 
+- $y_A$ ∈ {0, 1} that indicates whether A is the selected k-tuple. 
+- The first set of constraints enforce that e receives label i if and only if e ∈ $A_i$ for the selected labeling. 
 - The second set of constraints enforce that we select exactly one k-tuple. 
 - The third set of constraints enforce that each element receives at most one label. 
 - The fourth set of constraints enforce the size constraints for the labels. 
-By relaxing the integrality constraints x_{e,i}, Y_A ∈ {0, 1} to x_{e,i} , Y_A ∈ (0, 1), we obtain the LP relaxation for the problem
+By relaxing the integrality constraints $x_{e,i}$, $Y_A$ ∈ {0, 1} to $x_{e,i}$ , $Y_A$ ∈ (0, 1), we obtain the LP relaxation for the problem
 
 # 2. The method and my interpretation
 
@@ -49,7 +50,7 @@ This section describes the original method presented in the paper "Streaming Alg
 
 ### 2.1.1 K-Submodularity Definition
 
-In the paper, the concept of submodularity plays a fundamental role. A function f: (2+1)^V -> R, where V is a finite ground set, is said to be k-submodular if it satisfies the diminishing returns property. Specifically, for any sets A, B subset of V, where |A| <= |B|, and any element e not in B, the following inequality holds:
+In the paper, the concept of submodularity plays a fundamental role. A function $f: (2+1)^V -> R$, where V is a finite ground set, is said to be k-submodular if it satisfies the diminishing returns property. Specifically, for any sets A, B subset of V, where |A| <= |B|, and any element e not in B, the following inequality holds:
 
 $f(A ∪ {e}) - f(A) >= f(B ∪ {e}) - f(B)$
 
@@ -63,7 +64,7 @@ Pairwise Monotone
 
 ![orthant_submodular](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/40e42f3c-5a2d-4d9b-af35-e0d67fd8ed81)
 
- for all $X, Y ∈ (k+1)^V$ such that X \preccurlyeq Y, $e \notin supp(Y)$ and $i ∈ (k)$
+ for all $X, Y ∈ (k+1)^V$ such that $X \preccurlyeq Y$, $e \notin supp(Y)$ and $i ∈ (k)$
 
 ### 2.1.2 Marginal Gain Definition
 
@@ -78,7 +79,7 @@ It quantifies the utility or contribution of an element towards improving the ob
 This section provides an overview of the approximation guarantees for maximizing submodular functions subject to cardinality constraints. The table below summarizes some of the notable approximation guarantee algorithms in the literature.
 
 ![approximation_table_2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/0405c199-8f79-41e0-8b68-4c8aac7f0e83)
-*Figure N Comparison of Algorithms* 
+*Figure 2 Comparison of Algorithms* 
 
 Proof of the approximation bound can be found in [paper](https://proceedings.mlr.press/v162/ene22a/ene22a.pdf)
 
@@ -89,7 +90,7 @@ The paper proposes a novel streaming algorithm for maximizing a monotone k-submo
 Algorithm details are as follows:
 
 ![primal_dual_algorithm](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/2a97554e-5f37-4d36-a44b-feb3b3bbb458)
-*Figure N Pseudocode of Algorithm*
+*Figure 3 Pseudocode of Algorithm*
 
 Method uses primal-dual variables to increase the treshold of accepting an item as the marjinal gain decreases over time.
 
@@ -121,13 +122,13 @@ There are two experiments in paper: Influence maximization and sensor placement 
 Although the therotical number of simulations required stated at [Borgs et al, 2014](https://arxiv.org/pdf/1212.0884.pdf), author of the paper did not state anything about whether it is used as number of simulations to approximate the function. In addition, cost of evaluating the function with these number of simulations is very costly, so I used this number R = 100 in order to get a frame about comparision of the algorithms with different budget constraints. Simulation process explained in following figure:
 
 ![build_hypergraph](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/811e5f3e-b03e-4127-9ca1-9b132d982dd2)
-*Figure N Simulation Process of Approximating Influence Function*
+*Figure 4 Simulation Process of Approximating Influence Function*
 
 
 Process uses Independent Cascade Process which can be seen in figure below:
 
 ![icp](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/5e21eaee-3ea4-4cdb-9254-5e6eb9846a9a)
-*Figure N Independent Cascade Process*
+*Figure 5 Independent Cascade Process*
 
 
 **2 Sensor Placement with *k* Measurements:**
@@ -186,7 +187,7 @@ Setup Component | The authors | Us
 ------------ | ------------- | -------------
 B | 1-30 | 1-10
 K | 3,10 | 3 
-D | B*( 2^(1/B) -1) | B( (2^1/B) -1)
+D | $B*( 2^(1/B) -1)$ | $B*( 2^(1/B) -1)$
 R | - | 100
 C | 0.5D | 0.5D
 
@@ -194,32 +195,34 @@ Where B is the budget for all types, R represents the number of simulations proc
 
 Experiment results are as follows:
 
-*Figure 2: Author's Results on Influence Maximization*
 ![Picture1](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/9cb41674-267f-45bd-89d3-69f845f93edf)
+*Figure 6: Author's Results on Influence Maximization*
 
-*Figure 1: My Results on Influence Maximization*
+
 ![inf_max_result](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/ff7834db-204c-4920-992c-e626c086ba5a)
+*Figure 7: My Results on Influence Maximization*
 
 As can be seen on figures, author's results are more smooth and diminishing return of value is more clear. This is due to the choise of number of simulations to approximate the benefit function. Although there is therotical lower bound for R, I could not simulate such times because of computational resource restrictions. Also, author was able to generate the results of different budgets ranging from 1-30 whereas I could reproduce only between 1-10 because as budget constraint increases, computation time also increases linearly. Due to the limited resources, I chose B between 1-10 to see the trend in the value of the function.
 
 **2. Sensor Placement with *k* Different Measurements:**
 
-*Table 3: Parameters for Sensor Placement Problem*
+*Table 2: Parameters for Sensor Placement Problem*
 Setup Component | The authors | Us
 ------------ | ------------- | -------------
 B | 1-30 | 1-30
 K | 3 | 3 
-D |  B*( 2^(1/B) -1) |  B*( 2^(1/B) -1)
+D |  $B*( 2^(1/B) -1)$ |  $B*( 2^(1/B) -1)$
 C | 0.5D | 0.5D
 
 Since the computational resource is enough the reproduce the problem, I used same parameters with author. In this experiment I get similar results as shown below:
 
-*Figure 3: Author's Results on Sensor Placement Problem*
-![Picture2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/c19606b7-b2a6-45cb-a5bb-d55e0e7c08df)
 
-*Figure 1: My Results on Sensor Placement Problem*
+![Picture2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/c19606b7-b2a6-45cb-a5bb-d55e0e7c08df)
+*Figure 8: Author's Results on Sensor Placement Problem*
+
 
 ![Sensor_plc](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/cf93d1b2-b123-44e1-b543-3ecceae38896)
+*Figure 9: My Results on Sensor Placement Problem*
 
 As can be seen on the figures, mine results approaches the greedy solution quicker than the author's. This might be due to strategy to dealing with missing columns in data that author chooses.
 
@@ -245,7 +248,7 @@ To wrap up, I enjoyed reproducing this paper and learned a lot during the proces
 
 - Naoto Ohsaka and Yuichi Yoshida, ["Monotone k-Submodular Function Maximization with Size Constraints," NeurIPS,2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf)
 
--  Yaron Singer "AM 221: Advanced Optimization," Harward University, Available: [http://people.seas.harvard.edu/~yaron/AM221-S16/index.html](http://people.seas.harvard.edu/~yaron/AM221-S16/index.html)
+- Yaron Singer "AM 221: Advanced Optimization," Harward University, Available: [http://people.seas.harvard.edu/~yaron/AM221-S16/index.html](http://people.seas.harvard.edu/~yaron/AM221-S16/index.html)
 
 - David P. Williamson and David B. Shmoys, [*The Design of Approximation Algorithms*. Cambridge University Press, 2010.](http://www.designofapproxalgs.com/)
 

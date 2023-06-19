@@ -78,7 +78,7 @@ It quantifies the utility or contribution of an element towards improving the ob
 
 This section provides an overview of the approximation guarantees for maximizing submodular functions subject to cardinality constraints. The table below summarizes some of the notable approximation guarantee algorithms in the literature.
 
-![approximation_table_2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/0405c199-8f79-41e0-8b68-4c8aac7f0e83)
+![comp_2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/09b00706-ebed-40de-8fe0-f551776feb6e)
 *Figure 2 Comparison of Algorithms* 
 
 Proof of the approximation bound can be found in [paper](https://proceedings.mlr.press/v162/ene22a/ene22a.pdf)

@@ -1,4 +1,4 @@
-# UniVIP: A Unified Framework for Self-Supervised Visual Pre-training [1]
+# UniVIP: A Unified Framework for Self-Supervised Visual Pre-training
 
 This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.edu.tr/~skalkan/ADL/) project for reproducing a paper without an implementation. See [CENG502 (Spring 20223) Project List](https://github.com/CENG502-Projects/CENG502-Spring2023) for a complete list of all paper reproduction projects.
 
@@ -13,7 +13,7 @@ One popular method that tries to learn similar representations for differently a
 
 It can be seen that it is very difficult for these boxes to contain consistent image crops, where the model can learn to relate object parts to the same object. A different approach is necessary here which is aware of multiple objects in varying sizes and the whole scene in general.
 
-The paper UniVIP (CVPR 2022) tries to solve this problem. And this repository tries to reproduce their method based on their descriptions in the paper.
+The paper UniVIP [1] (CVPR 2022) tries to solve this problem. And this repository tries to reproduce their method based on their descriptions in the paper.
 
 
 ## 1.1. Paper summary

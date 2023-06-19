@@ -4,13 +4,15 @@ ItemSage: Learning Product Embeddings for Shopping Recommendations at Pinterest
 
 # 1. Introduction
 
-Paper is published on ACM SIGKDD Conference on Knowledge Discovery and Data Mining in 2022. It proposes a recommender system using multi-modal representation learning. Proposed system uses image and text embeddings to provide better results to Pinterest users. 
+Paper is published on ACM SIGKDD Conference on Knowledge Discovery and Data Mining in 2022. It proposes a recommender system using multi-modal representation learning. Proposed system uses image and text embeddings to provide better results to Pinterest users. It creates a single embedding for each item and gained +7% improvement in key bussiness metrics.
 
-<div style="text-align:center"><img  src="./images/itemsage2.png" alt="itemsage" style="height:400px;"/> </div>
+<div style="text-align:center"><img  src="./images/itemsage3.png" alt="itemsage" style="height:400px;"/> </div>
 
 ## 1.1. Paper summary
 
 Pinterest is an image-based social network. Users can search for content by text queries. System recommends contents according to their interests, log histories and also current image. In order to provide fast and effective recommendations and search results to the users, authors created a multi-modal system. 
+
+At Home surface, users get recommendations according to their past activity. In the Closeup surface, recommendation are provided according to the pin the user currently viewing. In the Search surface, recommendations are created according to the search string. All of the surfaces use the same item embeddings. 
 
 
 <div style="text-align:center"><img src="./images/itemsage1.png" alt="itemsage" style="height:400px;"/></div>
@@ -26,11 +28,11 @@ Image embeddings are taken from PinSage module.
 Text embeddings are produced using hashing trick in order to get rid of high vocabulary volume. They used an embedding table E size of 100.000 x 256. And weight table W size of |V|x2 weights. Numerical values for each token is taken from the vocabularies. Then, hashing trick is used to get 2 embeddings for each text token. 2 embeddings are multiplied with their corresponding weigths and summed. 
 The global variable CLS is passed through a linear layer.
 
-<div style="text-align:center"><img src="./images/itemsage2.png" alt="itemsage" style="height:400px;"/></div>
+<div style="text-align:center"><img src="./images/itemsage2.png" alt="itemsage" style="height:300px;"/></div>
 
 Authors used transformer encoders to get the relationship among embeddings. First, all embeddings including image, text and CLS are processed through a linear layer size of 512 to convert all embeddings to the same dimensions. Then, embeddings are passed through 1-layer transformer encoder. The global embedding, CLS token is used as the output of the transformer encoder. This embedding is passed through a sequential nonlinear GELU layer to obtain the 256 dimension final embedding. 
 Each item is represented by this 256 dimensional embedding. 
-For search through the embeddings, each item is transformed into its corresponding embedding and search is done via ANN search.
+For search through the embeddings, each item is transformed into its corresponding embedding and search is done via Approximate Nearest Neighbour Search.
 
 ## 2.2. Our interpretation 
 

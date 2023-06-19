@@ -90,6 +90,7 @@ The paper proposes a novel streaming algorithm for maximizing a monotone k-submo
 Algorithm details are as follows:
 
 ![primal_dual_algorithm](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/2a97554e-5f37-4d36-a44b-feb3b3bbb458)
+
 *Figure 3 Pseudocode of Algorithm*
 
 Method uses primal-dual variables to increase the treshold of accepting an item as the marjinal gain decreases over time.
@@ -196,10 +197,12 @@ Where B is the budget for all types, R represents the number of simulations proc
 Experiment results are as follows:
 
 ![Picture1](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/9cb41674-267f-45bd-89d3-69f845f93edf)
+
 *Figure 6: Author's Results on Influence Maximization*
 
 
 ![inf_max_result](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/ff7834db-204c-4920-992c-e626c086ba5a)
+
 *Figure 7: My Results on Influence Maximization*
 
 As can be seen on figures, author's results are more smooth and diminishing return of value is more clear. This is due to the choise of number of simulations to approximate the benefit function. Although there is therotical lower bound for R, I could not simulate such times because of computational resource restrictions. Also, author was able to generate the results of different budgets ranging from 1-30 whereas I could reproduce only between 1-10 because as budget constraint increases, computation time also increases linearly. Due to the limited resources, I chose B between 1-10 to see the trend in the value of the function.
@@ -218,10 +221,12 @@ Since the computational resource is enough the reproduce the problem, I used sam
 
 
 ![Picture2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/c19606b7-b2a6-45cb-a5bb-d55e0e7c08df)
+
 *Figure 8: Author's Results on Sensor Placement Problem*
 
 
 ![Sensor_plc](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/cf93d1b2-b123-44e1-b543-3ecceae38896)
+
 *Figure 9: My Results on Sensor Placement Problem*
 
 As can be seen on the figures, mine results approaches the greedy solution quicker than the author's. This might be due to strategy to dealing with missing columns in data that author chooses.

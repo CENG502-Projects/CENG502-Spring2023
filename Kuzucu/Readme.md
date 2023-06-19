@@ -79,7 +79,7 @@ Figure 2. The pseudocode for the EULC module of the proposed framework
 
 where $\hat{v}_i(;)$ stands for the $i^{th}$ logit, $\delta^{x_i}$ stands for the instance-dependent noise factor and $\delta^y$ stands for the class-dependent noise factor.
 
-- Then, these corrupted logits are passed through a softmax layer to obtain output proabilities:
+- Then, these corrupted logits are passed through a softmax layer to obtain output probabilities:
 
 <p align="center">
   $\hat{y_i} = softmax(\delta^{x_i}(W) + \delta^y f_{W}(x_i))$
@@ -191,6 +191,7 @@ Table 1. Synthetic CIFAR-10 Results of ULC compared to other well-known methods 
 
 Table 2. Synthetic CIFAR-10 Results w/ Symmetric Noise of Reproduction ULC
 
+The reproduced results are not significantly different (albeit a lit lower) from the reported results for the synthetic CIFAR-10 settings with low corruption percentages. However, for the high corruption percentages, the reproduced results significantly differ from the reported ones. One reason as to why might that be the case is that the authors perform tuning with different hyperparameters, such as trying different $\lambda_u$ values (specifically $[0, 25, 50, 100]$) for these experiments. Since I did not have the computational resources to tune for those, this implementation directly uses the default settings for all of the experiments, e.g $\lambda_u = 25$ for all. Another possible reason might be due to the non-deterministic nature of the proposed framework, particularly due to the usage of MC Dropout [4] with $T=10$, instead of the recommended $T \in [30, 100]$, forward passes for each sample.
 
 
 
@@ -202,12 +203,14 @@ Table 3. Synthetic Imbalanced CIFAR-10 Results of ULC compared to other well-kno
 
 | CIFAR-10 (Sym.)     | 1:5 & 20%  | 1:5 & 50%  | 1:10 & 20%  | 1:10 & 50%  |
 |---------------------|------------|------------|-------------|-------------|
-| ULC-Reprod. (Best)  |            |            |             |             |
-| ULC-Reprod. (Last)  |            |            |             |             |
+| ULC-Reprod. (Best)  |   94.1     |     92.2   |       94.0  |        90.6 |
+| ULC-Reprod. (Last)  |   93.7     |     91.3   |       93.9  |        89.9 |
 
 
 Table 4.  Synthetic Imbalanced CIFAR-10 Results w/ Symmetric Noise of Reproduction ULC
 
+
+For the imbalanced results, the reproduced results are not significantly different (albeit a lit lower) from the reported results for the imbalanced synthetic CIFAR-10 settings. For the settings with higher corruption percentages and worse imbalance ratios, the gap between the reported and reproduced increases. To reiterate, one reason as to why might that be the case is that the authors perform tuning with different hyperparameters, such as trying different $\lambda_u$ values (specifically $[0, 25, 50, 100]$) for these experiments. Since I did not have the computational resources to tune for those, this implementation directly uses the default settings for all of the experiments, including for these imbalanced experiments, e.g $\lambda_u = 25$ for all. Another possible reason might be due to the non-deterministic nature of the proposed framework, particularly due to the usage of MC Dropout [4] with $T=10$, instead of the recommenned $T \in [30, 100]$ forward passes for each sample.
 
 
 # 4. Conclusion

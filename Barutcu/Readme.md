@@ -229,7 +229,7 @@ Since the computational resource is enough the reproduce the problem, I used sam
 
 *Figure 9: My Results on Sensor Placement Problem*
 
-As can be seen on the figures, mine results approaches the greedy solution quicker than the author's. This might be due to strategy to dealing with missing columns in data that author chooses.
+As can be seen on the figures, mine results approaches the greedy solution quicker than the author's. This might be due to strategy to dealing with missing columns in data and order of the arrival of the items. 
 
 # 4. Conclusion
 

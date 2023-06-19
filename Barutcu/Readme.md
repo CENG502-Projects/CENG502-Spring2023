@@ -169,10 +169,11 @@ Directory structure
 - sensor_placement.ipynb file contains the sensor placement experiment with data preprocessing functions k-greedy algorithm implementation
 
 ### 3.2.1 Create Environment
-**conda create (env_name)**
+conda create -n (env_name)
+conda activate env_name
 
 ### 3.2.2 Install Dependencies
-**pip install -r requirements.txt**
+pip install -r requirements.txt
 
 ### 3.2.3 Running the Experiments
 Cells in jupyter notebooks can sequencially be run to reproduce the results.

@@ -35,8 +35,16 @@ The main goal of deep feature learning is to learn discriminative feature space 
 ![Figure 2](./image/seq_mnist.png)
 <img width="720" alt="seq_mnist" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/seq_mnist.PNG">
 
+To better illustrate the proposed method, they build a simulated sequence recognition dataset named Seq-MNIST using the above scheme. They interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. 
+
+Then, they used a modified version of LeNet which is LeNet++(a deeper and wider network) for the feature extraction. LeNet takes an input x=(x1,x2,..,xT) and returns frame-wise features v=(v1, v2,..., vT). After that it goes through a fully connected layer and softmax. Fully connected layer has number of labels + 1 out put values for the "blank" token which is used in CTC. With the help of an extra ‘blank’ class, CTC defines a many-to-one mapping to align the alignment path π and its corresponding labeling l. This mapping is achieved by successively removing
+the repeated labels and blanks in the path. For example, B(-aaa--aabbb-) =
+B(-a-ab-) = aab. The posterior probability of the labeling can be calculated by:
+
 ![Figure 3](./image/ffr.png)
 <img width="256" alt="ffr" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ffr.PNG">
+
+
 
 ![Figure 4](./image/prob.png)
 <img width="256" alt="prob" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/prob.PNG">
@@ -74,6 +82,9 @@ The main goal of deep feature learning is to learn discriminative feature space 
 
 
 ## 2.2. Our interpretation 
+![Figure 13](./image/my_mnist_seq.png)
+<img width="720" alt="my_mnist_seq" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/my_mnist_seq.PNG">
+
 
 @TODO: Explain the parts that were not clearly explained in the original paper and how you interpreted them.
 

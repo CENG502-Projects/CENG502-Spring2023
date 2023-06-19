@@ -29,8 +29,35 @@ The main goal of deep feature learning is to learn discriminative feature space 
 # 2. The method and my interpretation
 
 ## 2.1. The original method
-![Figure 1](./image/seq_mnist.png)
-<img width="720" alt="seq_mnist">
+![Figure 1](./image/framework.png)
+<img width="720" alt="framework" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/framework.PNG">
+
+![Figure 2](./image/seq_mnist.png)
+<img width="720" alt="seq_mnist" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/seq_mnist.PNG">
+
+![Figure 3](./image/ffr.png)
+<img width="256" alt="ffr" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ffr.PNG">
+
+![Figure 4](./image/prob.png)
+<img width="256" alt="prob" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/prob.PNG">
+
+![Figure 5](./image/dist_freatures.png)
+<img width="720" alt="dist_freatures" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/dist_freatures.PNG">
+
+![Figure 6](./image/ctc_loss.png)
+<img width="720" alt="ctc_loss" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ctc_loss.PNG">
+
+![Figure 7](./image/dist_center.png)
+<img width="720" alt="dist_center" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/dist_center.PNG">
+
+![Figure8](./image/radial_fba.png)
+<img width="400" alt="radial_fba" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_fba.PNG">
+
+
+![Figure 9](./image/ang_per_grp.png)
+<img width="720" alt="ang_per_grp" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ang_per_grp.PNG">
+
+
 
 @TODO: Explain the original method.
 

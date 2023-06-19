@@ -190,10 +190,24 @@ for s = S-1 to 0:
 
 Similarly, β(s,t)=0 for all s>2t which corresponds to the unconnected boxes in the bottom-left.
 
+CTC Loss calculation for each timestep:
+
+γ(s,t)=α(s,t)β(s,t)
+
+P(seqt,t)=∑s=0,S γ(s,t)/y(s,t)
+
+loss=-∑t=0,T-1  ln(P(seqt,t))
 
 
+RadialCTC:
 
-@TODO: Explain the parts that were not clearly explained in the original paper and how you interpreted them.
+Then, loss as -∑t=0,T-1 ∑s=0,S ln(γ(s,t)/y(s,t))*z(s,t).
+
+But for the calculation of z the paper mentions an s value which is different then the state s above like the fourier series s. I did not understand what to put for s. So, I could not test the radialCTC part.
+
+I added angular ragularization. 
+
+
 
 # 3. Experiments and results
 

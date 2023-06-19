@@ -24,7 +24,7 @@ Each item is represented by 12 text embeddings including title, color etc and at
 
 ## 2.1. The original method
 
-Image embeddings are taken from PinSage module. 
+Image embeddings are taken from PinSage [1] module. 
 Text embeddings are produced using hashing trick in order to get rid of high vocabulary volume. They used an embedding table E size of 100.000 x 256. And weight table W size of |V|x2 weights where V is the vocabulary size. Numerical values for each token is taken from the vocabularies. Then, hashing trick is used to get 2 embeddings for each text token. 2 embeddings are multiplied with their corresponding weigths and summed. 
 The global variable CLS is passed through a linear layer.
 
@@ -32,7 +32,7 @@ The global variable CLS is passed through a linear layer.
 
 Authors used transformer encoders to get the relationship among embeddings. First, all embeddings including image, text and CLS are processed through a linear layer size of 512 to convert all embeddings to the same dimensions. Then, embeddings are passed through 1-layer transformer encoder. The global embedding, CLS token is used as the output of the transformer encoder. This embedding is passed through a sequential nonlinear GELU layer to obtain the 256 dimension final embedding. 
 Each item is represented by this 256 dimensional embedding. 
-For search through the embeddings, each item is transformed into its corresponding embedding and search is done via Approximate Nearest Neighbour Search.
+For search through the embeddings, each item is transformed into its corresponding embedding and search is done via Approximate Nearest Neighbour Search [2].
 
 ## 2.2. Our interpretation 
 
@@ -62,7 +62,9 @@ We did not have a dataset that is used by Pinterest which has around 20 photos p
 
 # 5. References
 
-@TODO: Provide your references here.
+[1] Rex Ying, Ruining He, Kaifeng Chen, Pong Eksombatchai, William L Hamilton, and Jure Leskovec. 2018. Graph convolutional neural networks for web-scale recommender systems. In Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. 974–983.
+
+[2] Yen-Chun Chen, Linjie Li, Licheng Yu, Ahmed El Kholy, Faisal Ahmed, Zhe Gan, Yu Cheng, and Jingjing Liu. 2019. Uniter: Learning universal image-text representations. (2019).
 
 # Contact
 

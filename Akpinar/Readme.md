@@ -12,15 +12,21 @@ A well-liked goal function in sequence recognition called Connectionist Temporal
 1.1.1. Contributions
 
 -Putting out the RadialCTC, which keeps the CTC's iterative alignment mechanism while constraining sequence characteristics to a hypersphere. The characteristics of non-blank classes are dispersed around the center of the blank class in radial arcs.
+
 -Proposing a straightforward angular perturbation term that can consistently supervise all sequence data while taking the sequence-wise angular distribution into account in order to control the peaky behavior.
+
 -Conducting thoughtful experiments about the interaction between localization and recognition. The usefulness of RadialCTC, which delivers competitive performance on two sequence recognition applications and may also offer configurable event boundaries, is demonstrated by experimental data.
 
 1.1.2. Important consepts
 
 CTC is proposed to provide supervision for unsegmented sequence data, which has shown advantages in many sequence recognition tasks. A controversial characteristic of CTC is its spike phenomenon. Networks trained with CTC will conservatively predict a series of spikes.
+
 Liu et al. [5] propose a entropy-based regularization method to penalize the peaky distribution and encourage exploration. 
+
 Min et al. [6] propose a visual alignment constraint to enhance feature extraction before the powerful temporal module. Adding constraints on the CTC-based framework can alleviate the overfitting problem. However, the peaky behavior still exists, and it is hard to provide clear event boundaries.
+
 Many works  try to understand the peaky behavior of CTC. Earlier speech recognition works interpret CTC as a special kind of Hidden Markov Model [7], which is trained with the Baum-Welch soft alignment algorithm, and the alignment result is updated at each iteration. Some recent works leverage this iterative fitting characteristic and extend the spiky activations to get better recognition performance. 
+
 However, these methods change the pseudo label at each iteration manually and may break the continuity of the sequence feature.
 Similar work to RadialCTC is [8], where the authors find that the peaky behavior is a property of local convergence, and the peaky behavior can be suboptimal. Different to [8], authors constrain sequence features on a hypersphere and control the peaky behavior with an angular perturbation term.
 
@@ -37,14 +43,12 @@ The main goal of deep feature learning is to learn discriminative feature space 
 
 To better illustrate the proposed method, they build a simulated sequence recognition dataset named Seq-MNIST using the above scheme. They interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. 
 
-Then, they used a modified version of LeNet which is LeNet++(a deeper and wider network) for the feature extraction. LeNet takes an input x=(x1,x2,..,xT) and returns frame-wise features v=(v1, v2,..., vT). After that it goes through a fully connected layer and softmax. Fully connected layer has number of labels + 1 out put values for the "blank" token which is used in CTC. With the help of an extra ‘blank’ class, CTC defines a many-to-one mapping to align the alignment path π and its corresponding labeling l. This mapping is achieved by successively removing
-the repeated labels and blanks in the path. For example, B(-aaa--aabbb-) =
-B(-a-ab-) = aab. The posterior probability of the labeling can be calculated by:
-
 ![Figure 3](./image/ffr.png)
 <img width="256" alt="ffr" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ffr.PNG">
 
-
+Then, they used a modified version of LeNet which is LeNet++(a deeper and wider network) for the feature extraction. LeNet takes an input x=(x1,x2,..,xT) and returns frame-wise features v=(v1, v2,..., vT). After that it goes through a fully connected layer and softmax. Fully connected layer has number of labels + 1 out put values for the "blank" token which is used in CTC. With the help of an extra ‘blank’ class, CTC defines a many-to-one mapping to align the alignment path π and its corresponding labeling l. This mapping is achieved by successively removing
+the repeated labels and blanks in the path. For example, B(-aaa--aabbb-) =
+B(-a-ab-) = aab. The posterior probability of the labeling can be calculated by:
 
 ![Figure 4](./image/prob.png)
 <img width="256" alt="prob" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/prob.PNG">
@@ -52,14 +56,43 @@ B(-a-ab-) = aab. The posterior probability of the labeling can be calculated by:
 ![Figure 5](./image/dist_freatures.png)
 <img width="720" alt="dist_freatures" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/dist_freatures.PNG">
 
+The frame-wise features v visualized above after training the model with CTC. we can observe that: 
+
+(1) after training with CTC, the framewise features are separable among non-blank classes, but the decision boundary between non-blank classes and the blank class is pretty complicated,
+
+(2) over half of the features are classified to the blank class, which is corresponding to the peaky behavior of CTC, and features of the blank class have a large intraclass variance, and 
+
+(3) although some transition frames are pretty similar to the keyframe, they are classified to the blank class.
+
+
 ![Figure 6](./image/ctc_loss.png)
 <img width="720" alt="ctc_loss" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ctc_loss.PNG">
-
+Normalization: the learned features with supervision from CTC have large intra-class variance, especially on the blank class, and the decision boundary between the blank class and non-blank classes is not clear. The vanilla CTC takes the inner distance between features and weights as input and provides little constraint on the alignment process. To learn a more separable feature space, we normalize both the features and weights and constrain the learned features on a hypersphere, which has been proven a practical approach in face recognition. As shown above, After constraining all features on the hypersphere, the search space of the alignment process is reduced considerably, and features are distributed along several disjoint paths from the center of the
+blank class.
 ![Figure 7](./image/dist_center.png)
 <img width="720" alt="dist_center" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/dist_center.PNG">
 
+Angle regularization: any frames between two non-blank keyframes can be classified into the blank class. Therefore, any transition trajectory between two non-blank keyframes will go through the decision region of the blank class. To enhance the discriminative and generalization ability of the model, they propose an angle regularization term to minimize the distance between Wb^T.Wnb and a given value cos(β).
+
+Center regularization: They only apply center regularization on keyframes set KF(v), which is implemented by first estimating the alignment path π = arg maxπ p(π|v,l; θ) with the maximal probability and then minimizing the distance between features of keyframes in π and their corresponding classes.
+
+The conservative supervision from CTC only classified a small ratio of frames to non-blank classes, but we can observe from Fig. 4(b) that features of the blank class are also clustered into several groups, which are distributed along the disjoint arcs to the centers of non-blank classes. This observation raises two questions: 
+
+(1) can we obtain accurate localization information from CTC, and
+
+(2) what is the relationship between the recognition and localization abilities of the model trained with CTC?
+
 ![Figure8](./image/vanilla_fba.png)
 <img width="400" alt="vanilla_fba" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/vanilla_fba.PNG">
+
+The role of the angular margin: Adopting an angular/cosine-margin based constraint is popular in deep feature learning, which can make learned features more discriminative by adding a margin term in softmax loss. 
+
+
+The frame-wise gradient of CTC has the same formulation as the CrossEntropy (CE) loss, and the optimization of CTC is equivalent to iterative fitting [22]. However, the pseudo label ytk is calculated by considering probabilities of all feasible paths. In other words, changes in the logit also influence the probabilities of relevant paths, and adding a margin term on one frame also changes the pseudo labels of its neighboring frames.
+
+RadialCTC:
+
+Adopting an angular perturbation term can change the pseudo label, which provides a valuable tool to control the peaky behavior. 
 
 
 ![Figure 9](./image/ang_per_grp.png)

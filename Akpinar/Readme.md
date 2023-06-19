@@ -18,11 +18,11 @@ A well-liked goal function in sequence recognition called Connectionist Temporal
 1.1.2. Important consepts
 
 CTC is proposed to provide supervision for unsegmented sequence data, which has shown advantages in many sequence recognition tasks. A controversial characteristic of CTC is its spike phenomenon. Networks trained with CTC will conservatively predict a series of spikes.
-Liu et al. [23] propose a entropy-based regularization method to penalize the peaky distribution and encourage exploration. 
-Min et al. [29] propose a visual alignment constraint to enhance feature extraction before the powerful temporal module. Adding constraints on the CTC-based framework can alleviate the overfitting problem. However, the peaky behavior still exists, and it is hard to provide clear event boundaries.
-Many works  try to understand the peaky behavior of CTC. Earlier speech recognition works interpret CTC as a special kind of Hidden Markov Model [33], which is trained with the Baum-Welch soft alignment algorithm, and the alignment result is updated at each iteration. Some recent works leverage this iterative fitting characteristic and extend the spiky activations to get better recognition performance. 
+Liu et al. [5] propose a entropy-based regularization method to penalize the peaky distribution and encourage exploration. 
+Min et al. [6] propose a visual alignment constraint to enhance feature extraction before the powerful temporal module. Adding constraints on the CTC-based framework can alleviate the overfitting problem. However, the peaky behavior still exists, and it is hard to provide clear event boundaries.
+Many works  try to understand the peaky behavior of CTC. Earlier speech recognition works interpret CTC as a special kind of Hidden Markov Model [7], which is trained with the Baum-Welch soft alignment algorithm, and the alignment result is updated at each iteration. Some recent works leverage this iterative fitting characteristic and extend the spiky activations to get better recognition performance. 
 However, these methods change the pseudo label at each iteration manually and may break the continuity of the sequence feature.
-Similar work to ours is [44], where the authors find that the peaky behavior is a property of local convergence, and the peaky behavior can be suboptimal. Different to [44], we constrain sequence features on a hypersphere and control the peaky behavior with an angular perturbation term.
+Similar work to RadialCTC is [8], where the authors find that the peaky behavior is a property of local convergence, and the peaky behavior can be suboptimal. Different to [8], authors constrain sequence features on a hypersphere and control the peaky behavior with an angular perturbation term.
 
 The main goal of deep feature learning is to learn discriminative feature space with proper supervision. In some fine-grained image classification tasks  an important technical route is to learn strong discriminative features by improving the conventional softmax loss.
 
@@ -57,13 +57,21 @@ The main goal of deep feature learning is to learn discriminative feature space 
 # 5. References
 
 [1] Y. Min et al., “Deep radial embedding for visual sequence learning,” Lecture Notes in Computer Science, pp. 240–256, 2022. doi:10.1007/978-3-031-20068-7_14 
+
 [2] Graves, A., Fern´andez, S., Gomez, F., Schmidhuber, J.: Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks. In: Proceedings of International Conference on Machine Learning. pp. 369–376 (2006)
+
 [3] Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016)
+
 [4] S. Ogun, “Breaking down the CTC loss,” Sitewide ATOM, https://ogunlao.github.io/blog/2020/07/17/breaking-down-ctc-loss.html (accessed Jun. 19, 2023). 
 
+[5] Liu, H., Jin, S., Zhang, C.: Connectionist temporal classification with maximum entropy regularization. Advances in Neural Information Processing Systems 31,
+831–841 (2018)
 
+[6] Min, Y., Hao, A., Chai, X., Chen, X.: Visual alignment constraint for continuous sign language recognition. In: Proceedings of the IEEE International Conference on Computer Vision. pp. 11542–11551 (2021)
 
+[7] Rabiner, L.R.: A tutorial on hidden markov models and selected applications in speech recognition. Proceedings of the IEEE 77(2), 257–286 (1989)
 
+[8] Zeyer, A., Schl¨uter, R., Ney, H.: Why does ctc result in peaky behavior? arXiv preprint arXiv:2105.14849 (2021)
 
 # Contact
 

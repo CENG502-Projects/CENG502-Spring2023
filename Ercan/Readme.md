@@ -25,7 +25,7 @@ Each item is represented by 12 text embeddings including title, color etc and at
 ## 2.1. The original method
 
 Image embeddings are taken from PinSage module. 
-Text embeddings are produced using hashing trick in order to get rid of high vocabulary volume. They used an embedding table E size of 100.000 x 256. And weight table W size of |V|x2 weights. Numerical values for each token is taken from the vocabularies. Then, hashing trick is used to get 2 embeddings for each text token. 2 embeddings are multiplied with their corresponding weigths and summed. 
+Text embeddings are produced using hashing trick in order to get rid of high vocabulary volume. They used an embedding table E size of 100.000 x 256. And weight table W size of |V|x2 weights where V is the vocabulary size. Numerical values for each token is taken from the vocabularies. Then, hashing trick is used to get 2 embeddings for each text token. 2 embeddings are multiplied with their corresponding weigths and summed. 
 The global variable CLS is passed through a linear layer.
 
 <div style="text-align:center"><img src="./images/itemsage2.png" alt="itemsage" style="height:400px;"/></div>

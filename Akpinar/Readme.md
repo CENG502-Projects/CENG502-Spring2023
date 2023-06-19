@@ -85,7 +85,8 @@ The main goal of deep feature learning is to learn discriminative feature space 
 
 ## 3.2. Running the code
 
-@TODO: Explain your code & directory structure and how other people can run it.
+
+Our main file is `main.ipynb` where we declare step by step code cells to run our code. 
 
 ## 3.3. Results
 

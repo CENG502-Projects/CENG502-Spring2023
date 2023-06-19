@@ -132,14 +132,63 @@ I constructed the Seq-MNIST, interpolate with alpha=9 and add 5 frames to the be
 ![Figure 14](./image/my_mnist_seq.png)
 <img width="720" alt="my_mnist_seq" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/my_mnist_seq.PNG">
 
-Then, I constructed LeNets++ from Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016) with below parameters. Some of the convolution layers are followed by max pooling. (5, 32)/1,2 × 2 denotes 2 cascaded convolution layers with 32 filters of size 5 × 5, where the stride and padding are 1 and 2 respectively. 2/2,0 denotes the max-pooling layers with grid of 2 ×2, where the stride and padding are 2 and 0 respectively. In LeNets++, we use the Parametric Rectified Linear Unit (PReLU) as the nonlinear unit. Where to use PReLu was not clear so I used it after every conv and fc layers.
-
+Then, I constructed LeNets++ from Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016) with below parameters. Some of the convolution layers are followed by max pooling. (5, 32)/1,2 × 2 denotes 2 cascaded convolution layers with 32 filters of size 5 × 5, where the stride and padding are 1 and 2 respectively. 2/2,0 denotes the max-pooling layers with grid of 2×2, where the stride and padding are 2 and 0 respectively. In LeNets++, we use the Parametric Rectified Linear Unit (PReLU) as the nonlinear unit. Where to use PReLu was not clear so I used it after every conv and fc layers(in=2048,out=3).
 
 ![Figure 14](./image/lenetpp.png)
 <img width="720" alt="lenetpp" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/lenetpp.PNG">
 
+For the output layer, I used 3 as our paper for 3D feature map. the output goes through a fc(in=3,out=11) and softmax. I return feature v for plotting. 
 
+For the CTC implementation, follow the explanation from [4] which is based on [2]
 
+I get a vector, which has the length of vocabulary, for each time step of LeNets++ computation. The softmax function is applied to it to get a vector of probabilities. I exclude all rows that do not include tokens from the target sequence and then rearrange the tokens to form the output sequence. This is done during training only. If a token occur multiple times in the label, we repeat the rows for similar tokens in their appropriate location. This becomes our probability matrix,  y(s,t) like the "door" example below.
+
+![Figure 15](./image/door.png)
+<img width="720" alt="door" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/door.PNG">
+
+Forward Algorithm for computing  α(s,t):
+
+First, let’s create a matrix of zeros of same shape as our probability matrix, y(s,t) to store our α values. The forward algorithm is given by;
+
+Initialize:
+
+α-mat = zeros_like(y-mat)
+
+α(0,0)=y(0,0),α(1,0)=y(1,0)
+
+α(s,0)=0 for s>1
+
+Iterate forward:
+
+for t = 1 to T-1:
+
+for s = 0 to S:
+
+α(s,t)=(α(s,t−1)+α(s−1,t−1))y(s,t) if seq(s)=“ε” or seq(s) = seq(s-2)
+
+α(s,t)=(α(s,t−1)+α(s−1,t−1)+α(s−2,t−2))y(s,t) otherwise
+
+Note that α(s,t)=0 for all s<S−2(T−t)−1 which corresponds to the unconnected boxes in the top-right. These variables correspond to states for which there are not enough time-steps left to complete the sequence.
+
+Backward algorithm for computing β(s,t):
+
+Let’s also create a matrix of zeros of same shape as our probability matrix, y(s,t) to store our β values.
+
+Initialize:
+
+β(S−1,T−1)=1, β(S−2,T−1)=1,
+
+β(s,T−1)=0 for s<S−2
+
+Iterate backward:
+
+for t = T-2 to 0:
+for s = S-1 to 0:
+β(s,t)=β(s,t+1)y(s,t)+β(s+1,t+1)y(s+1,t) if seq(s)=“ε” or seq(s)=seq(s+2)
+
+β(s,t)=β(s,t+1)y(s,t)+β(s+1,t+1)y(s+1,t)+β(s+2,t+2))y(s+2,t) otherwise
+
+Similarly, β(s,t)=0 for all s>2t which corresponds to the unconnected boxes in the bottom-left.
 
 
 

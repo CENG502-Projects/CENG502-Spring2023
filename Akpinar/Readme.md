@@ -94,28 +94,39 @@ RadialCTC:
 
 Adopting an angular perturbation term can change the pseudo label, which provides a valuable tool to control the peaky behavior. 
 
+They try to control the peaky behavior of CTC by perturbing blank logits of all frames with a sequence-dependent term. As the decision boundaries between the blank class and non-blank classes are similar, they look into the decision criteria of softmax in the binary case.
+After normalizing both features and weights and ignoring the bias term, the decision boundary between the blank class b and a non-blank class nb is θ1 = θ2.
 
 ![Figure 9](./image/ang_per_grp.png)
 <img width="720" alt="ang_per_grp" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ang_per_grp.PNG">
 
+To control the peaky behavior flexibly, they propose a radial constraint that is implemented by adding an angular perturbation term m(η, θ,l) between v and Wb and adopt the pseudo label of the perturbed logits to provide supervision for the original logits. given visual features v = (v1, · · · , vT ) and its corresponding labeling l = (l1, · · · , lU ), they find the frame vτ which has the kth (k = U + 1 + ⌊(T − U) ∗ η⌋) largest angular difference between the blank class and the class with the highest probability that has appeared in the labeling. 
+
+This process can be formulated as:
+
 ![Figure 10](./image/m.png)
 <img width="256" alt="m" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/m.PNG">
+
+calculate the perturbed prediction z as below:
 
 ![Figure 11](./image/z.png)
 <img width="720" alt="z" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/z.PNG">
 
-![Figure 12](./image/radial_fba.png)
-<img width="720" alt="radial_fba" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_fba.PNG">
+and The loss can be calculated as below:
 
 ![Figure 12](./image/radial_fba.png)
 <img width="720" alt="radial_fba" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_fba.PNG">
 
-![Figure 12](./image/radial_loss.png)
+As the proposed method adjust the blank ratio based on ‘radial’ feature distribution, we named this method RadialCTC. 
+
+The entire process can be formulated as:
+
+![Figure 13](./image/radial_loss.png)
 <img width="720" alt="radial_loss" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_loss.PNG">
 
 
 ## 2.2. Our interpretation 
-![Figure 13](./image/my_mnist_seq.png)
+![Figure 14](./image/my_mnist_seq.png)
 <img width="720" alt="my_mnist_seq" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/my_mnist_seq.PNG">
 
 

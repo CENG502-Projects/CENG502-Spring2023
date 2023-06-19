@@ -1,4 +1,4 @@
-# Paper title [@TODO: Change]
+# CTIN: Robust Contextual Transformer Network for Inertial Navigation
 
 This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.edu.tr/~skalkan/ADL/) project for reproducing a paper without an implementation. See [CENG502 (Spring 20223) Project List](https://github.com/CENG502-Projects/CENG502-Spring2023) for a complete list of all paper reproduction projects.
 
@@ -109,6 +109,7 @@ In this project the implementation of the CTIN paper is provided. The implementa
 # 5. References
 
 [1] [Rao, B., Kazemi, E., Ding, Y., Shila, D. M., Tucker, F. M., & Wang, L. (2022, June). CTIN: Robust contextual transformer network for inertial navigation. In Proceedings of the AAAI Conference on Artificial Intelligence (Vol. 36, No. 5, pp. 5413-5421).](https://ojs.aaai.org/index.php/AAAI/article/download/20479/20238)
+
 [2] [Herath, S., Yan, H. and Furukawa, Y., 2020, May. RoNIN: Robust Neural Inertial Navigation in the Wild: Benchmark, Evaluations, & New Methods. In 2020 IEEE International Conference on Robotics and Automation (ICRA) (pp. 3146-3152). IEEE.](https://ieeexplore.ieee.org/abstract/document/9196860)
 
 

@@ -2,6 +2,8 @@
 
 ItemSage: Learning Product Embeddings for Shopping Recommendations at Pinterest
 
+first try
+
 # 1. Introduction
 
 @TODO: Introduce the paper (inc. where it is published) and describe your goal (reproducibility).

@@ -79,7 +79,7 @@ This section provides an overview of the approximation guarantees for maximizing
 
 ![approximation_table_2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/0405c199-8f79-41e0-8b68-4c8aac7f0e83)
 
-Proof of the approximation bound can be found in [paper] (https://proceedings.mlr.press/v162/ene22a/ene22a.pdf)
+Proof of the approximation bound can be found in [paper](https://proceedings.mlr.press/v162/ene22a/ene22a.pdf)
 
 ### 2.1.4 Proposed Algorithm
 
@@ -95,9 +95,9 @@ Method uses primal-dual variables to increase the treshold of accepting an item 
 
 Although the algorithm is well defined in the paper, some of the aspects are problem dependent. Those are:
 
-**1. Definition of Function:** Problem related function should be defined in order to reflect of the benefits of any combination of elements. In the paper, there are two different experiment settings which both have different evalution functions. For influence maximization problem, function evaluation is very costly even on a small subset of elements. To overcome this, benefit function is approximated according to method proposed by [Borgs et al, 2014] (https://arxiv.org/pdf/1212.0884.pdf)
+**1. Definition of Function:** Problem related function should be defined in order to reflect of the benefits of any combination of elements. In the paper, there are two different experiment settings which both have different evalution functions. For influence maximization problem, function evaluation is very costly even on a small subset of elements. To overcome this, benefit function is approximated according to method proposed by [Borgs et al, 2014](https://arxiv.org/pdf/1212.0884.pdf)
 
-**2. Marginal Benefit of Adding an element to Existing Set:** Marginal benefit determines the whether incoming element should be added to existing element set S. It is very critical to design marginal benefit function to reflect the gain of the element. Function is problem dependent and should be designed carefully. For influence maximization problem in paper, there are no clear statements as to how this function is design. I referred another research [Youze et al, 2015] (https://dl.acm.org/doi/10.1145/2723372.2723734) to determine the marginal benefit as the difference of the  values sets in approximated function R that are covered by a node
+**2. Marginal Benefit of Adding an element to Existing Set:** Marginal benefit determines the whether incoming element should be added to existing element set S. It is very critical to design marginal benefit function to reflect the gain of the element. Function is problem dependent and should be designed carefully. For influence maximization problem in paper, there are no clear statements as to how this function is design. I referred another research [Youze et al, 2015](https://dl.acm.org/doi/10.1145/2723372.2723734) to determine the marginal benefit as the difference of the  values sets in approximated function R that are covered by a node
 set S.
 
 **3. Dealing with Missing Values in Dataset:** In sensor placement problem, There are missing rows related to humidity, light condition and temperature columns. Since strategy of dealing with missing values are not clearly stated in paper, I chose my own method that I eliminated all missing rows in the dataset which is about 400.000 rows of data in total dataset.
@@ -111,12 +111,12 @@ There are two experiments in paper: Influence maximization and sensor placement 
 **1. Influence Maximization with *k* topics:** In this experiment, we aim to maximize influence in a social network with multiple topics of interest. The objective is to identify a set of influential nodes that can maximize the spread of information or influence across the network for each topic. The experiment involves the following steps:
 
 1. Constructing directed network graph from undirected edges in Facebook SNAP dataset.
-2. Approximating the influence function proposed by [Borgs et al, 2014] (https://arxiv.org/pdf/1212.0884.pdf) with approximation guarentee lowerbound number of simulations O(nk^2log(n)log(k)) where k is number of topics and n is number of nodes in grapgh using k-Independent Cascade Process proposed by [Ohsaka & Yoshida, 2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf)
+2. Approximating the influence function proposed by [Borgs et al, 2014](https://arxiv.org/pdf/1212.0884.pdf) with approximation guarentee lowerbound number of simulations O(nk^2log(n)log(k)) where k is number of topics and n is number of nodes in grapgh using k-Independent Cascade Process proposed by [Ohsaka & Yoshida, 2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf)
 3. Applying the proposed influence maximization algorithm, leveraging the k-submodular framework, to identify the most influential nodes for each topic.
 4. Comparing the performance of the algorithm with k-greedy algorithm proposed by [Ohsaka & Yoshida, 2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf).
 5. Evaluating the values of the methods ranging between different budget constraints.
 
-Although the therotical number of simulations required stated at [Borgs et al, 2014] (https://arxiv.org/pdf/1212.0884.pdf), author of the paper did not state anything about whether it is used as number of simulations to approximate the function. In addition, cost of evaluating the function with these number of simulations is very costly, so I used this number R = 100 in order to get a frame about comparision of the algorithms with different budget constraints. Simulation process explained in following figure:
+Although the therotical number of simulations required stated at [Borgs et al, 2014](https://arxiv.org/pdf/1212.0884.pdf), author of the paper did not state anything about whether it is used as number of simulations to approximate the function. In addition, cost of evaluating the function with these number of simulations is very costly, so I used this number R = 100 in order to get a frame about comparision of the algorithms with different budget constraints. Simulation process explained in following figure:
 
 ![build_hypergraph](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/811e5f3e-b03e-4127-9ca1-9b132d982dd2)
 *Figure N Simulation Process of Approximating Influence Function*
@@ -183,7 +183,7 @@ Setup Component | The authors | Us
 ------------ | ------------- | -------------
 B | 1-30 | 1-10
 K | 3,10 | 3 
-D | B(2^1/B^-1) | B(2^1/B^-1)
+D | B*(2^1/B^-1) | B*(2^1/B^-1)
 R | - | 100
 C | 0.5D | 0.5D
 
@@ -206,7 +206,7 @@ Setup Component | The authors | Us
 ------------ | ------------- | -------------
 B | 1-30 | 1-30
 K | 3 | 3 
-D | B(2^1/B^-1) | B(2^1/B^-1)
+D | B(2 ^1/B^ -1) | B(2 ^1/B^ -1)
 C | 0.5D | 0.5D
 
 Since the computational resource is enough the reproduce the problem, I used same parameters with author. In this experiment I get similar results as shown below:
@@ -222,12 +222,36 @@ As can be seen on the figures, mine results approaches the greedy solution quick
 
 # 4. Conclusion
 
-@TODO: Discuss the paper in relation to the results in the paper and your results.
+In this project, I  implemented and partially reproduced the results of the paper "Streaming Algorithm for Monotone k-Submodular Maximization with Cardinality Constraints." The paper introduced a novel algorithm for maximizing influence in a social network with cardinality constraints, providing a constant-factor approximation guarantee. We focused on applying this algorithm to the Influence Maximization problem and the Sensor Placement problem.
+
+For the Influence Maximization problem, we conducted a partial reproduction of the results due to limited computational resources. Despite the smaller number of simulations used to approximate the submodular function, our implementation yielded similar results to those presented in the paper. We verified the effectiveness of the proposed algorithm by comparing it with the k-Greedy algorithm, a commonly used baseline. Eventhough I could not generate the whole range of bugdet constraint in the problem, I could be able to generate some of the results to compare with author's.
+
+In the Sensor Placement problem, we also achieved similar results to those presented in the paper. Our implementation of the proposed algorithm demonstrated a faster convergence towards the results of the Greedy algorithm. Notably, it is observed that our implementation of the proposed algorithm approached the results of the Greedy algorithm more quickly than reported by the authors. This discrepancy could be attributed to our specific strategy for dealing with missing values.
+
+Overall, our implementation confirmed the key findings of the paper and highlighted the effectiveness of the proposed algorithm for both the Influence Maximization and Sensor Placement problems. The project underscores the significance of efficient algorithms for submodular maximization in practical applications such as social network analysis and sensor deployment.
+
+To wrap up, we enjoyed reproducing this paper and learned a lot during the process. We would like to thank the authors for writing such a great and mostly clear paper and Sinan Hoca for equipping us with the skills to take on this project.
 
 # 5. References
 
-@TODO: Provide your references here.
+-Christian Borgs, Michael Brautbar, Jennifer Chayes, and Brendan Lucier, ["Maximizing Social Influence in Nearly Optimal Time," in Proceedings of the Twenty-Fifth Annual ACM-SIAM Symposium on Discrete Algorithms, 2014, pp. 946-957.](https://arxiv.org/pdf/1212.0884.pdf)
+
+- Chandra Chekuri and Kent Quanrud, ["Submodular Optimization with Submodular Cover and Submodular Knapsack Constraints," SIAM Journal on Computing (SICOMP), vol. 47, no. 1, pp. 175-203, 2018.](https://proceedings.neurips.cc/paper/2013/file/a1d50185e7426cbb0acad1e6ca74b9aa-Paper.pdf)
+
+- Youze Tang, Yanchen Shi, and Xiaokui Xiao, ["Influence Maximization in Near-Linear Time: A Martingale Approach," SIGMOD '15: Proceedings of the 2015 ACM SIGMOD International Conference on Management of DataMay 2015Pages 1539–1554](https://dl.acm.org/doi/10.1145/2723372.2723734)
+
+- Naoto Ohsaka and Yuichi Yoshida, ["Monotone k-Submodular Function Maximization with Size Constraints," NeurIPS,2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf)
+
+-  Yaron Singer "AM 221: Advanced Optimization," Harward University, Available: [http://people.seas.harvard.edu/~yaron/AM221-S16/index.html](http://people.seas.harvard.edu/~yaron/AM221-S16/index.html)
+
+- David P. Williamson and David B. Shmoys, [*The Design of Approximation Algorithms*. Cambridge University Press, 2010.](http://www.designofapproxalgs.com/)
+
+- Stephen Boyd and Lieven Vandenberghe, [*Convex Optimization*. Cambridge University Press, 2004.](https://web.stanford.edu/~boyd/cvxbook/)
 
 # Contact
 
 Mehmet Barutcu - mehmetbarutcu00@gmail.com
+
+# License
+
+All original code we wrote in this repository is licensed under the MIT License. Everything except for all pictures in the images directory are borrowed from the paper is my original work. These images belong to their copyright holders. They are provided in this repository for educational purposes only, which constitute fair use under the US copyright law.

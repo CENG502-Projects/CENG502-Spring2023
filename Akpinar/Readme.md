@@ -56,8 +56,15 @@ The main goal of deep feature learning is to learn discriminative feature space 
 
 # 5. References
 
-@TODO: Provide your references here.
+[1] Y. Min et al., “Deep radial embedding for visual sequence learning,” Lecture Notes in Computer Science, pp. 240–256, 2022. doi:10.1007/978-3-031-20068-7_14 
+[2] Graves, A., Fern´andez, S., Gomez, F., Schmidhuber, J.: Connectionist temporal classification: labelling unsegmented sequence data with recurrent neural networks. In: Proceedings of International Conference on Machine Learning. pp. 369–376 (2006)
+[3] Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016)
+[4] S. Ogun, “Breaking down the CTC loss,” Sitewide ATOM, https://ogunlao.github.io/blog/2020/07/17/breaking-down-ctc-loss.html (accessed Jun. 19, 2023). 
+
+
+
+
 
 # Contact
 
-@TODO: Provide your names & email addresses and any other info with which people can contact you.
+Gülfem Akpınar, gulfem.akpinar@metu.edu.tr

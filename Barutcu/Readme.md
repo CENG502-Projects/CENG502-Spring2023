@@ -139,22 +139,21 @@ In this experiment, we focus on the problem of sensor placement in a given envir
 ## 3.2. Running the code
 ```
 Directory structure
-└── Edit me to generate/
-    ├── datasets/
-    │   ├── Intellab.txt
-    │   └── facebook_dataset.txt
-    ├── Images/
-    │   ├── approximation_table_1.jpg
-    │   ├── build_hypergraph.jpg
-    │   ├── greedy_algorithm.jpg
-    │   ├── independent_cascade_process.jpg
-    │   ├── lp_formulation.jpg
-    │   ├── node_selection.jpg
-    │   ├── primal_dual_algorithm.jpg
-    │   └── sensor_placement.jpg
-    ├── influence_maximization.ipynb
-    ├── sensor_placement.ipynb
-    └── requirements.txt
+├── datasets/
+│   ├── Intellab.txt
+│   └── facebook_dataset.txt
+├── Images/
+│   ├── approximation_table_1.jpg
+│   ├── build_hypergraph.jpg
+│   ├── greedy_algorithm.jpg
+│   ├── independent_cascade_process.jpg
+│   ├── lp_formulation.jpg
+│   ├── node_selection.jpg
+│   ├── primal_dual_algorithm.jpg
+│   └── sensor_placement.jpg
+├── influence_maximization.ipynb
+├── sensor_placement.ipynb
+└── requirements.txt
 ```
 
 - Files in datasets folder contains facebook and Intel Lab datasets in txt format

@@ -1,4 +1,4 @@
-# UniVIP: A Unified Framework for Self-Supervised Visual Pre-training
+# UniVIP: A Unified Framework for Self-Supervised Visual Pre-training [1]
 
 This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.edu.tr/~skalkan/ADL/) project for reproducing a paper without an implementation. See [CENG502 (Spring 20223) Project List](https://github.com/CENG502-Projects/CENG502-Spring2023) for a complete list of all paper reproduction projects.
 
@@ -13,7 +13,7 @@ One popular method that tries to learn similar representations for differently a
 
 It can be seen that it is very difficult for these boxes to contain consistent image crops, where the model can learn to relate object parts to the same object. A different approach is necessary here which is aware of multiple objects in varying sizes and the whole scene in general.
 
-The paper UniVIP [1] (CVPR 2022) tries to solve this problem. And this repository tries to reproduce their method based on their descriptions in the paper.
+The paper UniVIP (CVPR 2022) tries to solve this problem. And this repository tries to reproduce their method based on their descriptions in the paper.
 
 
 ## 1.1. Paper summary
@@ -65,7 +65,7 @@ An unsupervised instance proposal algorithm called selective search is applied t
 
 Here is a sample scene-scene-instances group:
 
-![Scenes and instances selected from the overlap with selective search.](image.png)
+<img src="imgs/image_ssi.png" alt="Scenes and instances selected from the overlap with selective search." style="width: 50%;">
   
 Then, scenes are proposed as in the first step like BYOL, but it is required that these scenes have an overlap where K box proposals are fully included. For 20 iterations, different random views (scenes) are generated if this criterion was not full-filled. 
 

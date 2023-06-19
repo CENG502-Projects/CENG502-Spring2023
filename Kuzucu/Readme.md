@@ -163,8 +163,9 @@ The directory structure looks like the following:
 ├── PreResNet.py
 └── requirements.txt
 ```
+First, creating a directory ``` mkdir checkpoints ``` is recommended to store the saved model parameters.
 
-One can directly call the main_cifar.py file through passing the --data_path argument to it (same goes for the imbalanced versions of CIFAR-10, the code will be using the data in whichever directory, whether balanced or imbalanced passed to it):
+Then, one can directly call the main_cifar.py file through passing the --data_path argument to it (same goes for the imbalanced versions of CIFAR-10, the code will be using the data in whichever directory, whether balanced or imbalanced passed to it):
 
 ```
   python3 main_cifar.py --data_path data/cifar-10-batches-py

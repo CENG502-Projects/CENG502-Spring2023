@@ -263,6 +263,7 @@ To wrap up, I enjoyed reproducing this paper and learned a lot during the proces
 # Contact
 
 Mehmet Barutcu - mehmetbarutcu00@gmail.com
+
 [Github Link](https://github.com/MehmetBarutcu)
 
 # License

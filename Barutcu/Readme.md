@@ -30,7 +30,7 @@ The proposed streaming algorithm in the paper makes several key contributions to
 
 The problem addressed in the paper can be mathematically formulated as follows:
 
-![lp_formulation](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/eb88c61d-c14d-40d1-a3b8-5ea27f5d5680)
+![primal_dual](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/32d89eb0-5f48-4b41-a352-2ed5b7c3d871)
 
 The formulation captures the objective of maximizing a monotone k-submodular function subject to constraints on the size of the selected subset. The paper discusses the details of the formulation and provides insights into its properties and potential algorithmic approaches for solving it. 
 - xe,i ∈ {0, 1} that indicates whether element e is assigned label i. 
@@ -39,7 +39,7 @@ The formulation captures the objective of maximizing a monotone k-submodular fun
 - The second set of constraints enforce that we select exactly one k-tuple. 
 - The third set of constraints enforce that each element receives at most one label. 
 - The fourth set of constraints enforce the size constraints for the labels. 
-By relaxing the integrality constraints xe,i, yA ∈ {0, 1} to xe,i, yA ∈ (0, 1), we obtain the LP relaxation for the problem
+By relaxing the integrality constraints x_{e,i}, Y_**A** ∈ {0, 1} to xe,i, Y_**A** ∈ (0, 1), we obtain the LP relaxation for the problem
 
 # 2. The method and my interpretation
 
@@ -47,9 +47,9 @@ By relaxing the integrality constraints xe,i, yA ∈ {0, 1} to xe,i, yA ∈ (0, 
 
 This section describes the original method presented in the paper "Streaming Algorithm for Monotone k-Submodular Maximization with Cardinality Constraints." It covers the definition of k-submodularity, the algorithm proposed by the authors, the concept of marginal gain, and the approximation of the submodular function.
 
-### 2.1.1 k-Submodularity Definition
+### 2.1.1 K-Submodularity Definition
 
-In the paper, the concept of submodularity plays a fundamental role. A function f: (2+1)^V -> R, where V is a finite ground set, is said to be k-submodular if it satisfies the diminishing returns property. Specifically, for any sets A, B subset of V, where |A| <= |B|, and any element e not in B, the following inequality holds:
+In the paper, the concept of submodularity plays a fundamental role. A function f: (2+1)^V^ -> R, where V is a finite ground set, is said to be k-submodular if it satisfies the diminishing returns property. Specifically, for any sets A, B subset of V, where |A| <= |B|, and any element e not in B, the following inequality holds:
 
 $f(A ∪ {e}) - f(A) >= f(B ∪ {e}) - f(B)$
 
@@ -57,12 +57,13 @@ This property captures the idea that adding an element to a smaller set yields a
 
 Pairwise Monotone
 
-$\delta_{e,i} f(X) + \delta_{e,j} f(X) \geqslant 0$ and,
+![pairwise_monotone](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/1df9c18b-ab82-48ae-a47a-647925a18e48) and,
 
  Orthant Submodular
- \delta_{e,i} f(X) \geqslant \delta_{e,i} f(Y)
- 
- for all $X, Y ∈ (k+1)^V$ such that X \prec Y, $e \notin supp(Y)$ and $i ∈ (k)$
+
+![orthant_submodular](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/40e42f3c-5a2d-4d9b-af35-e0d67fd8ed81)
+
+ for all $X, Y ∈ (k+1)^V^$ such that X \prec Y, $e \notin supp(Y)$ and $i ∈ (k)$
 
 ### 2.1.2 Marginal Gain Definition
 
@@ -173,7 +174,51 @@ Cells in jupyter notebooks can sequencially be run to reproduce the results.
 
 ## 3.3. Results
 
-@TODO: Present your results and compare them to the original paper. Please number your figures & tables as if this is a paper.
+Experiment settings are as follows:
+
+**1. Influence Maximization with *k* Different Topics:**
+
+*Table 1: Parameters for Influence Maximization Problem*
+Setup Component | The authors | Us
+------------ | ------------- | -------------
+B | 1-30 | 1-10
+K | 3,10 | 3 
+D | B(2^1/B^-1) | B(2^1/B^-1)
+R | - | 100
+C | 0.5D | 0.5D
+
+Where B is the budget for all types, R represents the number of simulations processes to approximate influence function f, K is number of different topics and C, D are algorithm parameters
+
+Experiment results are as follows:
+
+*Figure 2: Author's Results on Influence Maximization*
+![inf_result](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/d8d0e5fe-46de-43b9-bb1e-3c3d1a28c46e)
+
+*Figure 1: My Results on Influence Maximization*
+![inf_max_result](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/ff7834db-204c-4920-992c-e626c086ba5a)
+
+As can be seen on figures, author's results are more smooth and diminishing return of value is more clear. This is due to the choise of number of simulations to approximate the benefit function. Although there is therotical lower bound for R, I could not simulate such times because of computational resource restrictions. Also, author was able to generate the results of different budgets ranging from 1-30 whereas I could reproduce only between 1-10 because as budget constraint increases, computation time also increases linearly. Due to the limited resources, I chose B between 1-10 to see the trend in the value of the function.
+
+**2. Sensor Placement with *k* Different Measurements:**
+
+*Table 3: Parameters for Sensor Placement Problem*
+Setup Component | The authors | Us
+------------ | ------------- | -------------
+B | 1-30 | 1-30
+K | 3 | 3 
+D | B(2^1/B^-1) | B(2^1/B^-1)
+C | 0.5D | 0.5D
+
+Since the computational resource is enough the reproduce the problem, I used same parameters with author. In this experiment I get similar results as shown below:
+
+*Figure 3: Author's Results on Sensor Placement Problem*
+![sensor_placement](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/b33e29c4-2ef3-4880-93a8-5052d78813ea)
+
+*Figure 1: My Results on Sensor Placement Problem*
+
+![Sensor_plc](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/cf93d1b2-b123-44e1-b543-3ecceae38896)
+
+As can be seen on the figures, mine results approaches the greedy solution quicker than the author's. This might be due to strategy to dealing with missing columns in data that author chooses.
 
 # 4. Conclusion
 

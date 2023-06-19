@@ -397,13 +397,13 @@ Expected results are dependent on the model and parameters used in the command.
 ### 3.3.1. Implementation Results
 The following figures show the train and loss plots of different settings: baseline and tuneup. The former is the baseline training of the model on 1000 epochs, whereas, the latter is the finetuned model using the TUNEUP method. 
 
-![Baseline Loss](/figs/1.jpeg)
+![Baseline Loss](figs/1.jpeg)
 <p align="center">
 <b>Figure 1: The train and validation loss curves of the baseline model we implement</b>
 </p>
 
 
-![Tune Up loss](/figs/2.jpeg)
+![Tune Up loss](figs/2.jpeg)
 <p align="center">
 <b>Figure 2: The train and validation loss curves of the TUNEUP method we implement combining both pretraining and finetuning</b>
 </p>

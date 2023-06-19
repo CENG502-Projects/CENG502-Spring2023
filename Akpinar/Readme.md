@@ -30,6 +30,7 @@ The main goal of deep feature learning is to learn discriminative feature space 
 
 ## 2.1. The original method
 ![Figure 1](./image/seq_mnist.png)
+<img width="720" alt="seq_mnist">
 
 @TODO: Explain the original method.
 

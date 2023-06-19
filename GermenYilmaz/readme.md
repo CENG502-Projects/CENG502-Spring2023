@@ -397,11 +397,7 @@ Expected results are dependent on the model and parameters used in the command.
 ### 3.3.1. Implementation Results
 The following figures show the train and loss plots of different settings: baseline and tuneup. The former is the baseline training of the model on 1000 epochs, whereas, the latter is the finetuned model using the TUNEUP method. 
 
-<p align="center">
-<img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/GermenYilmaz/figs/BASEloss_plot.png?raw=true" align="center" border="0" alt="W_{ij}  \Longrightarrow  ( W_{ij1},...,W_{ijK} )  " width="179" height="21" /> (Eq. 1)
-</p>
-
-![Baseline loss]()
+![Baseline loss](figs/BASEloss_plot.png)
 <p align="center">
 <b>Figure 1: The train and validation loss curves of the baseline model we implement</b>
 </p>

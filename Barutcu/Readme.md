@@ -52,7 +52,7 @@ This section describes the original method presented in the paper "Streaming Alg
 
 In the paper, the concept of submodularity plays a fundamental role. A function $f: (2+1)^V -> R$, where V is a finite ground set, is said to be k-submodular if it satisfies the diminishing returns property. Specifically, for any sets A, B subset of V, where |A| <= |B|, and any element e not in B, the following inequality holds:
 
-$f(A ∪ {e}) - f(A) >= f(B ∪ {e}) - f(B)$
+$f(A ∪ {e}) - f(A) \geq f(B ∪ {e}) - f(B)$
 
 This property captures the idea that adding an element to a smaller set yields a higher marginal gain compared to adding it to a larger set. It is a key characteristic of many real-world optimization problems. K-submodularity is the generalization of the submodular definition into k different sets. A function is k-submodular if and only if:
 

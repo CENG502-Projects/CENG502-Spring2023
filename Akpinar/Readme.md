@@ -127,12 +127,13 @@ The entire process can be formulated as:
 
 ## 2.2. Our interpretation
 
-I constructed the Seq-MNIST, interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. The example can be seen below.
+I constructed the Seq-MNIST, interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. The example can be seen below. The interpolation was not clear so I used range(0.1, 1, 0.1) for the intervals and [0.1, 0.3, 0.5, 0.7, 0.9] for the ends. Also, LeNet++ uses 32x32 input data so I reshape the image.
 
 ![Figure 14](./image/my_mnist_seq.png)
 <img width="720" alt="my_mnist_seq" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/my_mnist_seq.PNG">
 
-Then, I constructed LeNets++ from Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016) with below parameters. Some of the convolution layers are followed by max pooling. (5, 32)/1,2 × 2 denotes 2 cascaded convolution layers with 32 filters of size 5 × 5, where the stride and padding are 1 and 2 respectively. 2/2,0 denotes the max-pooling layers with grid of 2 ×2, where the stride and padding are 2 and 0 respectively. In LeNets++, we use the Parametric Rectified Linear Unit (PReLU) as the nonlinear unit.
+Then, I constructed LeNets++ from Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016) with below parameters. Some of the convolution layers are followed by max pooling. (5, 32)/1,2 × 2 denotes 2 cascaded convolution layers with 32 filters of size 5 × 5, where the stride and padding are 1 and 2 respectively. 2/2,0 denotes the max-pooling layers with grid of 2 ×2, where the stride and padding are 2 and 0 respectively. In LeNets++, we use the Parametric Rectified Linear Unit (PReLU) as the nonlinear unit. Where to use PReLu was not clear so I used it after every conv and fc layers.
+
 
 ![Figure 14](./image/lenetpp.png)
 <img width="720" alt="lenetpp" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/lenetpp.PNG">

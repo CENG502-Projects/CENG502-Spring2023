@@ -165,10 +165,10 @@ The directory structure looks like the following:
 ```
 First, creating a directory ``` mkdir checkpoints ``` is recommended to store the saved model parameters.
 
-Then, one can directly call the main_cifar.py file through passing the --data_path argument to it (same goes for the imbalanced versions of CIFAR-10, the code will be using the data in whichever directory, whether balanced or imbalanced passed to it):
+Then, one can directly call the main_cifar.py file through passing the --data_path argument to it (same goes for the imbalanced versions of CIFAR-10, the code will be using the data in whichever directory, whether balanced or imbalanced passed to it) with noise ratio 0.2 as follows:
 
 ```
-  python3 main_cifar.py --data_path data/cifar-10-batches-py
+  python3 main_cifar.py --data_path data/cifar-10-batches-py --r 0.2
 ```
 
 

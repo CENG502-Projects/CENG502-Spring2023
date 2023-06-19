@@ -55,7 +55,7 @@ The method is mainly insipired by DeiT [4], idea of adding distillation token to
 
 ![MINE Regularization](assets/mine_algorithm.png)
 
-To alleviate the risk potential disentanglement of the distillation tokens (channel-spatial), a regularization method is proposed to be applied. The regularization method is chosen to be [8] (MINE), and it is applied according to Algortihm 1. In short, spatial and channel tokens from the same input are treated as joint distribution and unpaired tokens (from different inputs) are treated as marginal distribution. The objective for MINE is given as follows:
+To alleviate the risk of potential entanglement of the distillation tokens (channel-spatial), a regularization method is proposed to be applied. The aim is to disentangle the spatial-channel tokens to learn presumably distinct representations. The regularization method is chosen to be [8] (MINE), and it is applied according to Algortihm 1. In short, spatial and channel tokens from the same input are treated as joint distribution and unpaired tokens (from different inputs) are treated as marginal distribution. The objective for MINE is given as follows:
 
 $$ \frac{1}{b}\sum_{i=1}^b \psi_\theta(T_S^{(i)},T_C^{(i)})) - \log(\frac{1}{b}\sum_{i=1}^b e^{\psi_\theta(T_S^{(i)},\overline{T_C}^{(i)})}) $$
 
@@ -221,7 +221,7 @@ The results regarding the experiments on ImageNet-1k are illustrated in _Table 3
 | * Mixer-S16 (Baseline) | Mixer-S16       | N/A                              | N/A              | N/A                 | N/A                  | 72.90%     | ?          |
 | * + JFT-300M           | Mixer-S16       | N/A                              | N/A              | N/A                 | N/A                  | 73.80%     | ?          |
 | * + DeiT dist.         | Mixer-S16       | N/A                              | N/A              | :heavy_check_mark:  | N/A                  | 74.20%     | ?          |
-| * + STD (proposal)     | Mixer-S16       | :heavy_check_mark                | :x:              | :heavy_check_mark:  | ResNet-50 ResNet-101 | 75.74%     | ?          |
+| * + STD (proposal)     | Mixer-S16       | :heavy_check_mark:                | :x:              | :heavy_check_mark:  | ResNet-50 ResNet-101 | 75.74%     | ?          |
 | [STD-51](https://app.neptune.ai/o/metu-ms/org/std/runs/details?viewId=99675a7b-c665-436e-b150-82edd443c8ba&detailsTab=dashboard&dashboardId=995a85af-a9cb-4387-9d85-e7ffce9e5cd0&shortId=STD-51&type=run)                 | Mixer-S16 + STD | :x:                              | :x:              | :heavy_check_mark:  | ResNet-50            | 75.08%     | 92.08%     |
 
 _**Table 3.3.2:** The experiments conducted on ImageNet-1k dataset. For the column descriptions refer to _Table 3.3.1_. The entries marked with (*) are results reported in the paper (Table 2). Cells with (?) indicates that the result is not reported/unavailable._

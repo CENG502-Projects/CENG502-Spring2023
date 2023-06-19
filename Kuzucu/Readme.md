@@ -186,8 +186,8 @@ Table 1. Synthetic CIFAR-10 Results of ULC compared to other well-known methods 
 
 | CIFAR-10 (Sym.)     | 20%  | 50%  | 80%  | 90%  |
 |---------------------|------|------|------|------|
-| ULC-Reprod. (Best)  |95.5  | 94.7 | 89.8 | 83.6 |
-| ULC-Reprod. (Last)  |94.6  | 94.5 | 89.2 | 82.2 |
+| ULC-Reprod. (Best)  |95.5  | 94.7 | 92.5 | 83.6 |
+| ULC-Reprod. (Last)  |94.6  | 94.5 | 92.2 | 82.2 |
 
 Table 2. Synthetic CIFAR-10 Results w/ Symmetric Noise of Reproduction ULC
 

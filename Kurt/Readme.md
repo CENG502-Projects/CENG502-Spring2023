@@ -16,7 +16,7 @@ CTIN is the first paper to facilitate transformers in inertial navigation. Paper
 
 ## 2.1. The original method
 
-![CTIN Method](figure/Visio-arch.pdf)
+![CTIN Method](figure/method.png)
 
 CTIN takes IMU measurements for a pre-determined window size m, and using the Rotation Matrix Selector, converts the measurements to global frame from body frame. At the Rotation Matrix Selector output, [6, m] measurement vector is obtained. 
 

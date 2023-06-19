@@ -10,7 +10,7 @@ The main goal of the paper is to present an efficient streaming algorithm for so
 
 The authors propose a novel streaming algorithm that processes the elements in a streaming fashion, making efficient use of limited memory resources. The algorithm provides near-optimal solutions and guarantees a constant-factor approximation to the optimal solution.
 
-In this project, we have reproduced the key results and findings of the paper, implemented the proposed algorithm, and validated its performance on various datasets. The code and experimental results can be found in this GitHub repository.
+In this project, I have reproduced the key results and findings of the paper, implemented the proposed algorithm, and validated its performance on various datasets. The code and experimental results can be found in this GitHub repository.
 
 ## 1.1. Paper summary
 
@@ -188,7 +188,7 @@ Setup Component | The authors | Us
 ------------ | ------------- | -------------
 B | 1-30 | 1-10
 K | 3,10 | 3 
-D | $B*( 2^(1/B) -1)$ | $B*( 2^(1/B) -1)$
+D | $B*(2^{1/B} -1)$ | $B*(2^{1/B} -1)$
 R | - | 100
 C | 0.5D | 0.5D
 
@@ -214,7 +214,7 @@ Setup Component | The authors | Us
 ------------ | ------------- | -------------
 B | 1-30 | 1-30
 K | 3 | 3 
-D |  $B*( 2^(1/B) -1)$ |  $B*( 2^(1/B) -1)$
+D |  $B*(2^{1/B} -1)$ |  $B*(2^{1/B} -1)$
 C | 0.5D | 0.5D
 
 Since the computational resource is enough the reproduce the problem, I used same parameters with author. In this experiment I get similar results as shown below:
@@ -241,7 +241,7 @@ In the Sensor Placement problem, we also achieved similar results to those prese
 
 Overall, our implementation confirmed the key findings of the paper and highlighted the effectiveness of the proposed algorithm for both the Influence Maximization and Sensor Placement problems. The project underscores the significance of efficient algorithms for submodular maximization in practical applications such as social network analysis and sensor deployment.
 
-To wrap up, I enjoyed reproducing this paper and learned a lot during the process. We would like to thank the authors for writing such a great and mostly clear paper and Sinan Hoca for equipping us with the skills to take on this project.
+To wrap up, I enjoyed reproducing this paper and learned a lot during the process. I would like to thank the authors for writing such a great and mostly clear paper and Sinan Hoca for equipping us with the skills to take on this project.
 
 # 5. References
 
@@ -265,4 +265,4 @@ Mehmet Barutcu - mehmetbarutcu00@gmail.com
 
 # License
 
-All original code I wrote in this repository is licensed under the MIT License. Everything except for all pictures in the images directory are borrowed from the paper is my original work. These images belong to their copyright holders. They are provided in this repository for educational purposes only, which constitute fair use under the US copyright law.
+All original code I wrote in this repository is licensed under the MIT License. Everything except for all pictures in the images directory are borrowed from the papers referenced above is my original work. These images belong to their copyright holders. They are provided in this repository for educational purposes only, which constitute fair use under the US copyright law.

@@ -125,9 +125,22 @@ The entire process can be formulated as:
 <img width="720" alt="radial_loss" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_loss.PNG">
 
 
-## 2.2. Our interpretation 
+## 2.2. Our interpretation
+
+I constructed the Seq-MNIST, interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. The example can be seen below.
+
 ![Figure 14](./image/my_mnist_seq.png)
 <img width="720" alt="my_mnist_seq" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/my_mnist_seq.PNG">
+
+Then, I constructed LeNets++ from Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016) with below parameters. Some of the convolution layers are followed by max pooling. (5, 32)/1,2 × 2 denotes 2 cascaded convolution layers with 32 filters of size 5 × 5, where the stride and padding are 1 and 2 respectively. 2/2,0 denotes the max-pooling layers with grid of 2 ×2, where the stride and padding are 2 and 0 respectively. In LeNets++, we use the Parametric Rectified Linear Unit (PReLU) as the nonlinear unit.
+
+![Figure 14](./image/lenetpp.png)
+<img width="720" alt="lenetpp" src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/lenetpp.PNG">
+
+
+
+
+
 
 
 @TODO: Explain the parts that were not clearly explained in the original paper and how you interpreted them.

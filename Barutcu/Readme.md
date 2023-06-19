@@ -26,7 +26,7 @@ The proposed streaming algorithm in the paper makes several key contributions to
 
 3. **Theoretical Analysis:** The paper provides a theoretical analysis of the algorithm's performance, including bounds on approximation guarantees and computational complexity. It establishes the algorithm's effectiveness and its applicability to real-world problems.
 
-4. **Free Disposal of Algorithm Parameters:** Paper offers an algorithm which does not stores the previous iterations results which makes it efficient in term of memory usage and asymtotic complexity, unlike the other state of the art approaches in the literature that uses greedy approach [Ohsaka & Yoshida, 2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf) and offline computation other than streaming approach. 
+4. **Free Disposal of Algorithm Parameters:** Paper offers an algorithm which does not store results of the previous iterations, so offers efficient computation in term of memory usage and asymptotic complexity, unlike the method in the literature that uses greedy approach [Ohsaka & Yoshida, 2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf) with offline computation other than streaming approach. 
 
 The problem addressed in the paper can be mathematically formulated as follows:
 

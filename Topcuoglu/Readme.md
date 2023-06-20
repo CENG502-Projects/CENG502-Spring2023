@@ -11,7 +11,7 @@ One popular method that tries to learn similar representations for differently a
 
 <p align="center">
   <img src="imgs/image.png" alt="Cropped regions selected from an image available in COCO dataset with BYOL." style="width: 100%;"><br>
-  <em>Image 1: Cropped regions selected from an image available in the COCO dataset with BYOL.</em>
+  <em>Image 1: Cropped regions selected from an image available in the COCO dataset with BYOL (from the paper).</em>
 </p>
 
 It can be seen that it is very difficult for these boxes to contain consistent image crops, where the model can learn to relate object parts to the same object. A different approach is necessary here which is aware of multiple objects in varying sizes and the whole scene in general.
@@ -25,7 +25,7 @@ Unlike BYOL, UniVIP tries to learn the relation between scenes, between instance
 
 <p align="center">
   <img src="imgs/image-1.png" alt="Illustration of scene and instance relations." style="width: 100%;"><br>
-  <em>Image 2: Illustration of scene and instance relations..</em>
+  <em>Image 2: Illustration of scene and instance relations. (from the paper)</em>
 </p>
 
 In the image, scenes are similar, objects are part of (related) to scenes, and each object is different from the other. This would be indeed a useful learning guide for SSL. Their contributions are towards accomplishing these:
@@ -39,7 +39,7 @@ It is important to mention that, in the literature, there is a paper which BYOL 
 
 <p align="center">
   <img src="imgs/image-2.png" alt="Illustration of scene and instance relations." style="width: 40%;"><br>
-  <em> Image 3: Learning representation from objects in different images.</em>
+  <em> Image 3: Learning representation from objects in different images. (from the paper)</em>
 </p>
 
 Basically, they use BYOL to generate representations of images which they later pair into groups with the k-nearest neighbor method. Then with an unsupervised region proposal algorithm (selective search), they generate RoIs. Next, the pre-trained model is to find top-ranked RoI pairs, on top of which a model is trained which they call object-level representation learning. This three-stage method is smartly simplified by UniVIP.
@@ -77,14 +77,14 @@ Here is a sample scene-scene-instances group:
 
 <p align="center">
   <img src="imgs/image_ssi.png" alt="" style="width: 150%;"><br>
-  <em> Image 4: Scenes and instances selected from the overlap with selective search.</em>
+  <em> Image 4: Scenes and instances selected from the overlap with selective search.(My outputs)</em>
 </p>
   
 Then, scenes are proposed as in the first step like BYOL, but it is required that these scenes have an overlap where K box proposals are fully included. For 20 iterations, different random views (scenes) are generated if this criterion was not full-filled. 
 
 <p align="center">
   <img src="imgs/image-6.png" alt="" style="width: 50%;"><br>
-  <em> Table 1: Scene selection pseudocode.</em>
+  <em> Table 1: Scene selection pseudocode.(from the paper)</em>
 </p>
 
 Finally, as a backup plan, random boxes are generated considering the 3 constraints listed above. 

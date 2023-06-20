@@ -25,4 +25,5 @@ We hope that this will be an important contribution to those trying to implement
 | Min et al., ["Deep Radial Embedding for Visual Sequence Learning"](https://www.ecva.net/papers/eccv_2022/papers_ECCV/papers/136660234.pdf), ECCV 2022 | Gulfem Akpinar | [Akpinar](Akpinar) | 
 | Ene & Nguyen, ["Streaming Algorithm for Monotone k-Submodular Maximization with Cardinality Constraints"](https://proceedings.mlr.press/v162/ene22a.html), ICML 2022 | Mehmet Barutcu | [Barutcu](Barutcu) | 
 | Yu et al., ["A Biased Sampling Method for Imbalanced Personalized Ranking"](https://dl.acm.org/doi/abs/10.1145/3511808.3557218), CIKM 2022 | Egemen Sert | [Sert](Sert) |
-
+| Li et al., ["UniVIP: A Unified Framework for Self-Supervised Visual Pre-training"](https://openaccess.thecvf.com/content/CVPR2022/papers/Li_UniVIP_A_Unified_Framework_for_Self-Supervised_Visual_Pre-Training_CVPR_2022_paper.pdf), CVPR 2022 | Utku Mert Topcuoglu | [Topcuoglu](Topcuoglu) | 
+| Mo et al., ["Attacking Deep Reinforcement Learning With Decoupled Adversarial Policy"](https://ieeexplore.ieee.org/abstract/document/9684689), IEEE T on Dependable and Secure Computing, 2023 | Adnan Harun Dogan, Merve Tapli | [DoganTapli](DoganTapli) | 

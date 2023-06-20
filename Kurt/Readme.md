@@ -106,7 +106,7 @@ We implemented the forward pass of the algorithm and training can be performed. 
 # 4. Conclusion
 
 
-In this project the implementation of the CTIN paper is provided. The implementation of test methods are not finished in the required time and the results could not be compared with the original paper at this stage.
+In this project the implementation of the CTIN method is provided. The implementation of test methods are not finished in the required time and the results could not be compared with the original paper at this stage.
 
 # 5. References
 

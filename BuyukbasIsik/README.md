@@ -416,7 +416,7 @@ The method that the paper proposed integrates learnable memory tokens into each 
 
 # Contact
 
-You can contact us by opening an issue in this repository, which is preferred for matters related to this implementation.
+You can contact us by opening an issue [in our repository](https://github.com/necrashter/transformers-learnable-memory), which is preferred for matters related to this implementation.
 Alternatively, you can send an e-mail to us:
 - İlker Işık, e238051@metu.edu.tr
 - Ege Berk Büyükbaş, ege.buyukbas@metu.edu.tr

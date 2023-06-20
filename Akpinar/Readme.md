@@ -36,28 +36,30 @@ The main goal of deep feature learning is to learn discriminative feature space 
 
 ## 2.1. The original method
 
-Figure 1: The overall Framework(From the paper)
+
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/frameworkPNG.PNG" width="720" >
+Figure 1: The overall Framework(From the paper)
 
 
-Figure 2: Illustration of the preparation of the Seq-MNIST dataset(From the paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/seq_mnist.PNG" width="720" >
-
+Figure 2: Illustration of the preparation of the Seq-MNIST dataset(From the paper)
 
 To better illustrate the proposed method, they build a simulated sequence recognition dataset named Seq-MNIST using the above scheme. They interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. 
 
-Figure 3: Frame-wise feature extractor and softmax(From the paper)
+
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ffr.PNG" width="256" >
+Figure 3: Frame-wise feature extractor and softmax(From the paper)
 
 Then, they used a modified version of LeNet which is LeNet++(a deeper and wider network) for the feature extraction. LeNet takes an input x=(x1,x2,..,xT) and returns frame-wise features v=(v1, v2,..., vT). After that it goes through a fully connected layer and softmax. Fully connected layer has number of labels + 1 out put values for the "blank" token which is used in CTC. With the help of an extra ‘blank’ class, CTC defines a many-to-one mapping to align the alignment path π and its corresponding labeling l. This mapping is achieved by successively removing
 the repeated labels and blanks in the path. For example, B(-aaa--aabbb-) =
 B(-a-ab-) = aab. The posterior probability of the labeling can be calculated by:
 
-Figure 4: The posterior probability of the labeling(From the paper)
-<img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/prob.PNG" width="256" >
 
-Figure 5: Visualization of (a) the distribution of frame-wise features and (b) an example of transition trajectory in the test set of Seq-MNIST.(From the paper)
+<img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/prob.PNG" width="256" >
+Figure 4: The posterior probability of the labeling(From the paper)
+
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/dist_freatures.PNG" width="720" >
+Figure 5: Visualization of (a) the distribution of frame-wise features and (b) an example of transition trajectory in the test set of Seq-MNIST.(From the paper)
 
 The frame-wise features v visualized above after training the model with CTC. we can observe that: 
 
@@ -67,14 +69,14 @@ The frame-wise features v visualized above after training the model with CTC. we
 
 (3) although some transition frames are pretty similar to the keyframe, they are classified to the blank class.
 
-Figure 6: The Design of Loss Function for Sequence Recognition(From the paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ctc_loss.PNG" width="720" >
+Figure 6: The Design of Loss Function for Sequence Recognition(From the paper)
 
 Normalization: the learned features with supervision from CTC have large intra-class variance, especially on the blank class, and the decision boundary between the blank class and non-blank classes is not clear. The vanilla CTC takes the inner distance between features and weights as input and provides little constraint on the alignment process. To learn a more separable feature space, we normalize both the features and weights and constrain the learned features on a hypersphere, which has been proven a practical approach in face recognition. As shown above, After constraining all features on the hypersphere, the search space of the alignment process is reduced considerably, and features are distributed along several disjoint paths from the center of the
 blank class.
 
-Figure 7: The distribution of frame-wise features with (a) normalization and (b) normalization, angle and center constraints in the test set of Seq-MNIST.(From the paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/dist_center.PNG" width="720" >
+Figure 7: The distribution of frame-wise features with (a) normalization and (b) normalization, angle and center constraints in the test set of Seq-MNIST.(From the paper)
 
 Angle regularization: any frames between two non-blank keyframes can be classified into the blank class. Therefore, any transition trajectory between two non-blank keyframes will go through the decision region of the blank class. To enhance the discriminative and generalization ability of the model, they propose an angle regularization term to minimize the distance between Wb^T.Wnb and a given value cos(β).
 
@@ -86,8 +88,8 @@ The conservative supervision from CTC only classified a small ratio of frames to
 
 (2) what is the relationship between the recognition and localization abilities of the model trained with CTC?
 
-Figure 8: Vanilla Forward-Backward Algorithm of CTC(From the paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/vanilla_fba.PNG" width="400" >
+Figure 8: Vanilla Forward-Backward Algorithm of CTC(From the paper)
 
 The role of the angular margin: Adopting an angular/cosine-margin based constraint is popular in deep feature learning, which can make learned features more discriminative by adding a margin term in softmax loss. 
 
@@ -101,45 +103,45 @@ Adopting an angular perturbation term can change the pseudo label, which provide
 They try to control the peaky behavior of CTC by perturbing blank logits of all frames with a sequence-dependent term. As the decision boundaries between the blank class and non-blank classes are similar, they look into the decision criteria of softmax in the binary case.
 After normalizing both features and weights and ignoring the bias term, the decision boundary between the blank class b and a non-blank class nb is θ1 = θ2.
 
-Figure 9: The geometric interpretation of the angluar perturbation process(From the paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/ang_per_grp.PNG" width="720" >
+Figure 9: The geometric interpretation of the angluar perturbation process(From the paper)
 
 To control the peaky behavior flexibly, they propose a radial constraint that is implemented by adding an angular perturbation term m(η, θ,l) between v and Wb and adopt the pseudo label of the perturbed logits to provide supervision for the original logits. given visual features v = (v1, · · · , vT ) and its corresponding labeling l = (l1, · · · , lU ), they find the frame vτ which has the kth (k = U + 1 + ⌊(T − U) ∗ η⌋) largest angular difference between the blank class and the class with the highest probability that has appeared in the labeling. 
 
 This process can be formulated as:
 
-Figure 10: the angluar perturbation process(From the paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/m.PNG" width="256"  >
+Figure 10: the angluar perturbation process(From the paper)
 
 calculate the perturbed prediction z as below:
 
-Figure 11: Calculatation the perturbed prediction z(From the paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/z.PNG" width="720">
+Figure 11: Calculatation the perturbed prediction z(From the paper)
 
 and The loss can be calculated as below:
 
-Figure 12:  Forward-Backward Algorithm of CTC(From The paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_fba.PNG" width="720"  >
+Figure 12:  Forward-Backward Algorithm of CTC(From The paper)
 
 As the proposed method adjust the blank ratio based on ‘radial’ feature distribution, we named this method RadialCTC. 
 
 The entire process can be formulated as:
 
-Figure 13: The Design of Loss Function for Sequence Recognition with RadialCTC(From the paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/radial_loss.PNG" width="720"  >
+Figure 13: The Design of Loss Function for Sequence Recognition with RadialCTC(From the paper)
 
 
 ## 2.2. Our interpretation
 
 I constructed the Seq-MNIST, interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. The example can be seen below. The interpolation was not clear so I used range(0.1, 1, 0.1) for the intervals and [0.1, 0.3, 0.5, 0.7, 0.9] for the ends. Also, LeNet++ uses 32x32 input data so I reshape the image.
 
-Figure 14: An example of Seq-MNIST dataset(From my results)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/my_mnist_seq.PNG" width="720"  >
+Figure 14: An example of Seq-MNIST dataset(From my results)
 
 Then, I constructed LeNets++ from Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016) with below parameters. Some of the convolution layers are followed by max pooling. (5, 32)/1,2 × 2 denotes 2 cascaded convolution layers with 32 filters of size 5 × 5, where the stride and padding are 1 and 2 respectively. 2/2,0 denotes the max-pooling layers with grid of 2×2, where the stride and padding are 2 and 0 respectively. In LeNets++, we use the Parametric Rectified Linear Unit (PReLU) as the nonlinear unit. Where to use PReLu was not clear so I used it after every conv and fc layers(in=2048,out=3).
 
-Figure 15: Architecture of LeNets++(From another paper)
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/lenetpp.PNG" width="720" >
+Figure 15: Architecture of LeNets++(From another paper)
 
 For the output layer, I used 3 as our paper for 3D feature map. the output goes through a fc(in=3,out=11) and softmax. I return feature v for plotting. 
 
@@ -147,8 +149,8 @@ For the CTC implementation, follow the explanation from [4] which is based on [2
 
 I get a vector, which has the length of vocabulary, for each time step of LeNets++ computation. The softmax function is applied to it to get a vector of probabilities. I exclude all rows that do not include tokens from the target sequence and then rearrange the tokens to form the output sequence. This is done during training only. If a token occur multiple times in the label, we repeat the rows for similar tokens in their appropriate location. This becomes our probability matrix,  y(s,t) like the "door" example below.
 
-Figure 15: An example(From [4])
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/door.PNG" width="720"  >
+Figure 15: An example(From [4])
 
 Forward Algorithm for computing  α(s,t):
 

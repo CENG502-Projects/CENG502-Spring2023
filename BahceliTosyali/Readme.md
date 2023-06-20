@@ -23,7 +23,7 @@ Traditionally; in normalization procedures test, validation and training datas s
 <p align="center">
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/5e7f1a5d-99cf-4102-ba1b-46e86a68dfab" alt="drifting" width="600">
   <br>
-  <em>Figure 1: Illustration of the concept drifting phenomenon.</em>
+  <em>Figure 1: Illustration of the concept drifting phenomenon <i>(from the paper)</i>.</em>
 </p>
 
 
@@ -46,7 +46,7 @@ This module uses a window of size $n$  where with $n$ data it tries to predict t
 <p align="center">
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/6d9b016a-d1a2-4752-b42e-8771521e0a02" alt="inputTemporal" width="250">
   <br>
-  <em>Figure 2: Illustration of the input temporal data.</em>
+  <em>Figure 2: Illustration of the input temporal data <i>(from the paper)</i>.</em>
 </p>
 
 The relation between those three blocks and MLP block is as follows
@@ -122,13 +122,13 @@ networks are given in the following figure.
 <p align="center"> 
   <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/88089192/21ad7e85-3db4-4883-8c26-d717fce4ef85" alt="windowed_image" width="450">
   <br>
-  <em>Figure 4.1: The chart for parameters in the neural network for long sequence forecasting model </em>
+  <em>Figure 4.1: The chart for parameters in the neural network for long sequence forecasting model <i>(from the paper)</i>. </em>
 </p>
 
 <p align="center"> 
   <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/88089192/1730d020-0221-4c1a-b8bc-15fddd67403f" alt="windowed_image" width="450">
   <br>
-  <em>Figure 4.2: The chart for parameters in the neural network for anomaly detection model </em>
+  <em>Figure 4.2: The chart for parameters in the neural network for anomaly detection model <i>(from the paper)</i>. </em>
 </p>
 
 For tests we used Frobenius norm (L2 norm) as suggested without any changes.

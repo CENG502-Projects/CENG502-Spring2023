@@ -106,7 +106,7 @@ The illustration for this function and handling behavior can be seen in the Figu
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/7fdbb055-b443-40fe-90ee-8a5387f8ee44" alt="windowed_image">
   <br>
-  <em>Figure 3: Illustration for <i>windowed_Set</i> function.</em>
+  <em>Figure 3: Illustration for <i>windowed_Set</i> function <i>ours</i>.</em>
 </p>
 
 
@@ -159,7 +159,7 @@ We created the model and trained the model with 30 epochs as mentioned in the pa
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/d0fcb565-de5c-4329-8a5c-4b368742cf43" alt="windowed_image">
   <br>
-  <em>Figure 5: Training and validation loss for Etth1 dataset </em>
+  <em>Figure 5: Training and validation loss for Etth1 dataset <i>ours</i>. </em>
 </p>
 
 Then we calculated the MSE and MAE loss values for this dataset with the model. The results can be seen in the table below.
@@ -167,7 +167,7 @@ Then we calculated the MSE and MAE loss values for this dataset with the model. 
 <p align="center"> 
   <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/88089192/55555f08-ac09-448b-a652-9dfa62a3b086" alt="windowed_image">
   <br>
-  <em>Figure 6: Metric scores for different models and ours for Etth1 dataset </em>
+  <em>Figure 6: Metric scores for different models and ours for Etth1 dataset <i>ours</i>. </em>
 </p>
 
 
@@ -187,7 +187,7 @@ And the following chart shows us the anomaly sequences that are found by our mod
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/52931384/d93044e6-8685-480d-8345-c7683fdcac42" alt="windowed_image">
   <br>
-  <em>Figure 8: The anomaly sequences of our model  </em>
+  <em>Figure 8: The anomaly sequences of our model.</em>
 </p>
 
 As you can see our model's accuracies ranges from 0.2 to 0.6; our mean accuracies 0.4 overall. 

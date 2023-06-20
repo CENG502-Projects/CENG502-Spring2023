@@ -239,7 +239,7 @@ class AgentLearningDecoder(nn.Module):
         b, h, w = M_s.shape
         F_a_hat = self.cross_attn(F_a, F_s, M_s, bypass_ot, max_iter_ot)
 
-        # TODO/Assumption: There is no specification about normalization or dropout 
+        # Assumption: There is no specification about normalization or dropout 
         # If we follow the notations used in the paper, this file should contain everything 
         # paper provides. The flow of original decoder is different from the AAFormer's decoder figures.
         return F_a_hat

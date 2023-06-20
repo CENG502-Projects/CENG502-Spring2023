@@ -93,7 +93,6 @@ class AgentMatchingDecoder(nn.Module):
         #print("scores_qa.shape = ", scores_qa.shape)
 
         
-        # TODO: can we implement it without for loops? (to make it faster)
         # Aligning Matrix
         align_mat =  torch.empty(bs,hw,hw)
         for i in range(hw):

@@ -16,7 +16,12 @@ The objective of few-shot segmentation (FSS) is to segment objects in a given qu
 
 ## 2.1. The original method
 ![Figure 1](./imagefolder/Figure1.png)
+
+**Figure.1:** Network architecture to obtain feature vector inputs of AAFormer, i.e. support features $F^s$, and query features $F^q$. *Disclaimer:* This figure is taken from the original paper.
+
 <img width="720" alt="aaformer" src="https://github.com/bartuakyurek/AAFormer/assets/77360680/eb065407-f6d9-4b23-9605-ff7968164d54">
+
+**Figure.2:** Overall architecture of AAFormer. *Disclaimer:* This figure is taken from the original paper.
 
 - **Feature Extraction**:
 The model takes the support and query image features as the inputs. These features are obtained by feeding the images into a pre-trained ResNet model. There are two types of image features for each support and query image: mid-level and high-level features. Mid-level features are the concatenated outputs of block2 and block3 and high-level features are obtained from block4 of ResNet architecture. In the paper performance comparison is presented among different ResNet architectures including 50 and 101 layers. High-level features are given to the **prior mask generator** with the corresponding support masks to form the prior mask. The same support image masks are also imported to the **masked average pooling** module with the mid-level support features. In the output of this module, mid-level query features are concatenated and are passed through a convolutional layer to obtain the final query features which are to be fed to the AAFormer. Like on explained in the query feature gathering branch, the final support level features are found by concatenating the prior mask with mid-level support features and the masked-out versions before the convolutional layer. In addition to final image features, support image masks are the inputs to AAFormer. The structure of this mechanism is given in [Figure 1](.\imagefolder\Figure1.png).
@@ -56,7 +61,7 @@ Throughout our source code, we have discussed our interpretation and assumptions
 
 ## 3.1. Experimental setup
 
-We have implemented the setup of the original paper as closely as we could. The settings we have changed can be reviewed from the source code comments in detail. The paper uses 473 image resolution; however, we set the resolution to a lower value, i.e. 128 for our experiments. We provide our hyperparameters explicitly in `main.ipynb` and their values provided by the original paper and state the hyperparameters that are not mentioned in the paper. In addition to Dice Loss used by the original paper, we have also experimented with Binary Cross Entropy (BCE) Loss that is not used by the paper. 
+We have implemented the setup of the original paper as closely as we could. The settings we have changed can be reviewed from the source code comments in detail. The paper uses 473 image resolution; however, we set the resolution to a lower value, i.e. 128 for our experiments. We provide our hyperparameters explicitly in `main.ipynb` and their values provided by the original paper and state the hyperparameters that are not mentioned in the paper. In addition to Dice Loss used by the original paper, we have also experimented with Binary Cross Entropy (BCE) Loss that is not used by the paper. For the Dice loss, we have used [this implementation](https://github.com/hubutui/DiceLoss-PyTorch) of Dice Loss for PyTorch [8].
 
 We use `ResNet-50` as our backbone, where we also provide other ResNet options such as `ResNet-101`. The original paper uses the both in their ablation studies. For the datasets, we only experiment with $PASCAL-5^i$ which has 4 folds for cross-validation where $i$ denote the fold index, and every fold has 5 classes. We only experimented with the "fold0", i.e. we used $PASCAL-5^0$ (refer to Table 1's notation in original paper). We have experimented with 3-shot and 5-shot settings for $PASCAL-5^0$ Dataset. We also added an overfitting option to dataloaders that takes only one n-shot sample, and we run the overfitting experiment with 1-shot setting.
 
@@ -74,7 +79,7 @@ Our main file is `main.ipynb` where we declare step by step code cells to run ou
 
 
 
-**Figure 3.1:** Results from **iteration 2845** of AAFormer model trained on  $PASCAL-5^i$ dataset at $i=0$ fold, 5-shot setting. First five with blue masks: support images. Last two with red masks: prediction and ground truth.
+**Figure 3.1:** Our results from **iteration 2845** of AAFormer model trained on  $PASCAL-5^i$ dataset at $i=0$ fold, 5-shot setting. First five with blue masks: support images. Last two with red masks: prediction and ground truth.
 
 
 
@@ -84,7 +89,7 @@ Our main file is `main.ipynb` where we declare step by step code cells to run ou
 ![example_1](./imagefolder/additional_results/3-shot-4.jpg)
 ![example_1](./imagefolder/additional_results/3-shot-5.jpg)
 
-**Figure 3.2:** Results from 3-shot setting, **iteration 600** of AAFormer model trained on  $PASCAL-5^i$ dataset at $i=0$ fold. First three with blue masks: support images. Last two with red masks: prediction and ground truth.
+**Figure 3.2:** Our results from 3-shot setting, **iteration 600** of AAFormer model trained on  $PASCAL-5^i$ dataset at $i=0$ fold. First three with blue masks: support images. Last two with red masks: prediction and ground truth.
 
 
 Due to the computational limits, we couldn't train for 200 epochs as the paper did. Here we only provide results of 1 epoch training, which took 17 hours on a single GPU trained on Colab's T4. In addition, we provide an overfitting case of a single 1-shot sample, trained for 150 epochs.
@@ -94,43 +99,43 @@ Please see our additional visual results at [/imagefolder/additional_results](./
 
 ![Figure 2](./imagefolder/1000-iter.png)
 
-**Figure.4:** Resulting masks at 1000th iteration for a batch size of 4.
+**Figure.4:** Our resulting masks at 1000th iteration for a batch size of 4.
 
 ![Figure 3](./imagefolder/1000-iter-loss.png)
 
-**Figure.5.1:** Dice loss for 1000 mini-batch iterations (an epoch takes about 3000 iterations), and *5-shot* setting. The loss is pretty noisy accross the samples; however, we cannot declare that the model is not learning until we train the model for at least 10-20 epochs.
+**Figure.5.1:** Our training loss plot, using Dice loss for 1000 mini-batch iterations (an epoch takes about 3000 iterations), and *5-shot* setting. The loss is pretty noisy accross the samples; however, we cannot declare that the model is not learning until we train the model for at least 10-20 epochs.
 
 ![Figure 3](./imagefolder/3-shot-loss.png)
 
-**Figure.5.2:** Training with Dice loss for 600 mini-batch iterations in *3-shot* setting.
+**Figure.5.2:** Our training loss plot, using Dice loss for 600 mini-batch iterations in *3-shot* setting.
 
 
 ![Figure 4](./imagefolder/bce-loss.png)
 
-**Figure.6:** BCE Training Loss falling trend for 80 mini-batch iterations.
+**Figure.6:** Our BCE Training Loss falling trend for 80 mini-batch iterations.
 
 ### 3.3.2 Overfitting Results
 
 ![Figure 1](./imagefolder/overfit-0.png)
 
-**Figure.7:** Overfitting experiment with BCE Loss + Dice Loss
+**Figure.7:** Our overfitting experiment with BCE Loss + Dice Loss
 
 ![Figure 1](./imagefolder/overfit-1.png)
 
-**Figure.8:** Overfitting experiment with Dice Loss
+**Figure.8:** Our overfitting experiment with Dice Loss
 
 ![Figure 1](./imagefolder/overfit-2.png)
 
-**Figure.9:** Overfitting experiment with alternating Dice Loss / BCE Loss
+**Figure.9:** Our overfitting experiment with alternating Dice Loss / BCE Loss
 
 
 ![Figure 9](./imagefolder/visualization.jpg)
 
-**Figure.10:** Visualization of overfitted model's mask. Here we can observe the model's attempt to separate the plane with people occlusion.
+**Figure.10:** Visualization of our overfitted model's mask. Here we can observe the model's attempt to separate the plane with people occlusion. We have used HSNET's code snipplets for visualization [2]. 
 
 ![Figure 1](./imagefolder/table.png)
 
-**Table.1:** Numerical evaluation results, in comparison with original paper's Table.1. Our AAFormer model is trained for 3000 iterations on $PASCAL-5^0$.
+**Table.1:** Our numerical evaluation results, in comparison with original paper's Table.1. Our AAFormer model is trained for 3000 iterations on $PASCAL-5^0$.
 
 # 4. Conclusion
 
@@ -159,6 +164,8 @@ Gautheron, Nathalie T.H. Gayraud, Hicham Janati, Alain Rakotomamonjy, Ievgen Red
 [6] Zhang, Xiaolin, et al. "Sg-one: Similarity guidance network for one-shot semantic segmentation." IEEE transactions on cybernetics 50.9 (2020): 3855-3865.
 
 [7] Zhang, Chi, et al. "Canet: Class-agnostic segmentation networks with iterative refinement and attentive few-shot learning." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2019.
+
+[8] Github user @hubutui, Dice Loss for PyTorch, code is adopted from: https://github.com/hubutui/DiceLoss-PyTorch
 
 # Contact
 

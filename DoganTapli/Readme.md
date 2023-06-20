@@ -80,12 +80,12 @@ Max_Inject = 21 # for Pong game
 We replicated the experiments described in the paper using the provided codebase. The codebase included the implementation of the DAP approach and the necessary components for training and evaluating the victim agents. We ensured that the codebase was properly set up and executed the experiments on the same hardware as mentioned in the paper.
 ```bash
 # To pretrain the PPO model 
-python3 ppo_train.py
+python3 ppo_train.py --env-name Pong --num-threads 1
 ```
 During the experiments, we observed the performance of the DAP approach in terms of its ability to deceive the victim agents and induce them to take suboptimal actions. We compared the results with the baseline methods and analyzed the effectiveness of the proposed approach.
 ```bash
 # To run the uap model 
-python3 main.py --model-path assets/ALE/Pong*.p
+python3 main.py --env-name Pong --num-threads 1 --model-path assets/ALE/Pong*.p
 ```
 - [ ] @TODO: Explain your code & directory structure and how other people can run it.
 

@@ -76,7 +76,6 @@ def init_agent_tokens(device, num_tokens, M_s, f_s):
    
     """
     L_new = []
-    # TODO: can we compute this jointly for all images in a batch?
     for i in range(len(X)):
         L_single = L[i]      # L for a single image in a batch
 

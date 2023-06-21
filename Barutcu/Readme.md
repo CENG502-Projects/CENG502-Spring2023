@@ -278,6 +278,7 @@ To wrap up, I enjoyed reproducing this paper and learned a lot during the proces
 - Rishabh Iyer and Jeff Bilmes, ["Submodular Optimization with Submodular Cover and Submodular Knapsack Constraints," SIAM Journal on Computing (SICOMP), vol. 47, no. 1, pp. 175-203, 2018.](https://proceedings.neurips.cc/paper/2013/file/a1d50185e7426cbb0acad1e6ca74b9aa-Paper.pdf)
 - Stephen Boyd and Lieven Vandenberghe, [*Convex Optimization*. Cambridge University Press, 2004.](https://web.stanford.edu/~boyd/cvxbook/)
 - Yaron Singer "AM 221: Advanced Optimization," Harward University, Available: [http://people.seas.harvard.edu/~yaron/AM221-S16/index.html](http://people.seas.harvard.edu/~yaron/AM221-S16/index.html)
+- Velickovic Peter et al, [Graph Attention Networks, ICLR, 2018](https://arxiv.org/pdf/1710.10903.pdf)
 - Youze Tang, Yanchen Shi, and Xiaokui Xiao, ["Influence Maximization in Near-Linear Time: A Martingale Approach," SIGMOD '15: Proceedings of the 2015 ACM SIGMOD International Conference on Management of DataMay 2015Pages 1539–1554](https://dl.acm.org/doi/10.1145/2723372.2723734)
 
 # Contact

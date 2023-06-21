@@ -34,9 +34,9 @@ Each item is represented by 12 text embeddings including title, color etc and at
 ## 2.1.1. Multi-Modal Representation Learning
 
 <br>
-The aim of the multi-modal representation learning is to combine embeddings from different modalities including voice, vision, text etc. and create a single embedding for a product. [x] Paper propose a multi-modal representations from image and text embeddings.<br>
+The aim of the multi-modal representation learning is to combine embeddings from different modalities including voice, vision, text etc. and create a single embedding for a product. [1] Paper propose a multi-modal representations from image and text embeddings.<br>
 
-Image embeddings are taken from PinSage [1] module. <br>
+Image embeddings are taken from PinSage [2] module. <br>
 
 Text embeddings are produced using hashing trick in order to get rid of high vocabulary volume. They used an embedding table E size of 100.000 x 256. And weight table W size of |V|x2 weights where V is the vocabulary size. Numerical values for each token is taken from the vocabularies. Then, hashing trick is used to get 2 embeddings for each text token. 2 embeddings are multiplied with their corresponding weigths and summed. <br>
 
@@ -48,6 +48,8 @@ According to authors this is the first system that applies multi-modal represent
 
 Recommendation systems may have several tasks to be accomplished by using the same model. In order to provide this, systems employ multiple task-specific embeddings. However, using a single embedding acrross several tasks is more economic and convenient. Therefore, authors utilized a single product embedding for multi-task learning.<br>
 
+Multi-task learning is implemented using positive samples from different tasks in the same batch. 
+
 ## 2.1.3. Model Architecture
 
 <br>
@@ -55,10 +57,13 @@ Recommendation systems may have several tasks to be accomplished by using the sa
 <br>
 
 
-Authors used transformer encoders to get the relationship among embeddings. First, all embeddings including image, text and CLS are processed through a linear layer size of 512 to convert all embeddings to the same dimensions. Then, embeddings are passed through 1-layer transformer encoder. The global embedding, CLS token is used as the output of the transformer encoder. This embedding is passed through a sequential nonlinear GELU layer to obtain the 256 dimension final embedding. 
+Authors used transformer encoders to get the relationship among embeddings. First, all embeddings including image, text and CLS are processed through a linear layer size of 512 to convert all embeddings to the same dimensions. Then, embeddings are passed through 1-layer transformer encoder. The global embedding, CLS token is used as the output of the transformer encoder. This embedding is passed through a sequential linear and GELU layers to obtain the 256 dimension final embedding. 
 Each item is represented by this 256 dimensional embedding. <br>
 
-For search through the embeddings, each item is transformed into its corresponding embedding and search is done via Approximate Nearest Neighbour Search [2].
+For search through the embeddings, each item is transformed into its corresponding embedding and search is done via Approximate Nearest Neighbour Search [3].
+
+Authors used DistilBERT [4] for creating embeddings for text search queries. Search queries are used for fine-tuning a DistilBERT model. 
+
 
 ## 2.2. Our interpretation 
 
@@ -73,30 +78,32 @@ We did not have a dataset that is used by Pinterest which has around 20 photos p
 
 ## 3.1. Experimental setup
 
-@TODO: Describe the setup of the original paper and whether you changed any settings.
+--
 
 ## 3.2. Running the code
 
-@TODO: Explain your code & directory structure and how other people can run it.
+--
 
 ## 3.3. Results
 
-@TODO: Present your results and compare them to the original paper. Please number your figures & tables as if this is a paper.
+--
 
 # 4. Conclusion
 
-@TODO: Discuss the paper in relation to the results in the paper and your results.
+--
 
 # 5. References
 
-[1] Rex Ying, Ruining He, Kaifeng Chen, Pong Eksombatchai, William L Hamilton, and Jure Leskovec. 2018. Graph convolutional neural networks for web-scale recommender systems. In Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. 974–983.
+[1] Wenzhong Guo, Jianwen Wang, and Shiping Wang. 2019. Deep multimodal representation learning: A survey. IEEE Access 7 (2019), 63373–63394.
 
-[2] Yen-Chun Chen, Linjie Li, Licheng Yu, Ahmed El Kholy, Faisal Ahmed, Zhe Gan, Yu Cheng, and Jingjing Liu. 2019. Uniter: Learning universal image-text representations. (2019).
+[2] Rex Ying, Ruining He, Kaifeng Chen, Pong Eksombatchai, William L Hamilton, and Jure Leskovec. 2018. Graph convolutional neural networks for web-scale recommender systems. In Proceedings of the 24th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. 974–983.
 
-[x] Wenzhong Guo, Jianwen Wang, and Shiping Wang. 2019. Deep multimodal representation learning: A survey. IEEE Access 7 (2019), 63373–63394.
+[3] Yen-Chun Chen, Linjie Li, Licheng Yu, Ahmed El Kholy, Faisal Ahmed, Zhe Gan, Yu Cheng, and Jingjing Liu. 2019. Uniter: Learning universal image-text representations. (2019).
+
+[4] Victor Sanh, Lysandre Debut, Julien Chaumond, and Thomas Wolf. 2019. DistilBERT, a distilled version of BERT: Smaller, faster, cheaper and lighter. arXiv:1910.01108
 
 * All pictures and figures are taken from original paper.
   
 # Contact
 
-@TODO: Provide your names & email addresses and any other info with which people can contact you.
+Munir Ercan: munir.ercan [at] metu edu tr

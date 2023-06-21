@@ -256,7 +256,7 @@ The below table shows the different experimental setups for the link prediction 
 
 | Method                         | Transductive (ours) | Inductive (ours) | Inductive Cold 30%  (ours) | Inductive Cold 60% (ours) | Inductive Cold 90% (ours) |
 | ------------------------------ | :----------: | :-------: | :----------------: | :----------------: | :----------------: |
-| Base                           |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9745;        |
+| Base                           |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
 | TUNEUP w/o curriculum          |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
 | TUNEUP w/o syn-tails           |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
 | **TUNEUP (ours)**              |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |

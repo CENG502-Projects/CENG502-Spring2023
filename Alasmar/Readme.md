@@ -21,20 +21,28 @@ Given a Deep Model, the 'DECORE' framework assigns an agent to each layer of the
 following policy
 
 $$ p_j = \frac{1}{1+e^{-w_j}}$$
-$$\pi_{j} = \left\{ \begin{array}{lr}
-        1, & \text{with } p_j \\
-        0, & \text{with } 1 - p_j
-    \end{array}\right\}$$
+
+$$\begin{equation}
+\pi_{j} = 
+  \begin{cases}
+  1 & \text{with } p_j \\
+  0 & \text{with } 1 - p_j
+  \end{cases}
+\end{equation}$$
 
 $$a_i = \{\pi_0,\pi_1,...,\pi_{C_i}\}$$
 
 where $w_j$ is the importance weight of channel $j$ and $w_j \in s_i$, $\pi_{j}$ is the policy function which samples actions $\{1,0\}$ according to Bernoulli process. $p_j$ is the probability distribution of $\pi_j$. The model computes a compression reward according to: 
 $$R_{i,C} = \sum_{j=1}^{C_i} 1 - a_{i,j}$$
 the model incurs a penalty $\lambda$ for incorrect predictions as:
-$$R_{acc} = \left\{ \begin{array}{lr}
-        1, & \text{if } y_{pred} == y_{true} \\
-        -\lambda, & \text{otherwise }
-    \end{array}\right\}$$
+$$\begin{equation}
+R_{acc} = 
+  \begin{cases}
+  1 & \text{if } y_{Pred} == y_{True} \\
+  -\lambda & \text{otherwise }
+  \end{cases}
+\end{equation}$$
+
 
 The cost function is:
 $$max_{w} J(w) = \sum_{i=1}^{L} max_{w} E_{\tau \sim \pi_{w}(\tau_i)}[R_i]$$

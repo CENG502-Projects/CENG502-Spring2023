@@ -3,7 +3,7 @@
 This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.edu.tr/~skalkan/ADL/) project for reproducing a paper without an implementation. See [CENG502 (Spring 20223) Project List](https://github.com/CENG502-Projects/CENG502-Spring2023) for a complete list of all paper reproduction projects. If you are interested in the commit history, you can find the public repository in my account here: https://github.com/utkutpcgl/UniVIP.
 
 # 1. Introduction
-Self supervised learning aims to train generalizable models without labels by using the data intrinsic learning signals. There is a significant need for labeled data for most computer vision tasks, where object segmentation can be one of the most tedious ones. 
+Self-supervised learning aims to train generalizable models without labels by using the data intrinsic learning signals. There is a significant need for labeled data for most computer vision tasks, where object segmentation can be one of the most tedious ones. 
 
 Self-supervised learning methods have achieved on-par or even better results than their supervised counterparts in recent years (also in NLP). However, most available methods focus on iconic datasets (with single objects centered in the image) like ImageNet. For classification tasks, these methods might be sufficient but tasks like object detection and segmentation require learning more detailed representations by taking into account multiple objects in images of varying sizes. For the representations to be useful they have to be taking into account non-iconic samples which are common in datasets like COCO.
 
@@ -33,9 +33,9 @@ In the image, scenes are similar, objects are part of (related) to scenes, and e
 1. Rather than selecting fully random crops, selecting two random scenes with an overlap (where some objects reside) can solve the inconsistency problem in non-iconic datasets like COCO.
 2. If available instances in the image are known, together with the random crops (scenes), they utilize scene-to-scene similarity, instances-to-scene similarity, and instances-to instances dissimilarity.
 
-With these updates they achieve superior results both in single-centric (iconic) datasets like imagenet (classification) and non-iconic datasets like COCO and on multiple different downstream tasks.
+With these updates, they achieve superior results both in single-centric (iconic) datasets like imagenet (classification) and non-iconic datasets like COCO and on multiple different downstream tasks.
 
-It is important to mention that, in the literature, there is a paper which BYOL is very related (might be inspired from) called ORL (Unsupervised Object-Level Representation Learning from Scene Images) [3].
+It is important to mention that, in the literature, there is a paper to which BYOL is very related (might be inspired by) called ORL (Unsupervised Object-Level Representation Learning from Scene Images) [3].
 
 <p align="center">
   <img src="imgs/image-2.png" alt="Illustration of scene and instance relations." style="width: 40%;"><br>
@@ -139,11 +139,11 @@ Where the final loss turns out to be:
 - While selecting scenes with overlaps, it was not stated in the pseudo-code directly, but I have assumed that the overlap must have an edge larger than 64 pixels and did not increase the count if not (because the continuation would fail to generate K (4) boxes with iou, max_ratio, and min_size limitations anyways). 
 
 ## 2.2.2. Sinkhorn related
-- I have noticed that OTA paper (which UniVIP refers to), uses a logarithmic version of Sinkhorn iterations. I could not be sure if that is truly the same as Sinkhorn operations hence asked the original author of the logarithmic version (Prof. Gabriel Peyre, see here https://github.com/gpeyre/SinkhornAutoDiff/blob/master/sinkhorn_pointcloud.py).
+- I have noticed that the OTA paper (which UniVIP refers to), uses a logarithmic version of Sinkhorn iterations. I could not be sure if that is truly the same as Sinkhorn operations hence asked the original author of the logarithmic version (Prof. Gabriel Peyre, see here https://github.com/gpeyre/SinkhornAutoDiff/blob/master/sinkhorn_pointcloud.py).
 - As this paper uses Sinkhorn-Knopp optimization inspired by the OTA [2] paper, I used their values for iterations T and epsilon value (50 and 0.1 respectively.). UniVIP did not state these values explicitly.
 
 ## 2.2.3. Performance related
-- The performance of the method was not clearly stated, but, I have observed a significant boost-up (6 fold compared CPU loading), when changing the `__get_item__()` method of the dataset to perform some operations on the GPU (shared on multiple devices) as follows (`get_concatenated_instances` can benefit a lot from parallelization, as it includes cropping multiple RoIs from images.):
+- The performance of the method was not clearly stated, but, I have observed a significant boost-up (6 fold compared to CPU loading) when changing the `__get_item__()` method of the dataset to perform some operations on the GPU (shared on multiple devices) as follows (`get_concatenated_instances` can benefit a lot from parallelization, as it includes cropping multiple RoIs from images.):
 
 ```
 scene_one, scene_two, overlapping_boxes = scene_one.to(worker_id), scene_two.to(worker_id), overlapping_boxes.to(worker_id)
@@ -163,17 +163,17 @@ def byol_loss_fn(self, x, y):
     y = F.normalize(y, dim=-1, p=2)
     return (2 - 2 * (x * y).sum(dim=-1)).mean()
 ```
-- They say that they use linear warm up in the first 4 epochs to increase the learning rate. I was not sure whether they took a step every epoch or every iteration, hence, I increased it every iteration.
+- They say that they use linear warm-up in the first 4 epochs to increase the learning rate. I was not sure whether they took a step every epoch or every iteration, hence, I increased it every iteration.
 
 ## 2.2.5. Box generation related
 - In the paper they state that they apply a naive strategy when it is not possible to get overlapping scenes with K instances in certain trials (20) for every image, in which case they apply a naive strategy (not selective search). They did not clearly explain this part and I have asked the authors. One of them replied that they generated random boxes obeying the constraints applied to selective search proposals (iou_threshold and such). How they did this was also not very clear, so I simply sampled 100 different x,y,w,h values from an acceptable linear distribution and filtered them. If an acceptable box was produced I added it to the proposals, if not, I took the best random box, *even if it has a large IoU than 0.5*, this is because I did not want the training procedure to lose too much time here.
-- There were two images in the COCO dataset which had an edge smaller 64 where my code was failing (getting stuck in finding satisfactory scenes). They should have very little impact on the final results, hence, I have discarded these images in the dataset.
+- There were two images in the COCO dataset which had an edge smaller than 64 where my code was failing (getting stuck in finding satisfactory scenes). They should have very little impact on the final results, hence, I have discarded these images in the dataset.
 
 
 # 3. Experiments and results
-*NOTE:* This project could not manage to start a fully healthy training. In the final training I was running I observed NaN values in the output of the encoders in the 34th epoch (no NaN value until then). If I had more time I would re-load the final saved weights (checkpoint) and find out the root of the NaN values. Most probably it is not related to overshooting, but, a rare event where boxes or augmentations are causing this error. Debugging and training self-supervised methods are particularly very difficult and time-consuming as the required training time is 1 to 2 weeks. Even if careful, some problems arise during or after training. Writing a "bug-free" training code requires a lot of time and effort, which is worth it since having the wrong training code will result in wrong results anyways.
+*NOTE:* This project could not manage to start a fully healthy training. In the final training I was running I observed NaN values in the output of the encoders in the 34th epoch (no NaN value until then). If I had more time I would re-load the final saved weights (checkpoint) and find out the root of the NaN values. Most probably it is not related to overshooting, but, a rare event where boxes or augmentations are causing this error. Debugging and training self-supervised methods are particularly very difficult and time-consuming as the required training time is 1 to 2 weeks. Even if careful, some problems arise during or after training. Writing a "bug-free" training code requires a lot of time and effort, which is worth it since having the wrong training code will result in the wrong results anyways.
 
-With the pre-trained model (until epoch 34), I have trained the online encoder (ResNet50) for 28 epochs. I was not sure if they have picked the best accuracy at the final epoch or from the model with best accuracy in any epoch. I only shared the final results.
+With the pre-trained model (until epoch 34), I have trained the online encoder (ResNet50) for 28 epochs. I was not sure if they have picked the best accuracy at the final epoch or from the model with the best accuracy in any epoch. I only shared the final results.
 
 Due to lack of time, I had to increase the learning rate and batch size 8 times. The accuracy (top-1 accuracy) I achieved was 0.1%, which is basically the random guess accuracy. The pre-trained encoder learned nothing with 35 epochs training (should reach 800), but this most probably shows that there is a bug in the code and I received NaN values not arbitrarily. Below I share the expected results for linear probing on ImageNet (from the paper).
 
@@ -198,28 +198,28 @@ From the repo `https://github.com/Jiahao000/ORL/tree/master`, download the non-f
 1. To speed up loading the JSON file (~5GB) convert it to a pickle file with `data_ops/generate_proposals/json_to_pkl.py` (specify the path with `file_path`).
 2. Filter out small bounding boxes with `data_ops/generate_proposals/post_filter_boxes.py` (specify the path with `TARGET_PKL`).
 3. Enumerate the pickle file per image to sort them accordingly with `data_ops/enumerate_bbox.py`. (specify the path with `PICKLE_FILE`).
-4. Match boxes with image names with `data_ops/name_pkl.py` (specify the path with `TARGET_PKL`). Note that you have to modify `ANNOTATION_INFO` with `instances_train2017.json` or `image_info_unlabeled2017.json` paths from the COCO dataset.
+4. Match the boxes with image names with `data_ops/name_pkl.py` (specify the path with `TARGET_PKL`). Note that you have to modify `ANNOTATION_INFO` with `instances_train2017.json` or `image_info_unlabeled2017.json` paths from the COCO dataset.
 5. Finally convert the .pkl file contents from lists to tensors with `data_ops/pkl_convert_tensor.py`
 
-At the end, you will have pkl files with bounding box proposals (filtered for 64 min_size according to UniVIP) and image names matched.
+In the end, you will have pkl files with bounding box proposals (filtered for 64 min_size according to UniVIP) and image names matched.
 
 #### (NOT RECOMMENDED) Re-generating bounding box proposal generation with selective search
 
-1. Copy the python scripts in `ORL_files` to the repo ORL to run the command `bash dist_selective_search_single_gpu.sh configs/selfsup/orl/coco/stage2/selective_search_train2017.py univip_instances_train2017.json` in ORL (get from `https://github.com/Jiahao000/ORL/tree/2ad64f7389d20cb1d955792aabbe806a7097e6fb` and install runtime.txt dependencies and install this for selective search `pip3 install opencv-contrib-python --upgrade`).
+1. Copy the Python scripts in `ORL_files` to the repo ORL to run the command `bash dist_selective_search_single_gpu.sh configs/selfsup/orl/coco/stage2/selective_search_train2017.py univip_instances_train2017.json` in ORL (get from `https://github.com/Jiahao000/ORL/tree/2ad64f7389d20cb1d955792aabbe806a7097e6fb` and install runtime.txt dependencies and install this for selective search `pip3 install opencv-contrib-python --upgrade`).
 2. Replace the code in `selective_search_iou.py` and `/home/utku/Documents/ODTU/CENG502/project/ORL/openselfsup/datasets/selective_search.py` to apply iou_tresh together with selective search.
 3. Then generate the proposal boxes with the selective search for min_size 64.
 
 ### 3.2.2. Training the method (univip)
 
-1. In `train/dataloader.py`, modify this line to point to your PKL file with the box proposals: `ORI_FILTERED_PKL = <BOX_PROPOSAL_PATH>`. And this line to point to COCO train2017 images: `DATASET_PATH = <train2017>`.
+1. In `train/dataloader.py`, modify this line to point to your PKL file with the box proposals: `ORI_FILTERED_PKL = <BOX_PROPOSAL_PATH>`. And this line points to COCO train2017 images: `DATASET_PATH = <train2017>`.
 2. Modify `LOG_DIR` in `train/train.py` to the point where you want to log your training progress and weight file. 
 3. Set `USE_DDP=True` in `train/train.py`, assuming that you want to train with multiple GPUs. You can adjust the device settings further in this file if you are not satisfied with the current devices.
 4. Simply `cd train` and start training with `python3 train.py`. Training will start after the pkl file and the dataset is loaded. (ignore the warning related to CUDA )
 
 ### 3.2.3. Linear Probing on ImageNet1K
-0. Download the IN1K dataset from kaggle (first accept the terms from the website). Then download the dataset with `kaggle competitions download -c imagenet-object-localization-challenge` [from https://towardsdatascience.com/downloading-and-using-the-imagenet-dataset-with-pytorch-f0908437c4be]. Change `root` in `ImageNetKaggleDataset` to point to `ILSVRC/` and move the `.json` files to that root folder also.
-1. Download dataset related helper files with `cd train; bash download_IN_index_label.sh` [from https://towardsdatascience.com/downloading-and-using-the-imagenet-dataset-with-pytorch-f0908437c4be]. 
-2. Then train the model with `python3 eval_classifier.py`. This will train the pre-trained UVIP model on IN1K by freezing initial layers and only fine-tuning a final layer for 28 epochs. Finally it will output the accuracy on IN val set (as said in the paper ORL.)
+0. Download the IN1K dataset from Kaggle (first accept the terms from the website). Then download the dataset with `kaggle competitions download -c imagenet-object-localization-challenge` [8]. Change `root` in `ImageNetKaggleDataset` to point to `ILSVRC/` and move the `.json` files to that root folder also.
+1. Download dataset-related helper files with `cd train; bash download_IN_index_label.sh` [8]. 
+2. Then train the model with `python3 eval_classifier.py`. This will train the pre-trained UVIP model on IN1K by freezing initial layers and only fine-tuning a final layer for 28 epochs. Finally, it will output the accuracy on IN val set (as said in the paper ORL.)
 
 
 # 4. Conclusion
@@ -234,6 +234,7 @@ This project tried to reproduce the results of UniVIP which tries to improve sel
 5. Megvii-BaseDetection, "OTA," GitHub. [Online]. Available: https://github.com/Megvii-BaseDetection/OTA.
 6. G. Peyré, "SinkhornAutoDiff - example_sinkhorn_pointcloud.py," GitHub. [Online]. Available: https://github.com/gpeyre/SinkhornAutoDiff/blob/master/example_sinkhorn_pointcloud.py.
 7. J.-B. Grill, F. Strub, F. Altché, C. Tallec, P. H. Richemond, E. Buchatskaya, C. Doersch, B. A. Pires, Z. D. Guo, M. G. Azar, B. Piot, K. Kavukcuoglu, and J. Carreira, "Bootstrap your own latent-a new approach to self-supervised learning," in Proceedings of the 34th Conference on Neural Information Processing Systems, Vancouver, Canada, 2020, pp. 21271-21284.
+8. Towards Data Science. (2021, August 9). Downloading and Using the ImageNet Dataset with PyTorch. Towards Data Science. https://towardsdatascience.com/downloading-and-using-the-imagenet-dataset-with-pytorch-f0908437c4be
 
 # Contact
 

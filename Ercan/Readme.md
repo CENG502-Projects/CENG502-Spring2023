@@ -23,7 +23,7 @@ There are 3 surfaces at Pinterest where users get recommendation according to th
 <br>
 
 
-Each item is represented by 12 text embeddings including title, color etc and at most 20 image embeddings. Images are embedded using the PinSage module of Pinterest which is not available publicly. Texts are embedded using jointly with the system. Text are converted to numerical IDs using vocabulary. Unigrams are selected from most frequently used 200000 words, bigrams are selected from 1000000 tokens and character trigrams are selected from 64000 tokens. Out of vocabulary tokens are neglected.
+Each item is represented by 12 text embeddings including title, color etc and at most 20 image embeddings. Images are embedded using the PinSage module of Pinterest which is not available publicly. Texts are embedded using jointly with the system. Text are converted to numerical IDs using vocabulary. Unigrams are selected from most frequently used 200.000 words, bigrams are selected from 1.000.000 tokens and character trigrams are selected from 64.000 tokens. Out of vocabulary tokens are neglected.
 
 <br>
 
@@ -38,7 +38,7 @@ The aim of the multi-modal representation learning is to combine embeddings from
 
 Image embeddings are taken from PinSage [2] module. <br>
 
-Text embeddings are produced using hashing trick in order to get rid of high vocabulary volume. They used an embedding table E size of 100.000 x 256. And weight table W size of |V|x2 weights where V is the vocabulary size. Numerical values for each token is taken from the vocabularies. Then, hashing trick is used to get 2 embeddings for each text token. 2 embeddings are multiplied with their corresponding weigths and summed. <br>
+Text embeddings are produced using hashing trick in order to get rid of high vocabulary volume. They used an embedding table E size of 100.000 x 256. And weight table W size of |V|x2 weights where V is the vocabulary size. Numerical values for each token is taken from the vocabularies. Out of vocabulary tokens are neglected. Then, hashing trick is used to get 2 embeddings for each text token. A hash function with two different seeds is used for this task. 2 embeddings are multiplied with their corresponding weigths and summed. <br>
 
 The global variable CLS is passed through a linear layer. <br>
 
@@ -68,7 +68,7 @@ Authors used DistilBERT [4] for creating embeddings for text search queries. Sea
 ## 2.2. Our interpretation 
 
 <br>
-Since, PinSage which is used for image embeddings is not available publicly, we emplyed another image embedder for this. We used ResNet50 pretrained on ImageNet as image embedder. And also we did not have most frequently used vocabularies. In  order to overcome this usage, we emplyed hashing trick in this part too. We got numerical IDs for each token by using a hash function. Hash function provided us a value which we used for getting corresponding weigths from weight table W.
+Since, PinSage which is used for image embeddings is not available publicly, we emplyed another image embedder for this. We used ResNet50 pretrained on ImageNet as image embedder. And also we did not have most frequently used vocabularies. In  order to overcome this usage, we employed hashing trick in this part too. We got numerical IDs for each token by using a hash function. Hash function provided us a value which we used for getting corresponding weigths from weight table W. 
 
 Other parts are implemented as it is in the paper. 
 

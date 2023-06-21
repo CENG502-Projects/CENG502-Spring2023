@@ -246,7 +246,8 @@ Embedding Dimension | 64
 Number of Heads | 4 
 Number of GNN Layers | 2 
 Dropout | 0.6 
-Epoch | Elu 
+Epoch | 100
+Activation Function | Elu
 Loss Function | BCE 
 Learning Rate | 0.01 
 

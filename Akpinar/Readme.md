@@ -133,10 +133,13 @@ Figure 13: The Design of Loss Function for Sequence Recognition with RadialCTC(F
 
 ## 2.2. Our interpretation
 
+**Dataset Construction**
 I constructed the Seq-MNIST, interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. The example can be seen below. The interpolation was not clear so I used range(0.1, 1, 0.1) for the intervals and [0.1, 0.3, 0.5, 0.7, 0.9] for the ends. Also, LeNet++ uses 32x32 input data so I reshape the image.
 
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/my_mnist_seq.PNG" width="720"  >
 Figure 14: An example of Seq-MNIST dataset(From my results)
+
+**Model Architecture**
 
 Then, I constructed LeNets++ from Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016) with below parameters. Some of the convolution layers are followed by max pooling. (5, 32)/1,2 × 2 denotes 2 cascaded convolution layers with 32 filters of size 5 × 5, where the stride and padding are 1 and 2 respectively. 2/2,0 denotes the max-pooling layers with grid of 2×2, where the stride and padding are 2 and 0 respectively. In LeNets++, we use the Parametric Rectified Linear Unit (PReLU) as the nonlinear unit. Where to use PReLu was not clear so I used it after every conv and fc layers(in=2048,out=3).
 
@@ -145,6 +148,8 @@ Figure 15: Architecture of LeNets++(From another paper)
 
 For the output layer, I used 3 as our paper for 3D feature map. the output goes through a fc(in=3,out=11) and softmax. I return feature v for plotting. 
 
+**CTC loss calculation**
+
 For the CTC implementation, follow the explanation from [4] which is based on [2]
 
 I get a vector, which has the length of vocabulary, for each time step of LeNets++ computation. The softmax function is applied to it to get a vector of probabilities. I exclude all rows that do not include tokens from the target sequence and then rearrange the tokens to form the output sequence. This is done during training only. If a token occur multiple times in the label, we repeat the rows for similar tokens in their appropriate location. This becomes our probability matrix,  y(s,t) like the "door" example below.
@@ -152,7 +157,7 @@ I get a vector, which has the length of vocabulary, for each time step of LeNets
 <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/door.PNG" width="720"  >
 Figure 15: An example(From [4])
 
-Forward Algorithm for computing  α(s,t):
+**Forward Algorithm for computing  α(s,t):**
 
 First, let’s create a matrix of zeros of same shape as our probability  matrix, y(s,t) to store our α values. The forward algorithm is given by;
 
@@ -176,7 +181,7 @@ for s = 0 to S:
 
 Note that α(s,t)=0 for all s<S−2(T−t)−1 which corresponds to the unconnected boxes in the top-right. These variables correspond to states for which there are not enough time-steps left to complete the sequence.
 
-Backward algorithm for computing β(s,t):
+**Backward algorithm for computing β(s,t):**
 
 Let’s also create a matrix of zeros of same shape as our probability matrix, y(s,t) to store our β values.
 
@@ -196,7 +201,7 @@ for s = S-1 to 0:
 
 Similarly, β(s,t)=0 for all s>2t which corresponds to the unconnected boxes in the bottom-left.
 
-CTC Loss calculation for each timestep:
+**CTC Loss calculation for each timestep:**
 
 γ(s,t)=α(s,t)β(s,t)
 
@@ -205,7 +210,7 @@ P(seqt,t)=∑s=0,S γ(s,t)/y(s,t)
 loss=-∑t=0,T-1  ln(P(seqt,t))
 
 
-RadialCTC:
+**RadialCTC:**
 
 Then, loss as -∑t=0,T-1 ∑s=0,S ln(γ(s,t)/y(s,t))*z(s,t).
 
@@ -213,6 +218,8 @@ But for the calculation of z the paper mentions an s value which is different th
 I added angular and center regularization. 
 
 In the CTC loss and radial CTC loss calculation at the sum of ln gives "RuntimeError: Function 'LogBackward0' returned nan values in its 0th output." in backward propagation. I could not find a solution for that unfortunately so I could not make the experiments and get the results () you can see the error on the training part of the code but I implement the training and validation steps.
+
+**Other Datasets and models with RadialCTC**
 
 I also download and prepare the Phonex14 data set for multisinger and independentsinger. I apply the transformations that are specified in the paper. 
 For the model, I use ResNet18 with the last layer of BiLSTM with 2x512 hidden layers. I wrote the training and testing codes of this model with RadialCTC but due to the complication in backwardprob, I could not train the model and get the results

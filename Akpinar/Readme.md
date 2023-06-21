@@ -136,7 +136,7 @@ Figure 13: The Design of Loss Function for Sequence Recognition with RadialCTC(F
 **Dataset Construction**
 I constructed the Seq-MNIST, interpolate with alpha=9 and add 5 frames to the beginning and the end. The Seq-MNIST has 15,000 training sequences and 2500 testing sequences, and each sequence contains 41 frames. The example can be seen below. The interpolation was not clear so I used range(0.1, 1, 0.1) for the intervals and [0.1, 0.3, 0.5, 0.7, 0.9] for the ends. Also, LeNet++ uses 32x32 input data so I reshape the image.
 
-<img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/mmy_mnist_seq.png" width="720"  >
+<img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/my_mnist_seq.png" width="720"  >
 Figure 14: An example of Seq-MNIST dataset(From my results)
 
 **Model Architecture**

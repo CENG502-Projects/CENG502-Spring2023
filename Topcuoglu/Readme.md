@@ -171,7 +171,18 @@ def byol_loss_fn(self, x, y):
 
 
 # 3. Experiments and results
-*NOTE:* This project could not manage to start a fully healthy training. In the final training I was running I observed NaN values in the output of the encoders in the 53th epoch (no NaN value until then). If I had more time I would re-load the final saved weights (checkpoint) and find out the root of the NaN values. Most probably it is not related to overshooting, but, a rare event where boxes or augmentations are causing this error. Sadly, results on downstream tasks like linear probing, object detection, and segmentation could not be generated which require extra training on downstream tasks. Debugging and training self-supervised methods are particularly very difficult and time-consuming as the required training time is 1 to 2 weeks. Even if careful, some problems arise during or after training. Writing a "bug-free" training code requires a lot of time and effort, which is worth it since having the wrong training code will result in wrong results anyways. By being reliable, this project hopefully will be more helpful to the academy and open source community.
+*NOTE:* This project could not manage to start a fully healthy training. In the final training I was running I observed NaN values in the output of the encoders in the 34th epoch (no NaN value until then). If I had more time I would re-load the final saved weights (checkpoint) and find out the root of the NaN values. Most probably it is not related to overshooting, but, a rare event where boxes or augmentations are causing this error. Debugging and training self-supervised methods are particularly very difficult and time-consuming as the required training time is 1 to 2 weeks. Even if careful, some problems arise during or after training. Writing a "bug-free" training code requires a lot of time and effort, which is worth it since having the wrong training code will result in wrong results anyways.
+
+With the pre-trained model (until epoch 34), I have trained the online encoder (ResNet50) for 28 epochs. I was not sure if they have picked the best accuracy at the final epoch or from the model with best accuracy in any epoch. I only shared the final results.
+
+Due to lack of time, I had to increase the learning rate and batch size 8 times. The accuracy (top-1 accuracy) I achieved was 0.1%, which is basically the random guess accuracy. The pre-trained encoder learned nothing with 35 epochs training (should reach 800), but this most probably shows that there is a bug in the code and I received NaN values not arbitrarily. Below I share the expected results for linear probing on ImageNet (from the paper).
+
+![Alt text](results.png)
+<p align="center">
+  <img src="imgs/results.png" alt="" style="width: 50%;"><br>
+  <em> Table 2: Expected paper results.(from the paper)</em>
+</p>
+
 
 
 ## 3.1. Experimental setup
@@ -199,15 +210,21 @@ At the end, you will have pkl files with bounding box proposals (filtered for 64
 2. Replace the code in `selective_search_iou.py` and `/home/utku/Documents/ODTU/CENG502/project/ORL/openselfsup/datasets/selective_search.py` to apply iou_tresh together with selective search.
 3. Then generate the proposal boxes with the selective search for min_size 64.
 
-### 3.2.2. Training the method
+### 3.2.2. Training the method (univip)
 
 1. In `train/dataloader.py`, modify this line to point to your PKL file with the box proposals: `ORI_FILTERED_PKL = <BOX_PROPOSAL_PATH>`. And this line to point to COCO train2017 images: `DATASET_PATH = <train2017>`.
 2. Modify `LOG_DIR` in `train/train.py` to the point where you want to log your training progress and weight file. 
 3. Set `USE_DDP=True` in `train/train.py`, assuming that you want to train with multiple GPUs. You can adjust the device settings further in this file if you are not satisfied with the current devices.
 4. Simply `cd train` and start training with `python3 train.py`. Training will start after the pkl file and the dataset is loaded. (ignore the warning related to CUDA )
 
+### 3.2.3. Linear Probing on ImageNet1K
+0. Download the IN1K dataset from kaggle (first accept the terms from the website). Then download the dataset with `kaggle competitions download -c imagenet-object-localization-challenge` [from https://towardsdatascience.com/downloading-and-using-the-imagenet-dataset-with-pytorch-f0908437c4be]. Change `root` in `ImageNetKaggleDataset` to point to `ILSVRC/` and move the `.json` files to that root folder also.
+1. Download dataset related helper files with `cd train; bash download_IN_index_label.sh` [from https://towardsdatascience.com/downloading-and-using-the-imagenet-dataset-with-pytorch-f0908437c4be]. 
+2. Then train the model with `python3 eval_classifier.py`. This will train the pre-trained UVIP model on IN1K by freezing initial layers and only fine-tuning a final layer for 28 epochs. Finally it will output the accuracy on IN val set (as said in the paper ORL.)
+
+
 # 4. Conclusion
-This project tried to reproduce the results of UniVIP which tries to improve self-supervised learning in the vision domain for non-iconic datasets like COCO. The results could not be produced due to persisting errors in the training procedure which arise unexpectedly after very long training (50 epochs take half a day, which was the frequency of the final NaN outputting encoder error.). SSL in images with many objects is an interesting research direction and very important for the industry also. Eventually, I hope that this project will be of help to researchers interested in this field.
+This project tried to reproduce the results of UniVIP which tries to improve self-supervised learning in the vision domain for non-iconic datasets like COCO. The results were not representative due to persisting errors in the training procedure which arise unexpectedly after very long training (34 epochs take half a day, which was the frequency of the final NaN outputting encoder error.). SSL in images with many objects is an interesting research direction and very important for the industry also. Eventually, I hope that this project will be of help to researchers interested in this field.
 
 # 5. References
 

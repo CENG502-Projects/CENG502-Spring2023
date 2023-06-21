@@ -28,7 +28,7 @@ following policy
 
 
 $$ p_j = \frac{1}{1+e^{-w_j}}$$
-
+<a name="equation_1"></a>
 $$\begin{equation}
 \pi_{j} = 
   \begin{cases}
@@ -64,11 +64,12 @@ $$\begin{equation}
 \nabla_w J(w) = \sum_{i=1}^{L}   E_{\tau \sim \pi_{w}(\tau_i)}[\nabla_w log \pi_{w}(a_i|s_i)R_i]
 \end{equation}$$
 
+<a name="equation_5"></a>
 $$\begin{equation}
 \nabla_w J(w) = \frac{1}{N} \sum_{b=1}^{N} \sum_{i=1}^{L} [\nabla_w log \pi_{w}(a_{b,i}|s_{b,i})R_{b,i}]
 \end{equation}$$
 
-In equation (5), $N$ indicates the size of a batch and $L$ is the depth of the network, the gradients update the policies of the weights $w$ at each layer.
+In equation [5](#equation_5), $N$ indicates the size of a batch and $L$ is the depth of the network, the gradients update the policies of the weights $w$ at each layer.
 
 ## 2.2. Our interpretation 
 
@@ -76,9 +77,9 @@ In equation (5), $N$ indicates the size of a batch and $L$ is the depth of the n
 In the REINFORCE policy gradient algorithm, the infer of $\pi_w(a_i | s_i)$ was not clear, in this implementation it is interpreted as:
 $$\pi_w(a_i | s_i) = P(a_i|s_i) = \prod_{j=1}^{C_i} P(a_{i,j}|s_{i,j})$$
 
-Moreover, in equation (5), the authors have labeled the state representation as $s_{b,i}$ which indicates that for each element within the the batch there will be a different state, however, we think this is incorrect notation as the weights or policies will only be updated after each batch pass, hence, in this implementation we assumed that $s_{b,i}$ is fixed for each batch, only $a_{b,i}$ changes as it is sampled from a Bernoulli process. 
+Moreover, in equation [5](#equation_5), the authors have labeled the state representation as $s_{b,i}$ which indicates that for each element within the the batch there will be a different state, however, we think this is incorrect notation as the weights or policies will only be updated after each batch pass, hence, in this implementation we assumed that $s_{b,i}$ is fixed for each batch, only $a_{b,i}$ changes as it is sampled from a Bernoulli process. 
 
-The rest of our implementation follows the same structure of the original work, at first the model is  embedded with agents after each convolution layer, an agent takes an action based on the policy described by equation (1), the taken action works as a mask which either passes the output of the channel in case action $a=1$ is taken or drops the channel's output in case $a=0$.
+The rest of our implementation follows the same structure of the original work, at first the model is  embedded with agents after each convolution layer, an agent takes an action based on the policy described by equation [1](#equation_1), the taken action works as a mask which either passes the output of the channel in case action $a=1$ is taken or drops the channel's output in case $a=0$.
 
 # 3. Experiments and results
 
@@ -101,7 +102,7 @@ input_lastLayer = vgg16.classifier[6].in_features
 vgg16.classifier[6] = nn.Linear(input_lastLayer,10)
 ```
 After fine tuning the target model, in this case VGG16, it is passed to the 'DECOR' module in which the model will be embedded with agents. For optimizer, only the state representations $s_i$ of each layer will be updated throughout the training process, other parameters of the model are fixed.
-The 'CustomLoss' module implements the cost function in equation (5) with our interpretation in section 2.2, the input to this module is the value of penalty $\lambda$.
+The 'CustomLoss' module implements the cost function in equation [5](#equation_5) with our interpretation in section 2.2, the input to this module is the value of penalty $\lambda$.
 
 ```ruby
 num_epochs = 1

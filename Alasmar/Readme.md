@@ -35,6 +35,7 @@ $$a_i = \{\pi_0,\pi_1,...,\pi_{C_i}\}$$
 where $w_j$ is the importance weight of channel $j$ and $w_j \in s_i$, $\pi_{j}$ is the policy function which samples actions $\{1,0\}$ according to Bernoulli process. $p_j$ is the probability distribution of $\pi_j$. The model computes a compression reward according to: 
 $$R_{i,C} = \sum_{j=1}^{C_i} 1 - a_{i,j}$$
 the model incurs a penalty $\lambda$ for incorrect predictions as:
+
 $$\begin{equation}
 R_{acc} = 
   \begin{cases}

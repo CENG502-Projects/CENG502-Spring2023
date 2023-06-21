@@ -1,0 +1,8 @@
+# data
+cifar10
+
+# experiments
+exp/
+
+# runtime
+__pycache__

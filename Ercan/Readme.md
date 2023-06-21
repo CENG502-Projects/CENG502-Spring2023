@@ -66,6 +66,8 @@ We did not have a dataset that is used by Pinterest which has around 20 photos p
 
 [2] Yen-Chun Chen, Linjie Li, Licheng Yu, Ahmed El Kholy, Faisal Ahmed, Zhe Gan, Yu Cheng, and Jingjing Liu. 2019. Uniter: Learning universal image-text representations. (2019).
 
+* All pictures and figures are taken from original paper.
+  
 # Contact
 
 @TODO: Provide your names & email addresses and any other info with which people can contact you.

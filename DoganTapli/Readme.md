@@ -63,13 +63,30 @@ Overall, our interpretation of the method focused on filling in the technical de
 
 ## 3.1. Experimental setup
 
-The experiments were conducted on four different DRL environments, including Pong, Breakout, MsPacman, and Enduro. The widely used algorithms, including DQN and PPO, were applied to train the victim agents. The network trained with DQN outputs the estimate of Q values, and the one trained with PPO outputs the distribution over possible actions. We followed the same experimental setup as described in the original paper. The hyperparameters, such as learning rate, discount factor, and batch size, were set according to the recommendations in the literature.
+The experiments were conducted on four different DRL environments, including Pong, Breakout, MsPacman, and Enduro. The widely used algorithms, including DQN and PPO, were applied to train the victim agents. The network trained with DQN outputs the estimate of Q values, and the one trained with PPO outputs the distribution over possible actions. We followed the same experimental setup as described in the original paper. The hyperparameters, such as learning rate, discount factor, and batch size, were set according to the recommendations in the literature. For example some of such parameters are hardcoded in the code as below.
+
+```python
+Episode = 4000
+Discount Factor = 0.997
+Lambda_r = 0.95 # a hyperparameter in the reward calculation
+T = 1500
+Max_Inject = 21 # for Pong game
+```
+
 - [ ] @TODO: Describe the setup of the original paper and whether you changed any settings.
 
 ## 3.2. Running the code
 
 We replicated the experiments described in the paper using the provided codebase. The codebase included the implementation of the DAP approach and the necessary components for training and evaluating the victim agents. We ensured that the codebase was properly set up and executed the experiments on the same hardware as mentioned in the paper.
+```bash
+# To pretrain the PPO model 
+python3 ppo_train.py --env-name Pong --num-threads 1
+```
 During the experiments, we observed the performance of the DAP approach in terms of its ability to deceive the victim agents and induce them to take suboptimal actions. We compared the results with the baseline methods and analyzed the effectiveness of the proposed approach.
+```bash
+# To run the uap model 
+python3 main.py --env-name Pong --num-threads 1 --model-path assets/ALE/Pong*.p
+```
 - [ ] @TODO: Explain your code & directory structure and how other people can run it.
 
 ## 3.3. Results
@@ -91,6 +108,6 @@ In conclusion, the paper presents a novel Decoupled Adversarial Policy (DAP) app
 # Contact
 
 - Adnan Harun Dogan: [Github](https://github.com/adnanhd) [Twitter](https://twitter.com/adnanharundogan) [Google Scholar](https://scholar.google.com/citations?user=QGaRpqYAAAAJ&hl=en)
-- Merve Tapli: Github
+- Merve Tapli: [Github](https://github.com/mtapli)
 
 @TODO: Provide your names & email addresses and any other info with which people can contact you.

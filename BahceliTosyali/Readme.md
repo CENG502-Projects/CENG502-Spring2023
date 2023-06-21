@@ -23,7 +23,7 @@ Traditionally; in normalization procedures test, validation and training datas s
 <p align="center">
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/5e7f1a5d-99cf-4102-ba1b-46e86a68dfab" alt="drifting" width="600">
   <br>
-  <em>Figure 1: Illustration of the concept drifting phenomenon.</em>
+  <em>Figure 1: Illustration of the concept drifting phenomenon <i>(from the paper)</i>.</em>
 </p>
 
 
@@ -46,7 +46,7 @@ This module uses a window of size $n$  where with $n$ data it tries to predict t
 <p align="center">
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/6d9b016a-d1a2-4752-b42e-8771521e0a02" alt="inputTemporal" width="250">
   <br>
-  <em>Figure 2: Illustration of the input temporal data.</em>
+  <em>Figure 2: Illustration of the input temporal data <i>(from the paper)</i>.</em>
 </p>
 
 The relation between those three blocks and MLP block is as follows
@@ -106,7 +106,7 @@ The illustration for this function and handling behavior can be seen in the Figu
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/7fdbb055-b443-40fe-90ee-8a5387f8ee44" alt="windowed_image">
   <br>
-  <em>Figure 3: Illustration for <i>windowed_Set</i> function.</em>
+  <em>Figure 3: Illustration for <i>windowed_Set</i> function <i>(ours)</i>.</em>
 </p>
 
 
@@ -122,13 +122,13 @@ networks are given in the following figure.
 <p align="center"> 
   <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/88089192/21ad7e85-3db4-4883-8c26-d717fce4ef85" alt="windowed_image" width="450">
   <br>
-  <em>Figure 4.1: The chart for parameters in the neural network for long sequence forecasting model </em>
+  <em>Figure 4.1: The chart for parameters in the neural network for long sequence forecasting model <i>(from the paper)</i>. </em>
 </p>
 
 <p align="center"> 
   <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/88089192/1730d020-0221-4c1a-b8bc-15fddd67403f" alt="windowed_image" width="450">
   <br>
-  <em>Figure 4.2: The chart for parameters in the neural network for anomaly detection model </em>
+  <em>Figure 4.2: The chart for parameters in the neural network for anomaly detection model <i>(from the paper)</i>. </em>
 </p>
 
 For tests we used Frobenius norm (L2 norm) as suggested without any changes.
@@ -159,7 +159,7 @@ We created the model and trained the model with 30 epochs as mentioned in the pa
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/88089192/d0fcb565-de5c-4329-8a5c-4b368742cf43" alt="windowed_image">
   <br>
-  <em>Figure 5: Training and validation loss for Etth1 dataset </em>
+  <em>Figure 5: Training and validation loss for Etth1 dataset <i>(ours)</i>. </em>
 </p>
 
 Then we calculated the MSE and MAE loss values for this dataset with the model. The results can be seen in the table below.
@@ -167,7 +167,7 @@ Then we calculated the MSE and MAE loss values for this dataset with the model. 
 <p align="center"> 
   <img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/88089192/55555f08-ac09-448b-a652-9dfa62a3b086" alt="windowed_image">
   <br>
-  <em>Figure 6: Metric scores for different models and ours for Etth1 dataset </em>
+  <em>Figure 6: Metric scores for different models and ours for Etth1 dataset <i>(ours)</i>. </em>
 </p>
 
 
@@ -187,7 +187,7 @@ And the following chart shows us the anomaly sequences that are found by our mod
 <p align="center"> 
   <img src="https://github.com/Batucan2601/MARINA/assets/52931384/d93044e6-8685-480d-8345-c7683fdcac42" alt="windowed_image">
   <br>
-  <em>Figure 8: The anomaly sequences of our model  </em>
+  <em>Figure 8: The anomaly sequences of our model.</em>
 </p>
 
 As you can see our model's accuracies ranges from 0.2 to 0.6; our mean accuracies 0.4 overall. 

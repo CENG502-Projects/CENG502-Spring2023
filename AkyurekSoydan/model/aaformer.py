@@ -83,7 +83,6 @@ class AAFormer(nn.Module):
 
         # STEP 2.2: Get Initial Agent Tokens
         # -------------------------------------------------------------------------------------------------
-        # TODO: can we get rid of for loop?
         # Since every image will have different number of foreground pixels, it is not possible
         # to combine the foreground pixels of images in a single tensor. We may pad the tensors
         # since max number of foreground pixels is equal to the image area.

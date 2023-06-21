@@ -139,7 +139,7 @@ Our initial plan was to implement the dataset PPI for the paper. However, refere
 
   
 
-After this mismatch with dataset size and missing contextual data, we decided to pursue the ogbn-arxiv dataset. However, the same mismatch occurred. In the paper node size is reported as 143,941, however dataset has 169,343 nodes. Indicating a different dataset or filtering. However, we couldn't find any explicit reference to this event.
+After this mismatch with dataset size and missing contextual data, we decided to pursue the ogbn-arxiv dataset. However, the same mismatch occurred. In the paper node size is reported as 143,941, however dataset has 169,343 nodes. Indicating a different dataset or filtering. However, we couldn't find any explicit reference to this event. In current version, we are using the mismatched version. We hypothesize that authors filtered the dataset to reach their version.
 
   
   
@@ -168,7 +168,7 @@ Edges are divided into 2 parts. E_training, 50%, is used in the training of the 
 
 **Parts Interaction**
 
-It is not clear how these edges and nodes fit together for the inductive part. If chosen independently from each other, there is a possibility that we won't have any edges in-between V_new in E_validation. Meaning that inductive testing wouldn't be possible. Though this is a small chance, it shows that the initial conditions of the splits are of high importance. We didn't apply any normalization on the distribution of the edge splits on node splits.
+It is not clear how these edges and nodes fit together for the inductive part. If chosen independently from each other, there is a possibility that we won't have any edges in-between V_new in E_validation. Meaning that inductive testing wouldn't be possible. Though this is a small chance, it shows that the initial conditions of the splits are of high importance. We didn't apply any normalization on the distribution of the edge splits on node splits. We split the data according to the exact specifications given in the paper, even though we know these specifications not enough to have a non-biased dataset.
 
   
 
@@ -180,7 +180,7 @@ It is not clear how these edges and nodes fit together for the inductive part. I
 
   
 
-In the calculation of loss, bpr loss is used. Predictions of the model on positive and negative edges are used to propagate backwards. The ratio of positive and negative samples is crucial for the learning style and speed of the network. However, no ratio is explicitly mentioned in the paper. We assumed this ratio to be 1.
+In the calculation of loss, bpr loss is used. Predictions of the model on positive and negative edges are used to propagate backwards. The ratio of positive and negative samples is crucial for the learning style and speed of the network. However, no ratio is explicitly mentioned in the paper. We assumed this ratio to be 1. We feed equal amounts of positive and negative edges to the BPR loss.
 
   
 
@@ -197,7 +197,7 @@ It is explicitly stated that early stopping is utilized. However, it is not clea
 
   
 
-The paper mentions that they tried 0.25, 0.50 and 0.75 for drop edge ratio for transductive link prediction. However, they don't mention which one was the best option. We have chosen our drop edge ratio as 0.50.
+The paper mentions that they tried 0.25, 0.50 and 0.75 for drop edge ratio for transductive link prediction. However, they don't mention which one was the best option. We have chosen our drop edge ratio as 0.50. Meaning that every 1 edge out of 2 is removed according to given drop edge method.
 
   
 
@@ -207,7 +207,7 @@ The paper mentions that they tried 0.25, 0.50 and 0.75 for drop edge ratio for t
 
 **Recall calculation method**
 
-The paper mentions that they use Recall@50 for the evaluation of the network. However, there is no explicit implementation. That's why we used the implementation in [referenced paper](https://arxiv.org/abs/1905.08108) [^filter], here is [the implementation](https://github.com/xiangwang1223/neural_graph_collaborative_filtering/blob/a718a4f2df7c3942ca0df6759926975762c61eed/NGCF/utility/metrics.py#L73).
+The paper mentions that they use Recall@50 for the evaluation of the network. However, there is no explicit implementation. That's why we used the implementation in [referenced paper](https://arxiv.org/abs/1905.08108) [^filter], here is [the implementation](https://github.com/xiangwang1223/neural_graph_collaborative_filtering/blob/a718a4f2df7c3942ca0df6759926975762c61eed/NGCF/utility/metrics.py#L73). Implementation's paper is referenced next to the recall in TuneUp's paper.
 
   
 
@@ -226,9 +226,6 @@ In recall calculation, it is possible to produce about ~160,000 negative synthet
 In the backbone model, the decoder part is mentioned as MLP, without any further specification. We assumed 2 layers deep MLP with 256 hidden dimension size.
 
   
-
-@TODO: Explain the parts that were not clearly explained in the original paper and how you interpreted them.
-
   
 
 # 3. Experiments and results
@@ -265,7 +262,7 @@ The below table shows the different experimental setups for the link prediction 
 | **TUNEUP (ours)**              |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
 
 <p align="center">
-<b>Table 1: Experimental setup presented in the paper for the link prediction task</b>
+<b>Table 1: Experimental setup presented in the paper for the link prediction task (Regenerated according to data in paper, borrowed)</b>
 </p>
   
 
@@ -290,9 +287,6 @@ The following are the hyperparameters explicitly stated within the paper for the
 
 We utilized precomputation a lot during the implementation. Thus,
 
-  
-
-@TODO: Describe the setup of the original paper and whether you changed any settings.
 
   
 
@@ -399,13 +393,13 @@ The following figures show the train and loss plots of different settings: basel
 
 ![Baseline Loss](figs/1.jpeg)
 <p align="center">
-<b>Figure 1: The train and validation loss curves of the baseline model we implement</b>
+<b>Figure 1: The train and validation loss curves of the baseline model we implement (Our result)</b>
 </p>
 
 
 ![Tune Up loss](figs/2.jpeg)
 <p align="center">
-<b>Figure 2: The train and validation loss curves of the TUNEUP method we implement combining both pretraining and finetuning</b>
+<b>Figure 2: The train and validation loss curves of the TUNEUP method we implement combining both pretraining and finetuning (Our result)</b>
 </p>
 
 
@@ -416,7 +410,7 @@ Below, we report the Recall@50 results for several tests of the baseline model o
 |     Recall@50     | 0.103 | 0.132 | 0.126 |  0.127 | 0.122 |
 
 <p align="center">
-<b>Table 2: The evaluation of our baseline model on transductive link prediction tasks on multiple runs</b>
+<b>Table 2: The evaluation of our baseline model on transductive link prediction tasks on multiple runs. (Our results)</b>
 </p>
 
  Method                         | Transductive | Inductive  | Inductive Cold 30% | Inductive Cold 60% | Inductive Cold 90% |
@@ -426,7 +420,7 @@ Below, we report the Recall@50 results for several tests of the baseline model o
 | TUNEUP w/o syn-tails           |   0.112    | 0.096   |   -        |     -        |    -        |
 | **TUNEUP (ours)**              |   0.147    | 0.125   |     -       |     -       |    -        |
 <p align="center">
-<b>Table 3: The evaluation of our implementation of the baseline, TUNEUP w/o curriculum, TUNEUP w/o syn-tails, and TUNEUP methods on transductive and inductive settings</b>
+<b>Table 3: The evaluation of our implementation of the baseline, TUNEUP w/o curriculum, TUNEUP w/o syn-tails, and TUNEUP methods on transductive and inductive settings (Our results)</b>
 </p>
 
 
@@ -444,10 +438,10 @@ Below table reports the experimental results in the paper for link prediction ta
 | **TUNEUP (ours)**              |   0.241    | 0.225   |     0.193       |     0.144       |    0.062        |
 
 <p align="center">
-<b>Table 4: The evaluation of the baseline, TUNEUP w/o curriculum, TUNEUP w/o syn-tails, and TUNEUP methods reported in the paper</b>
+<b>Table 4: The evaluation of the baseline, TUNEUP w/o curriculum, TUNEUP w/o syn-tails, and TUNEUP methods reported in the paper (Regenerated according to paper, borrowed.)</b>
 </p>
 
-@TODO: Present your results and compare them to the original paper. Please number your figures & tables as if this is a paper.
+
 
 ## 3.4. Discussion
 
@@ -509,7 +503,6 @@ In Advances in Neural Information Processing Systems (NeurIPS), pp. 1025–1035,
 
   
 
-@TODO: Provide your references here.
 
   
 

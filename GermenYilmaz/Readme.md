@@ -285,7 +285,7 @@ The following are the hyperparameters explicitly stated within the paper for the
   
   
 
-We utilized precomputation a lot during the implementation. Thus,
+We utilized precomputation a lot during the implementation. Thus, start-up time can take around 10 minutes.
 
 
   
@@ -389,7 +389,7 @@ Expected results are dependent on the model and parameters used in the command.
 ## 3.3. Results
 
 ### 3.3.1. Implementation Results
-The following figures show the train and loss plots of different settings: baseline and tuneup. The former is the baseline training of the model on 1000 epochs, whereas, the latter is the finetuned model using the TUNEUP method. 
+The following figures show the train and loss plots of different settings: baseline and tuneup. The former is the baseline training of the model on 1000 epochs, whereas, the latter is the finetuned model using the TUNEUP method. Redlines are indicating epochs with best validation loss in default training.
 
 ![Baseline Loss](figs/1.jpeg)
 <p align="center">
@@ -397,7 +397,7 @@ The following figures show the train and loss plots of different settings: basel
 </p>
 
 
-![Tune Up loss](figs/2.jpeg)
+![Tune Up loss](figs/3.jpeg)
 <p align="center">
 <b>Figure 2: The train and validation loss curves of the TUNEUP method we implement combining both pretraining and finetuning (Our result)</b>
 </p>
@@ -456,7 +456,7 @@ Looking at the test measurements on the same model with default training, we can
 
 Comparing the results in Table 3, w/o syn and baseline GNN, an unexpected trend is observed: further finetuning of the baseline decreases the recall score (from .122, to .112). This is due to our tests' volatility caused by not measuring the recall for all nodes.
 
-Looking at Table 3, Inductive results we see that is worse of compared to transductive results. This was expected. This is due to model 
+Looking at Table 3, Inductive results we see that is worse of compared to transductive results. This was expected. This is due to model performing worse on unknown nodes.
 
 ### 3.4.2 Comparison between Paper and Implementation
 

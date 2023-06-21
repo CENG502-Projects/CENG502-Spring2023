@@ -166,9 +166,8 @@ The table below presents the software libraries and dependencies required for th
 | ale-py                       | 0.8.1   |
 | AutoROM                      | 0.4.2   |
 | AutoROM.accept-rom-license   | 0.6.1   |
-| python                       | 3.10    |
 
-These libraries encompass a range of functionalities such as deep learning, computer vision, numerical computing, reinforcement learning, and ROM management. By following the provided instructions, you can set up the environment and proceed with the project seamlessly.
+These libraries encompass a range of functionalities such as deep learning, computer vision, numerical computing, reinforcement learning, and ROM management. By following the provided instructions, you can set up the environment and proceed with the project seamlessly in **Python3.10**.
 
 
 ### Code execution

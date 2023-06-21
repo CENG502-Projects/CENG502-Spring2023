@@ -130,7 +130,7 @@ Max_Inject = 21 # for Pong game
 
 ## 3.2. Running the code
 
-Project Directory:
+### Project Directory
 ```
 ├── core
 │   └── agent.py
@@ -152,8 +152,26 @@ Project Directory:
 ├── uap.py
 ├── Readme.md
 ```
+### Python Package Environment
 
-Code execution:
+The table below presents the software libraries and dependencies required for the environment setup of the project:
+
+| Library                      | Version |
+|------------------------------|---------|
+| torch                        | 2.0.1   |
+| torchvision                  | 0.15.2  |
+| numpy                        | 1.25.0  |
+| gym                          | 0.26.2  |
+| gym-notices                  | 0.0.8   |
+| ale-py                       | 0.8.1   |
+| AutoROM                      | 0.4.2   |
+| AutoROM.accept-rom-license   | 0.6.1   |
+| python                       | 3.10    |
+
+These libraries encompass a range of functionalities such as deep learning, computer vision, numerical computing, reinforcement learning, and ROM management. By following the provided instructions, you can set up the environment and proceed with the project seamlessly.
+
+
+### Code execution
 We replicated the experiments described in the paper using the provided codebase. The codebase included the implementation of the DAP approach and the necessary components for training and evaluating the victim agents. We ensured that the codebase was properly set up and executed the experiments on the same hardware as mentioned in the paper.
 ```bash
 # To pre-train the PPO model 

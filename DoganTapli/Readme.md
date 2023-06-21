@@ -31,7 +31,50 @@ The paper's contributions lie in the development of the DAP approach, which offe
 
 The proposed DAP approach is evaluated through experiments conducted on four different DRL environments. The experiments aim to verify the effectiveness of the DAP approach from various aspects. The paper addresses two research questions: (1) Can the proposed DAP launch successful attacks with a small number of injecting times in different reinforcement learning tasks? (2) In which states does the proposed DAP launch the attack and inject perturbations? The experimental results demonstrate the effectiveness of the DAP approach in launching successful attacks with minimal injecting times across different reinforcement learning tasks. The paper also provides insights into the states where the DAP approach is most effective in launching attacks and injecting perturbations.
 
-The proposed DAP approach offers a significant contribution to the field of adversarial attacks on DRL systems. By decomposing the adversarial policy into switch and lure policies, the DAP approach provides a more sophisticated and targeted method for attacking DRL mechanisms. The experimental results validate the effectiveness of the DAP approach and highlight its potential for building more robust DRL systems. The findings of this paper have implications for the development of defense mechanisms against adversarial attacks on DRL systems and contribute to the broader understanding of the vulnerabilities and security challenges in the field of DRL
+The proposed DAP approach offers a significant contribution to the field of adversarial attacks on DRL systems. By decomposing the adversarial policy into switch and lure policies, the DAP approach provides a more sophisticated and targeted method for attacking DRL mechanisms. The experimental results validate the effectiveness of the DAP approach and highlight its potential for building more robust DRL systems. The findings of this paper have implications for the development of defense mechanisms against adversarial attacks on DRL systems and contribute to the broader understanding of the vulnerabilities and security challenges in the field of DRL.
+
+## 1.2. Architecture Overview
+This section covers the backbone architecture along with 5 components:
+
+* Environment
+* Victim Agent
+* Policy Deduction Stage
+* Database Construction Stage
+* Attack Launching Stage
+
+### Environment
+![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/f03f259e-a63a-4ac4-8abe-bc7f417eda28)
+
+The proposed method is tested on 4 different dynamical environments that is used in common for RL-related methods. These are:
+1. Pong
+2. Breakout
+3. Mspacman
+4. Enduro
+
+We tested our implementation only on the Pong environment. Importantly, adversarial attacker have an acces to victim's testing environment and environment supplies the current state `s_t` to victim agent.
+
+### Victim Agent
+![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/f419bf42-a44f-4e9e-a970-86845418c9c1)
+
+Victim agent is a PPO network that takes its input `s_t` from the environment and returns the attack policy associated with the current state `π(s_t)`. The victim agent aims to learn the optimal policy in such a way that it maximizes the `R` (return of a policy) where R is computed as:
+
+![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/10c83f0e-9e1d-4eca-84af-6c55b7a43326)
+
+where  $\gamma \in [0, 1]$ is a discount factor indicating how much the agent values an intermediate reward compared with a future reward.
+
+
+### Policy Deduction Stage
+![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/a4804b6a-804a-4f18-8db3-0f9a18ee02b3)
+
+Policy Deduction Stage consists of several backbone components. Attack policy is given to fully connected layer and the current is given to 2D convolutional layer and the outputs of the aforomentioned two operations are concatentated together as an attempt to be passed to LSTM network as an input. After successive timesteps in LSTM, the output is given two Fully connected networks: `Lure Policy` and `Switch Policy`. The role of them is given below:
+
+* **Lure Policy:** TODO
+* **Switch Policy:**  TODO
+### Database Construction Stage
+TODO
+
+### Attack Launching Stage
+TODO
 
 - [ ] @TODO: Summarize the paper, the method & its contributions in relation with the existing literature.
 
@@ -76,6 +119,29 @@ Max_Inject = 21 # for Pong game
 - [ ] @TODO: Describe the setup of the original paper and whether you changed any settings.
 
 ## 3.2. Running the code
+
+Project Directory:
+```
+├── core
+│   └── agent.py
+│   └── common.py
+│   └── ppo.py
+├── models
+│   └── attack.py
+│   └── mlp_critic.py
+│   └── mlp_policy_disc.py
+├── utils
+│   └── __init__.py
+│   └── math.py
+│   └── replay_memory.py
+│   └── tools.py
+│   └── torch.py
+│   └── zfilter.py
+├── main.py
+├── ppo_train.py
+├── uap.py
+├── Readme.md
+```
 
 We replicated the experiments described in the paper using the provided codebase. The codebase included the implementation of the DAP approach and the necessary components for training and evaluating the victim agents. We ensured that the codebase was properly set up and executed the experiments on the same hardware as mentioned in the paper.
 ```bash

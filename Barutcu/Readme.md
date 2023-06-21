@@ -180,6 +180,7 @@ Cells in jupyter notebooks can sequencially be run to reproduce the results.
 
 ## 3.3. Results
 
+### 3.3.1 Experiment Results:
 Experiment settings are as follows:
 
 **1. Influence Maximization with *k* Different Topics:**
@@ -230,7 +231,30 @@ Since the computational resource is enough the reproduce the problem, I used sam
 
 *Figure 9: My Results on Sensor Placement Problem*
 
-As can be seen on the figures, mine results approaches the greedy solution quicker than the author's. This might be due to strategy to dealing with missing columns in data and order of the arrival of the items. 
+As can be seen on the figures, mine results approaches the greedy solution quicker than the author's. This might be due to strategy to dealing with missing columns in data and order of the arrival of the items.
+
+### 3.3.2 Additional Studies:
+
+Simulation process and function approximation are intensive in terms of computational time. When a new person is added to network, influence of that person should be estimated to reflect the effect of gain in objective function. Considering the real time systems where new incomers constantly joins the network and some users leaves the platform, simulation process should be restarted over again to come up with a true form of appoximating function. Also, simulation process has sthocastic nature, effect of the new nodes might not be directly observable in function. Since the process is already costly and there are constant changes in the network, catching the on time approximation function is impractiable. In order to achive real-time applicable system, link prediction of the new incomers in aproximated function can be used as a solution to reflect the changes in the network.
+
+Graph attention networks [Velickovic et al, 2018](https://arxiv.org/pdf/1710.10903.pdf) have shown good performance on various of the tasks, including node prediction, edge attribute prediction, link prediction etc. In this experiment I designed gnn based model to train a network on approximated function so that new nodes in the network can be predicted whether it can be influenced on existing nodes in function without simulating the process from scratch. Experiment parameters are shown in table below:
+
+*Table 3: Parameters of GNN for Link Prediction*
+Setup Component | Parameters 
+------------ | ------------- 
+Embedding Dimension | 64 
+Number of Heads | 4 
+Number of GNN Layers | 2 
+Dropout | 0.6 
+Epoch | Elu 
+Loss Function | BCE 
+Learning Rate | 0.01 
+
+I used standard architecture proposed by [Velickovic et al, 2018](https://arxiv.org/pdf/1710.10903.pdf) for transductive tasks. Train-test Ratio setted as 0.9-0.1. Aim of the model is to predict a link between existing nodes to new ones.
+
+I could not finish the training because of memory constraint in GPU. With more computational power, experiment can be finished and results can be examined on my ready-to-use script named predict_grapg.ipynb. Experiment details can be seen in the script as well.
+
+Fine tune might be required on parameters especially on embedding Dimension, number of heads and learning rate. These are the next level task to advance the proposed method to make applicable in realistic scenarious. In addition, if node level or edge level features exist in the model, predictions accuracy might be effected in positive way.
 
 # 4. Conclusion
 
@@ -240,7 +264,9 @@ For the Influence Maximization problem, we conducted a partial reproduction of t
 
 In the Sensor Placement problem, we also achieved similar results to those presented in the paper. Our implementation of the proposed algorithm demonstrated a faster convergence towards the results of the Greedy algorithm. Notably, it is observed that our implementation of the proposed algorithm approached the results of the Greedy algorithm more quickly than reported by the authors. This discrepancy could be attributed to our specific strategy for dealing with missing values.
 
-Overall, our implementation confirmed the key findings of the paper and highlighted the effectiveness of the proposed algorithm for both the Influence Maximization and Sensor Placement problems. The project underscores the significance of efficient algorithms for submodular maximization in practical applications such as social network analysis and sensor deployment.
+Our implementation confirmed the key findings of the paper and highlighted the effectiveness of the proposed algorithm for both the Influence Maximization and Sensor Placement problems. The project underscores the significance of efficient algorithms for submodular maximization in practical applications such as social network analysis and sensor deployment.
+
+Finally, we set up an experiment to absorve the overhead cost of the approximiting the function on influence maximization problem when new person joins the network. We could not finish the study, however, with the setup, experiment can be completed by running the script.   
 
 To wrap up, I enjoyed reproducing this paper and learned a lot during the process. I would like to thank the authors for writing such a great and mostly clear paper and Sinan Hoca for equipping us with the skills to take on this project.
 

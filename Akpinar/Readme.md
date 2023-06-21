@@ -214,6 +214,9 @@ I added angular and center regularization.
 
 In the CTC loss and radial CTC loss calculation at the sum of ln gives "RuntimeError: Function 'LogBackward0' returned nan values in its 0th output." in backward propagation. I could not find a solution for that unfortunately so I could not make the experiments and get the results () you can see the error on the training part of the code but I implement the training and validation steps.
 
+I also download and prepare the Phonex14 data set for multisinger and independentsinger. I apply the transformations that are specified in the paper. 
+For the model, I use ResNet18 with the last layer of BiLSTM with 2x512 hidden layers. I wrote the training and testing codes of this model with RadialCTC but due to the complication in backwardprob, I could not train the model and get the results
+
 
 
 # 3. Experiments and results

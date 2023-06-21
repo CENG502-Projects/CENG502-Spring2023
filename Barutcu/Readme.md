@@ -31,7 +31,7 @@ The proposed streaming algorithm in the paper makes several key contributions to
 The problem addressed in the paper can be mathematically formulated as follows:
 
 ![primal_dual](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/32d89eb0-5f48-4b41-a352-2ed5b7c3d871)
-*Figure 1: Primal Dual Formulation of LP Programming*
+*Figure 1: Primal Dual Formulation of LP Programming (Borrowed from the paper)* 
 
 The formulation captures the objective of maximizing a monotone k-submodular function subject to constraints on the size of the selected subset. The paper discusses the details of the formulation and provides insights into its properties and potential algorithmic approaches for solving it. 
 - $x_{e,i}$ ∈ {0, 1} that indicates whether element e is assigned label i. 
@@ -79,7 +79,7 @@ It quantifies the utility or contribution of an element towards improving the ob
 This section provides an overview of the approximation guarantees for maximizing submodular functions subject to cardinality constraints. The table below summarizes some of the notable approximation guarantee algorithms in the literature.
 
 ![comp_2](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/09b00706-ebed-40de-8fe0-f551776feb6e)
-*Figure 2 Comparison of Algorithms* 
+*Figure 2 Comparison of Algorithms (Borrowed from the paper)* 
 
 Proof of the approximation bound can be found in [paper](https://proceedings.mlr.press/v162/ene22a/ene22a.pdf)
 
@@ -91,7 +91,7 @@ Algorithm details are as follows:
 
 ![primal_dual_algorithm](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/2a97554e-5f37-4d36-a44b-feb3b3bbb458)
 
-*Figure 3 Pseudocode of Algorithm*
+*Figure 3 Pseudocode of Algorithm (Borrowed from the paper)* 
 
 Method uses primal-dual variables to increase the treshold of accepting an item as the marjinal gain decreases over time.
 
@@ -123,13 +123,13 @@ There are two experiments in paper: Influence maximization and sensor placement 
 Although the therotical number of simulations required stated at [Borgs et al, 2014](https://arxiv.org/pdf/1212.0884.pdf), author of the paper did not state anything about whether it is used as number of simulations to approximate the function. In addition, cost of evaluating the function with these number of simulations is very costly, so I used this number R = 100 in order to get a frame about comparision of the algorithms with different budget constraints. Simulation process explained in following figure:
 
 ![build_hypergraph](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/811e5f3e-b03e-4127-9ca1-9b132d982dd2)
-*Figure 4 Simulation Process of Approximating Influence Function*
+*Figure 4 Simulation Process of Approximating Influence Function (Borrowed from the [paper](https://arxiv.org/pdf/1212.0884.pdf))*
 
 
 Process uses Independent Cascade Process which can be seen in figure below:
 
 ![icp](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/5e21eaee-3ea4-4cdb-9254-5e6eb9846a9a)
-*Figure 5 Independent Cascade Process*
+*Figure 5 Independent Cascade Process (Borrowed from the [notes](http://people.seas.harvard.edu/~yaron/AM221-S16/index.html))*
 
 
 **2 Sensor Placement with *k* Measurements:**
@@ -159,6 +159,7 @@ Directory structure
 │   └── sensor_placement.jpg
 ├── influence_maximization.ipynb
 ├── sensor_placement.ipynb
+├── predict_graph.ipynb
 └── requirements.txt
 ```
 
@@ -167,6 +168,7 @@ Directory structure
 - requirements.txt contains the list of required Python packages.
 - influence_maximization.ipynb file contains the influence maximization experiment with data preprocessing functions and k-greedy algorithm implementation
 - sensor_placement.ipynb file contains the sensor placement experiment with data preprocessing functions k-greedy algorithm implementation
+- predict_graph.ipynb file contains gnn based model for link prediction task
 
 ### 3.2.1 Create Environment
 - conda create -n (env_name)

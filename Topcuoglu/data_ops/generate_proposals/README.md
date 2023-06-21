@@ -1,0 +1,1 @@
+Generating proposals out of COCO images. (Using previously generated proposals by the paper ORL.)

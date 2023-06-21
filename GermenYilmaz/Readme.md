@@ -43,8 +43,11 @@ The paper addresses three main graph learning problems: semi-supervised node cla
 *Below is the pseudocode of the overall TUNEUP Method*
 
 
+  
 
-Given: GNN Fθ, graph G, loss L, supervision Y, DropEdge ratio α.
+```
+
+Given: GNN Fθ, graph G, loss L, supervision Y , DropEdge ratio α.
 
   
 
@@ -72,6 +75,9 @@ Given: GNN Fθ, graph G, loss L, supervision Y, DropEdge ratio α.
 
 11: end while
 
+  
+
+```
   
 
 

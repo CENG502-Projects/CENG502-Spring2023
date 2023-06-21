@@ -153,18 +153,16 @@ Project Directory:
 ├── Readme.md
 ```
 
+Code execution:
+We replicated the experiments described in the paper using the provided codebase. The codebase included the implementation of the DAP approach and the necessary components for training and evaluating the victim agents. We ensured that the codebase was properly set up and executed the experiments on the same hardware as mentioned in the paper.
 ```bash
 # To pre-train the PPO model 
 python3 ppo_train.py # Optionally: --env-name Pong
 ```
-We replicated the experiments described in the paper using the provided codebase. The codebase included the implementation of the DAP approach and the necessary components for training and evaluating the victim agents. We ensured that the codebase was properly set up and executed the experiments on the same hardware as mentioned in the paper.
-```bash
-# To generate universal perturbations 
-python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p # Optionally: --env-name Pong
-```
 During the experiments, we observed the performance of the DAP approach in terms of its ability to deceive the victim agents and induce them to take suboptimal actions. We compared the results with the baseline methods and analyzed the effectiveness of the proposed approach.
-```bash
-# To evaluate 
+```bash 
+# To generate universal perturbations and evaluate
+python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p # Optionally: --env-name Pong
 python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p --uap-path uap.json
 ```
 

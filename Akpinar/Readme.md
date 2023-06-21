@@ -143,7 +143,7 @@ Figure 14: An example of Seq-MNIST dataset(From my results)
 
 Then, I constructed LeNets++ from Wen, Y., Zhang, K., Li, Z., Qiao, Y.: A discriminative feature learning approach for deep face recognition. In: Proceedings of the European Conference on Computer Vision. pp. 499–515. Springer (2016) with below parameters. Some of the convolution layers are followed by max pooling. (5, 32)/1,2 × 2 denotes 2 cascaded convolution layers with 32 filters of size 5 × 5, where the stride and padding are 1 and 2 respectively. 2/2,0 denotes the max-pooling layers with grid of 2×2, where the stride and padding are 2 and 0 respectively. In LeNets++, we use the Parametric Rectified Linear Unit (PReLU) as the nonlinear unit. Where to use PReLu was not clear so I used it after every conv and fc layers(in=2048,out=3).
 
-<img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/lenetppPNG.PNG" width="720" >
+<img src="https://github.com/CENG502-Projects/CENG502-Spring2023/blob/main/Akpinar/images/lenetpp.PNG" width="720" >
 Figure 15: Architecture of LeNets++(From another paper)
 
 For the output layer, I used 3 as our paper for 3D feature map. the output goes through a fc(in=3,out=11) and softmax. I return feature v for plotting. 

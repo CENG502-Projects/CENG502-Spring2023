@@ -67,14 +67,24 @@ where  $\gamma \in [0, 1]$ is a discount factor indicating how much the agent va
 ![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/a4804b6a-804a-4f18-8db3-0f9a18ee02b3)
 
 Policy Deduction Stage consists of several backbone components. Attack policy is given to fully connected layer and the current is given to 2D convolutional layer and the outputs of the aforomentioned two operations are concatentated together as an attempt to be passed to LSTM network as an input. After successive timesteps in LSTM, the output is given two Fully connected networks: `Lure Policy` and `Switch Policy`. The role of them is given below:
+The Policy Deduction Stage is a crucial component of the proposed DAP approach. It involves several backbone components that work together to generate the switch and lure policies. The attack policy is given to a fully connected layer, while the current state is given to a 2D convolutional layer. The outputs of these two operations are concatenated together to form a one-dimensional feature vector. This feature vector is then passed to an LSTM network as an input. The LSTM network is responsible for capturing sequential features and processing the input over successive timesteps. After processing the input, the output is given to two fully connected networks: the Lure Policy and the Switch Policy.
 
-* **Lure Policy:** TODO
-* **Switch Policy:**  TODO
+- **The Lure Policy** is responsible for determining which action the attacker should induce the victim to take. The Lure Policy takes the output of the LSTM network as input and outputs a probability distribution over possible actions. The Lure Policy is designed to strategically influence the victim's actions to achieve the attacker's objectives. By inducing the victim to take a specific action, the attacker can mislead the DRL system and obtain misleading results.
+
+- **The Switch Policy** is responsible for determining whether the attacker should launch an attack. The Switch Policy takes the output of the LSTM network as input and outputs a probability distribution over two possible actions: attack or no attack. The Switch Policy is designed to determine whether the current state is critical enough to warrant an attack. If the Switch Policy outputs a high probability of attack, the attacker launches an attack by injecting perturbations into the system.
+
 ### Database Construction Stage
-TODO
+The Database Construction Stage is a critical component of the DAP approach. It involves constructing a database of universal perturbations that can be used to induce the victim agent to take specific actions. The attacker samples states from the environment and classifies them into different categories based on the victim's original action and the induced action with respect to the state. For each specific category, the attacker generates a universal perturbation and stores it in the database. The universal perturbation can be used in real-time to induce the victim agent to take a specific action.
+
+The Database Construction Stage is designed to provide the attacker with a pre-constructed database of universal perturbations that can be used to launch attacks in real-time. By classifying the states into different categories, the attacker can generate perturbations that are specific to each category. This approach enhances the efficiency and practicality of the DAP approach by reducing the number of perturbation injection times required to launch an attack.
+
 
 ### Attack Launching Stage
-TODO
+The Attack Launching Stage is the final component of the DAP approach. It involves injecting the corresponding perturbations into the victim agent's states to induce it to take a specific action. The attacker uses the pre-constructed database of universal perturbations generated in the Database Construction Stage to query the specific perturbations according to the victim agent's original action and induced action. The attacker then injects the corresponding perturbations into the victim agent's states to induce it to take a specific action.
+
+The Attack Launching Stage is designed to be efficient and practical by utilizing the pre-constructed database of universal perturbations. By querying the database, the attacker can quickly obtain the corresponding perturbations and inject them into the victim agent's states. This approach reduces the number of perturbation injection times required to launch an attack, making the DAP approach more efficient and practical than existing methods.
+
+Overall, the Attack Launching Stage is a critical component of the DAP approach, as it enables the attacker to induce the victim agent to take specific actions and obtain misleading results. By injecting perturbations into the victim agent's states, the attacker can manipulate the DRL system and compromise its integrity. The DAP approach's effectiveness in launching attacks in the Attack Launching Stage is demonstrated through the experimental results presented in the paper.
 
 - [ ] @TODO: Summarize the paper, the method & its contributions in relation with the existing literature.
 

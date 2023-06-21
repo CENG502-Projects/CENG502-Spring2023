@@ -67,6 +67,7 @@ $$\begin{equation}
 \end{equation}$$
 
 <a name="equation_5"></a>
+
 $$\begin{equation}
 \nabla_w J(w) = \frac{1}{N} \sum_{b=1}^{N} \sum_{i=1}^{L} [\nabla_w log \pi_{w}(a_{b,i}|s_{b,i})R_{b,i}]
 \end{equation}$$

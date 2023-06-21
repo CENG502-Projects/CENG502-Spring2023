@@ -1,4 +1,3 @@
-
 # TUNEUP: A TRAINING STRATEGY FOR IMPROVING GENERALIZATION OF GRAPH NEURAL NETWORKS
 
   
@@ -11,7 +10,7 @@ This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.
 
   
 
-[TUNEUP](https://openreview.net/pdf?id=8xuFD1yCoH)[^tuneup], authored by [Weihua Hu](https://scholar.google.co.jp/citations?user=wAFMjfkAAAAJ&hl=ja), [Kaidi Cao](https://scholar.google.com/citations?user=4Zw1PJ8AAAAJ&hl=en),[Kexin Huang](https://scholar.google.com/citations?user=ogEXTOgAAAAJ&hl=en), [Edward W Huang](https://scholar.google.com/citations?user=EqvdkCAAAAAJ&hl=en), [ Karthik Subbian](https://scholar.google.com/citations?user=6ai0lDAAAAAJ&hl=en), and [Jure Leskovec](https://scholar.google.com/citations?user=Q_kKkIUAAAAJ&hl=en) is submitted to ICLR 2023. This paper proposes a novel method to employ a curriculum learning strategy on Graph Neural Networks (GNNs) for both inductive and transductive settings to alleviate a common problem: the neglect of nodes with lower degrees (tail nodes). That is, the classiccal simplistic loss for GNNs focuses on the easier task, optimizing the loss over the nodes with higher degree (head nodes), and overlooks the nodes with low degree (tail nodes), which are esentially harder to predict. This, overall, results in suboptimal performance. To mitigate this, they propose a curriculum learning strategy with esentially two stages: (1) train the model for the easy task (performing well on head nodes), and (2) adapt this model to the harder task (performing well on tail nodes).
+[TUNEUP](https://openreview.net/pdf?id=8xuFD1yCoH)[^tuneup], authored by [Weihua Hu](https://scholar.google.co.jp/citations?user=wAFMjfkAAAAJ&hl=ja), [Kaidi Cao](https://scholar.google.com/citations?user=4Zw1PJ8AAAAJ&hl=en),[Kexin Huang](https://scholar.google.com/citations?user=ogEXTOgAAAAJ&hl=en), [Edward W Huang](https://scholar.google.com/citations?user=EqvdkCAAAAAJ&hl=en), [ Karthik Subbian](https://scholar.google.com/citations?user=6ai0lDAAAAAJ&hl=en), and [Jure Leskovec](https://scholar.google.com/citations?user=Q_kKkIUAAAAJ&hl=en) is submitted to ICLR 2023. This paper proposes a novel method to employ a curriculum learning strategy on Graph Neural Networks (GNNs) for both inductive and transductive settings to alleviate a common problem: the neglect of nodes with lower degrees (tail nodes). That is, the classical simplistic loss for GNNs focuses on the easier task, optimizing the loss over the nodes with higher degrees (head nodes), and overlooks the nodes with low degrees (tail nodes), which are essentially harder to predict. This, overall, results in suboptimal performance. To mitigate this, they propose a curriculum learning strategy with essentially two stages: (1) train the model for the easy task (performing well on head nodes), and (2) adapt this model to the harder task (performing well on tail nodes).
 
   
 
@@ -19,7 +18,7 @@ This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.
 
   
 
-TUNEUP uses a two-stage training strategy to train a GNN: initially employing the default trainig strategy, then transfer the learned model to train specifically for the tail nodes. For the first stage, the base GNN simply minimizes the given supervised loss, which is likely to perform well on head nodes while poorly on tail nodes. In the second stage, TUNEUP synthesizes many tail nodes by dropping edges. And, by reusing the supervision from the dropped edges, the base GNN is finetuned to perform well on the tail nodes.
+TUNEUP uses a two-stage training strategy to train a GNN: initially employing the default training strategy, then transferring the learned model to train specifically for the tail nodes. For the first stage, the base GNN simply minimizes the given supervised loss, which is likely to perform well on head nodes while poorly on tail nodes. In the second stage, TUNEUP synthesizes many tail nodes by dropping edges. And, by reusing the supervision from the dropped edges, the base GNN is finetuned to perform well on the tail nodes.
 
   
 
@@ -27,21 +26,24 @@ The paper addresses three main graph learning problems: semi-supervised node cla
 
   
 
-**Link Prediction Task:** Given a graph, predict new links. That is, given a source node, predict target nodes.
+*Link Prediction Task:* Given a graph, predict new links. That is, given a source node, predict target nodes.
 
-*  **Graph** $G$
+*  *Graph* $G$
 
-*  **Supervision** Y: whether node $s \in V$ is linked to a node $t \in V$ in $G$
+*  *Supervision* Y: whether node $s \in V$ is linked to a node $t \in V$ in $G$
 
-*  **GNN** $F_{\theta}$: GNN model that predicts the score for a pair of nodes: $(s,t) \in V x V$, by generating the embeddings of $s$ and $t$ and calculating a score for their concatanetion using an MLP.
+*  *GNN* $F_{\theta}$: GNN model that predicts the score for a pair of nodes: $(s,t) \in V x V$, by generating the embeddings of $s$ and $t$ and calculating a score for their concatenation using an MLP.
 
-*  **Prediction**: $Y'$
+*  *Prediction*: $Y'$
 
-*  **Loss** L: [The Bayesian Personalized Ranking (BPR) loss](https://arxiv.org/abs/1205.2618) [^bpr], a contrastive loss to increase the scores for positive node pairs compared to negative ones.
+*  *Loss* L: [The Bayesian Personalized Ranking (BPR) loss](https://arxiv.org/abs/1205.2618) [^bpr], a contrastive loss to increase the scores for positive node pairs compared to negative ones.
 
   
 
-**Below is the pseudocode of the overall TUNEUP Method**
+*Below is the pseudocode of the overall TUNEUP Method*
+
+
+  
 
 ```
 
@@ -76,6 +78,9 @@ Given: GNN Fθ, graph G, loss L, supervision Y , DropEdge ratio α.
   
 
 ```
+  
+
+
 
   
 
@@ -87,7 +92,7 @@ Given: GNN Fθ, graph G, loss L, supervision Y , DropEdge ratio α.
 
 
 
-The paper proposes a method called TuneUp. Training of a backbone network is divided into 2 parts. First part as default GNN training, second part is where edges are dropped from training edges to "simulate" tail nodes. There is also ablation parts where affects of different combinations of the approach can be observed. In the following subsections main approach and these ablation approaches are described. Since we focused on the link prediction these are **explicitly exculusive** definations for link prediction.
+The paper proposes a method called TuneUp. Training of a backbone network is divided into 2 parts. The first part is default GNN training, the second part is where edges are dropped from training edges to "simulate" tail nodes. There are also ablation parts where the effects of different combinations of the approach can be observed. In the following subsections, the main approach and these ablation approaches are described. Since we focused on link prediction, these are *explicitly exclusive* definitions for link prediction.
 
 
   
@@ -104,13 +109,13 @@ This task is to train a baseline GNN, performing well on head nodes with high de
 
 ### 2.1.3 Tune Up
 
-Tune Up proposes to do additional training on top of an already trained network with the default GNN training approach. In Tune Up, according to the chosen edge drop ratio training edges are dropped from the graph. Thus, GNN is not able to message pass using these edges. Essentially, generating pseudo-low-degree, hard-to-learn nodes. However, in loss calculation model utilizes these removed edges as positive edges for backward propagation. With this approach network is pushed towards learning to message passing with a limited amount of edges, or in other words, the network learns to handle nodes with low degrees, tail nodes.
+Tune Up proposes to do additional training on top of an already trained network with the default GNN training approach. In Tune Up, according to the chosen edge drop ratio training edges are dropped from the graph. Thus, GNN is not able to message pass using these edges, essentially, generating pseudo-low-degree, hard-to-learn nodes. However, in loss calculation, the model utilizes these removed edges as positive edges for backward propagation. With this approach, the network is pushed towards learning to message passing with a limited amount of edges, or in other words, the network learns to handle nodes with low degrees, tail nodes.
 
   
 
 ### 2.1.4 w/o curriculum
 
-In TuneUp, first, the GNN is trained with all of the available training edges, thus trained on a high density of "head" nodes. In other words, easy-to-learn nodes. With the second part of the training, with the removal of the edges more tail nodes are generated, harder-to-learn nodes. Thus creating a "curriculum" type of training. In w/o curriculum study, the network simultaneously learns with easy-to-learn and hard-to-learn nodes. A comparison of this with TuneUp shows the effectives of the curriculum approach.
+In TuneUp, first, the GNN is trained with all of the available training edges, thus trained on a high density of "head" nodes. In other words, easy-to-learn nodes. In the second part of the training, with the removal of the edges, more tail -harder to train- nodes are generated. Thus, it creates a "curriculum" type of training. In w/o curriculum study, the network simultaneously learns with easy-to-learn and hard-to-learn nodes. A comparison of this with TuneUp shows the effectiveness of the curriculum approach.
 
   
   
@@ -125,40 +130,40 @@ In w/o syn-tails, edge drop is not applied in the second stage of the training. 
 
   
 
-The TUNEUP methods' description is really clear within the paper, we apply the same algorithm for training the network. However, [referenced paper's](https://github.com/DropEdge/DropEdge/tree/master) implementation of the drop edge does not apply to the dataset, so we have rewritten it.
+The TUNEUP methods' description is really clear within the paper, we apply the same algorithm for training the network. However, [referenced paper's](https://github.com/DropEdge/DropEdge/tree/master) implementation of the drop edge does not directly apply to the dataset at hand, so we have reimplemented it.
 
   
 
-The most ambiguous part of the paper is on data splits, training and testing of the network. So we did a lot of guesswork there. The following subsections follow this guesswork.
+The most ambiguous part of the paper is on data splits, training, and testing of the network. So we did a lot of guesswork there. The following subsections follow this guesswork.
 
   
 
 ### 2.2.1 Data Sources
 
-Our initial plan was to implement the dataset PPI for the paper. However, referenced paper for the dataset doesn't mention the dataset once and we couldn't find any repository having the dataset from that paper. Investigating the [arxiv page](https://arxiv.org/abs/2210.14843) of the paper, a [papers with code site link](https://paperswithcode.com/dataset/ppi) is given. Following the link a dataset named ppi can be found from [torch geometric's site](https://pytorch-geometric.readthedocs.io/en/latest/generated/torch_geometric.datasets.PPI.html#torch_geometric.datasets.PPI). However, we observed that the number of nodes and edges were not matching with the specifications on the paper. Also, protein ids and the corresponding amino acid sequences were missing from the dataset. Without the sequences and the ids, we were unable to embed them with the ESN language model. We e-mailed the first author of the paper about the dataset, however, we couldn't get any response in 1 month.
+Our initial plan was to implement the PPI dataset for the paper. However, referenced paper for the dataset doesn't mention the dataset once and we couldn't find any repository having the dataset from that paper. Investigating the [arxiv page](https://arxiv.org/abs/2210.14843) of the paper, a [papers with code site link](https://paperswithcode.com/dataset/ppi) is given. Following the link a dataset named ppi can be found from [torch geometric's site](https://pytorch-geometric.readthedocs.io/en/latest/generated/torch_geometric.datasets.PPI.html#torch_geometric.datasets.PPI). However, we observed that the number of nodes and edges were not matching with the specifications on the paper. Also, protein ids and the corresponding amino acid sequences were missing from the dataset. Without the sequences and the ids, we were unable to embed them with the ESN language model. We e-mailed the first author of the paper about the dataset, however, we couldn't get any response in 1 month.
 
   
 
-After this mismatch with dataset size and missing contextual data, we decided to pursue the ogbn-arxiv dataset. However, the same mismatch occurred. In the paper node size is reported as 143,941, however dataset has 169,343 nodes. Indicating a different dataset or filtering. However, we couldn't find any explicit reference to this event. In current version, we are using the mismatched version. We hypothesize that authors filtered the dataset to reach their version.
+After this mismatch with dataset size and missing contextual data, we decided to pursue the ogbn-arxiv dataset. However, the same mismatch occurred. In the paper node size is reported as 143,941, however, the dataset we have found has 169,343 nodes, indicating a different dataset or filtering. However, we couldn't find any explicit reference to this event. In the current version, we are using the mismatched version. We hypothesize that authors filtered the dataset to reach their version.
 
   
   
 
 ### 2.2.1 Data Split
 
-Due to data being graph data, the data split happens in two parts. Splitting of the nodes and edges. Even though each part's split is detailed, their interaction was not clear.
+As it is graph data, the split happens in two parts: the splitting of the nodes and edges. Even though each part's split is detailed, their interaction was not clear.
 
   
 
-**Nodes**
+*Nodes*
 
   
 
-All of the nodes are divided into 2 parts. V, 95%, that will be used in training, validation and testing for the transductive part. V_new, 5%, will be used in the testing of the inductive part.
+All of the nodes are divided into 2 parts. V, 95%, to be used in training, validation, and testing for the transductive part. V_new, 5%, will be used in the testing of the inductive part.
 
   
 
-**Edges**
+*Edges*
 
   
 
@@ -166,9 +171,9 @@ Edges are divided into 2 parts. E_training, 50%, is used in the training of the 
 
   
 
-**Parts Interaction**
+*Parts Interaction*
 
-It is not clear how these edges and nodes fit together for the inductive part. If chosen independently from each other, there is a possibility that we won't have any edges in-between V_new in E_validation. Meaning that inductive testing wouldn't be possible. Though this is a small chance, it shows that the initial conditions of the splits are of high importance. We didn't apply any normalization on the distribution of the edge splits on node splits. We split the data according to the exact specifications given in the paper, even though we know these specifications not enough to have a non-biased dataset.
+It is not clear how these edges and nodes fit together for the inductive part. If chosen independently from each other, there is a possibility that we won't have any edges in-between V_new in E_validation. Meaning that inductive testing wouldn't be possible. Though this is a small chance, it shows that the initial conditions of the splits are of high importance. We didn't apply any normalization on the distribution of the edge splits on node splits. We split the data according to the exact specifications given in the paper, even though we know these specifications are not enough to have a non-biased dataset.
 
   
 
@@ -176,28 +181,28 @@ It is not clear how these edges and nodes fit together for the inductive part. I
 
   
 
-**Negative edge ratio in training**
+*Negative edge ratio in training*
 
   
 
-In the calculation of loss, bpr loss is used. Predictions of the model on positive and negative edges are used to propagate backwards. The ratio of positive and negative samples is crucial for the learning style and speed of the network. However, no ratio is explicitly mentioned in the paper. We assumed this ratio to be 1. We feed equal amounts of positive and negative edges to the BPR loss.
+In the calculation of loss, bpr loss is used. Predictions of the model on positive and negative edges are used to propagate backward. The ratio of positive and negative samples is crucial for the learning style and speed of the network. However, no ratio is explicitly mentioned in the paper. We assumed this ratio to be 1. We feed equal amounts of positive and negative edges to the BPR loss.
 
   
 
-**Early Stop**
+*Early Stop*
 
   
 
-It is explicitly stated that early stopping is utilized. However, it is not clear, how it was implemented: patience levels etc. Not to hassle with this issue, we train the model on the whole 1000 epochs stated in the paper and choose the one with the lowest validation loss.
+It is explicitly stated that early stopping is utilized. However, it is not clear, how it was implemented: patience levels, etc. Not to hassle with this issue, we train the model on the whole 1000 epochs as stated in the paper, saving them periodically at certain points, and choose the one with the lowest validation loss.
 
   
   
 
-**Hyperparameters**
+*Hyperparameters*
 
   
 
-The paper mentions that they tried 0.25, 0.50 and 0.75 for drop edge ratio for transductive link prediction. However, they don't mention which one was the best option. We have chosen our drop edge ratio as 0.50. Meaning that every 1 edge out of 2 is removed according to given drop edge method.
+The paper mentions that they tried 0.25, 0.50, and 0.75 for drop edge ratio for transductive link prediction. However, they don't mention which one was the best option. We have chosen our drop edge ratio as 0.50. Meaning that every 1 edge out of 2 is removed according to the given drop edge method.
 
   
 
@@ -205,13 +210,13 @@ The paper mentions that they tried 0.25, 0.50 and 0.75 for drop edge ratio for t
 
   
 
-**Recall calculation method**
+*Recall calculation method*
 
 The paper mentions that they use Recall@50 for the evaluation of the network. However, there is no explicit implementation. That's why we used the implementation in [referenced paper](https://arxiv.org/abs/1905.08108) [^filter], here is [the implementation](https://github.com/xiangwang1223/neural_graph_collaborative_filtering/blob/a718a4f2df7c3942ca0df6759926975762c61eed/NGCF/utility/metrics.py#L73). Implementation's paper is referenced next to the recall in TuneUp's paper.
 
   
 
-**Recall calculation negative edge count & Amount of nodes used for recall calculation**
+*Recall calculation negative edge count & Amount of nodes used for recall calculation*
 
   
 
@@ -236,12 +241,12 @@ In the backbone model, the decoder part is mentioned as MLP, without any further
 
   
 
-There are three tasks reported in the paper: semi-supervised node classification, link prediction, and recommender systems. They have used 3 different datasets to evaluate the performance of TUNEUP on the link prediction task: ppi, Flickr, and ogbn-arxiv. As per the lack of computing power we have access to and the time limits, we have chosen to focus on the link prediction task using only the [ogbn-arxiv](https://ogb.stanford.edu/docs/nodeprop/) dataset.
+There are three tasks reported in the paper: semi-supervised node classification, link prediction, and recommender systems. They have used 3 different datasets to evaluate the performance of TUNEUP on the link prediction task: ppi, Flickr, and ogbn-arxiv. As per the time limits and lack of computing power we have access to, we have chosen to focus on the link prediction task using only the [ogbn-arxiv](https://ogb.stanford.edu/docs/nodeprop/) dataset.
 
 For link prediction, the paper reports results on three datasets: ppi (protein-protein interaction), Flickr, and arxiv (paper citation) networks. For semi-supervised node classification, they use ogbn-arxiv and ogbn-products networks. And, for the recommender system task, which is essentially a link prediction between bipartite graphs, they report scores on gowalla, yelp2018, and amazon-book datasets. 
 
 
-In the transductive setting, the goal is to make predictions on the data already on the graph. For the link prediction task, for example, it predicts the existence of edges between the nodes in the graph the model is trained on. In an inductive setting, however, the goal is to assess the performance on data never seen during training, ie, for link prediction, it is to predict the existence of an edge between two nodes that were not present in the training data. For this, before training, a small set of nodes is separated from the training graph. For the inductive cold setting, a portion of the edges is randomly removed, simulating a scenario for the tail nodes with pseudo-supervision. In this way, the subgraphs with an elevated number of tail nodes are fed to the graph while keeping the ground truth information at hand.    
+In the transductive setting, the goal is to make predictions on the data already on the graph. For the link prediction task, for example, it predicts the existence of edges between the nodes in the graph the model is trained with. In an inductive setting, however, the goal is to assess the performance on data never seen during training, ie, for link prediction, it is to predict the existence of an edge between two nodes that were not present in the training data. For this, before training, a small set of nodes is separated from the training graph. For the inductive cold setting, a portion of the edges is randomly removed, simulating a scenario for the tail nodes with pseudo-supervision. In this way, the subgraphs with an elevated number of tail nodes are fed to the graph while keeping the ground truth information at hand.    
 
   
 
@@ -256,17 +261,17 @@ The below table shows the different experimental setups for the link prediction 
 
 | Method                         | Transductive (ours) | Inductive (ours) | Inductive Cold 30%  (ours) | Inductive Cold 60% (ours) | Inductive Cold 90% (ours) |
 | ------------------------------ | :----------: | :-------: | :----------------: | :----------------: | :----------------: |
-| Base                           |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9745;        |
+| Base                           |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
 | TUNEUP w/o curriculum          |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
 | TUNEUP w/o syn-tails           |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
-| **TUNEUP (ours)**              |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
+| *TUNEUP (ours)*              |   &#9744;    | &#9744;   |     &#9744;        |     &#9744;        |     &#9744;        |
 
 <p align="center">
-<b>Table 1: Experimental setup presented in the paper for the link prediction task (Regenerated according to data in paper, borrowed)</b>
+<b>Table 1: Experimental setup presented in the paper for the link prediction task (Regenerated according to data in the paper, borrowed)</b>
 </p>
   
 
-**Hyper-parameters**
+*Hyper-parameters*
 
   
 
@@ -285,7 +290,7 @@ The following are the hyperparameters explicitly stated within the paper for the
   
   
 
-We utilized precomputation a lot during the implementation. Thus,
+We utilized precomputation a lot during the implementation. Thus, start-up time can take around 10 minutes.
 
 
   
@@ -294,18 +299,18 @@ We utilized precomputation a lot during the implementation. Thus,
 
 ### 3.2.1 Directory
 
-Directory consists of 2 main folders.
+The directory consists of 2 main folders.
 
-`bin:` Holds all py documents that is used by `train_controller` class.
+`bin:` Holds all py documents that are used by `train_controller` class.
 
-`dataset:` Empty in the reposotory. While `train_controller` initilizing it fills it with ogbn dataset.
+`dataset:` Empty in the repository. While `train_controller` initializing it fills it with ogbn dataset.
 
 `figs:` Holds the figures used in this readme file
 
 `bin:`
 - `train_controller.py:` Main class for the implementation. Controls all processing and training.
 - `data_processor.py:` Helper class to `train_controller`, downloads dataset, preprocesses and splits data
-- `models.py:` Holds graphical convulutional networ
+- `models.py:` Holds graphical convolutional network
 - `utils.py:` Helper functions
 - `TuneUp.py:` Parser for command line interface
   
@@ -313,11 +318,11 @@ Directory consists of 2 main folders.
 
 Execute the `TuneUp.py` script using Python with the following syntax:
 
-```shell
+shell
 python TuneUp.py TMN mode [options]
-```
 
-Here, `TMN` is the trained model name and `mode` is the mode you want to run. You can also specify additional options to customize the experiment:
+
+Here, `TMN` is the trained model name, and `mode` is the mode you want to run. You can also specify additional options to customize the experiment:
 
 - `--training_type {X}`
 
@@ -357,17 +362,17 @@ Here, `TMN` is the trained model name and `mode` is the mode you want to run. Yo
 
 Example queries:
 
-```shell
+shell
 python TuneUp.py my_trained_model train --training_type base --epoch 500 --lr 0.001 --weight_decay 0.01 --drop_percent 0.3
-```
 
-```shell
+
+shell
 python TuneUp.py my_trained_model test --test_type inductive --epoch 300 --lr 0.0005 --weight_decay 0.002 --drop_percent 0.4
-```
 
-```shell
+
+shell
 python TuneUp.py my_trained_model train --training_type tuneup --lr 0.0002 --weight_decay 0.005
-```
+
 
 `WARNING` It priotizes MPS > CUDA > CPU.
 
@@ -375,7 +380,7 @@ python TuneUp.py my_trained_model train --training_type tuneup --lr 0.0002 --wei
 
 Any kind of testing and training was painstakingly slow in tried CPUs (M1) and Intel(R) Core(TM) i5-8265U CPU @ 1.60GHz 1.80 GHz.
 
-Using MPS of the M1 didn't do any favour.
+Using the MPS of the M1 didn't do any favor.
 
 We used Colab for attaining the results. Mainly, V100 and A100. With these GPUs per epoch is around 6 seconds, leading to 3 hours of training time for 2000 epochs (training and finetuning).
 
@@ -389,7 +394,7 @@ Expected results are dependent on the model and parameters used in the command.
 ## 3.3. Results
 
 ### 3.3.1. Implementation Results
-The following figures show the train and loss plots of different settings: baseline and tuneup. The former is the baseline training of the model on 1000 epochs, whereas, the latter is the finetuned model using the TUNEUP method. 
+The following figures show the train and loss plots of different settings: baseline and tuneup. The former is the baseline training of the model on 1000 epochs, whereas, the latter is the finetuned model using the TUNEUP method. Redlines are indicating epochs with the best validation loss in default training.
 
 ![Baseline Loss](figs/1.jpeg)
 <p align="center">
@@ -397,7 +402,7 @@ The following figures show the train and loss plots of different settings: basel
 </p>
 
 
-![Tune Up loss](figs/2.jpeg)
+![Tune Up loss](figs/3.jpeg)
 <p align="center">
 <b>Figure 2: The train and validation loss curves of the TUNEUP method we implement combining both pretraining and finetuning (Our result)</b>
 </p>
@@ -418,7 +423,7 @@ Below, we report the Recall@50 results for several tests of the baseline model o
 | Base                           |   0.122    | 0.090  |   -       |   -       |    -        |
 | TUNEUP w/o curriculum          |   0.130    |  -   |     -        |     -       |     -        |
 | TUNEUP w/o syn-tails           |   0.112    | 0.096   |   -        |     -        |    -        |
-| **TUNEUP (ours)**              |   0.147    | 0.125   |     -       |     -       |    -        |
+| *TUNEUP (ours)*              |   0.147    | 0.125   |     -       |     -       |    -        |
 <p align="center">
 <b>Table 3: The evaluation of our implementation of the baseline, TUNEUP w/o curriculum, TUNEUP w/o syn-tails, and TUNEUP methods on transductive and inductive settings (Our results)</b>
 </p>
@@ -427,7 +432,7 @@ Below, we report the Recall@50 results for several tests of the baseline model o
 
 ### 3.3.2. Paper Results
 
-Below table reports the experimental results in the paper for link prediction task under different settings and methods.
+The below table reports the experimental results in the paper for the link prediction task under different settings and methods.
 
 
 | Method                         | Transductive (Paper's) | Inductive (Paper's) | Inductive Cold 30%  (Paper's) | Inductive Cold 60% (Paper's) | Inductive Cold 90% (Paper's) |
@@ -435,7 +440,7 @@ Below table reports the experimental results in the paper for link prediction ta
 | Base                           |   0.215    | 0.207  |   0.17       |   0.119        |    0.037        |
 | TUNEUP w/o curriculum          |   0.234    | 0.216   |     0.185        |     0.135       |     0.055        |
 | TUNEUP w/o syn-tails           |   0.219    | 0.212   |   0.17        |     0.119        |    0.036        |
-| **TUNEUP (ours)**              |   0.241    | 0.225   |     0.193       |     0.144       |    0.062        |
+| *TUNEUP (ours)*              |   0.241    | 0.225   |     0.193       |     0.144       |    0.062        |
 
 <p align="center">
 <b>Table 4: The evaluation of the baseline, TUNEUP w/o curriculum, TUNEUP w/o syn-tails, and TUNEUP methods reported in the paper (Regenerated according to paper, borrowed.)</b>
@@ -456,7 +461,7 @@ Looking at the test measurements on the same model with default training, we can
 
 Comparing the results in Table 3, w/o syn and baseline GNN, an unexpected trend is observed: further finetuning of the baseline decreases the recall score (from .122, to .112). This is due to our tests' volatility caused by not measuring the recall for all nodes.
 
-Looking at Table 3, Inductive results we see that is worse of compared to transductive results. This was expected. This is due to model 
+Looking at Table 3, Inductive results we see that is worse compared to transductive results. This was expected. This is due to the model performing worse on unknown nodes.
 
 ### 3.4.2 Comparison between Paper and Implementation
 
@@ -464,21 +469,21 @@ Comparing the results between the paper and our implementation(Table 3 - 4), it 
 
 One of the main reasons for this disparity can be the difference in the dataset. Looking at the number of nodes and average degree of nodes given in the paper and the dataset used in the implementation, it is clear that, the dataset went through some filtering/curation. This curation can be one of the reasons.
 
-The negative edge ratio is an important factor in training, choosing a small number can inhibit, or slow down the model's ability to learn. Meanwhile, choosing a large number can be overwhelming for positive pairs and also introduce wrong labelling on unknown true pairs. Since this ratio is not reported in the paper, this difference in the implementation can be the reason. However, achieving minimum validation loss in low epochs compared to the maximum given by the paper doesn't indicate slow learning.
+The negative edge ratio is an important factor in training, choosing a small number can inhibit, or slow down the model's ability to learn. Meanwhile, choosing a large number can be overwhelming for positive pairs and also introduce wrong labeling on unknown true pairs. Since this ratio is not reported in the paper, this difference in the implementation can be the reason. However, achieving minimum validation loss in low epochs compared to the maximum given by the paper doesn't indicate slow learning.
 
 One of the most crucial hyperparameters of the TuneUp is the drop edge ratio and the final drop edge ratio used in the chosen models is not shared in the paper. Essentially, Tune Up is a drop-edge with a curriculum learning approach. The selection of drop edge ratio, determines the second training set's population distribution, changing the course of training. We have chosen the drop edge ratio as 0.5 without any hyperparameter tuning, this might be a reason for the decrease in model performance.
 
 ### 3.4.3 Discussion on the method and paper
 
-Tune Up proposes a basic but neat way to increase the prediction capabilities of GNNs. Similar to the long tail distributions, where approaches try to enhance prediction metrics of tailing classes, TuneUp tries to address tailing nodes. Essentially, we have a lack of examples for tail classes and a lack of edges for tail nodes. In class imbalance problems with canonical data (vision, tabular etc.), it is possible to apply semantic augmentation to these classes to improve class example count.  However, unlike augmentations, rather than giving more data to the network, for better training, generating these synthetic edges supplies the network to better learn the tail nodes.
+Tune Up proposes a basic but neat way to increase the prediction capabilities of GNNs. Similar to the long tail distributions, where approaches try to enhance prediction metrics of tailing classes, TuneUp tries to address tailing nodes. Essentially, we have a lack of examples for tail classes and a lack of edges for tail nodes. In class imbalance problems with canonical data (vision, tabular, etc.), it is possible to apply semantic augmentation to these classes to improve class example count.  However, unlike augmentations, rather than giving more data to the network, for better training, generating these synthetic edges supplies the network to better learn the tail nodes.
 
-Tune Up is a context-independent approach to better representation learning, it can be used on nearly any backbone, any context and task. However, it requires extending the time for training: usage in the paper extends the training time by as much as the training itself (1000 epoch to 2000), which can result in the expenditure of computation power for little improvement.
+Tune Up is a context-independent approach to better representation learning, it can be used on nearly any backbone, any context, and task. However, it requires extending the time for training: usage in the paper extends the training time by as much as the training itself (1000 epoch to 2000), which can result in the expenditure of computation power for little improvement.
 
 Implementation and idea of the Tune Up were straightforward. However, systems surrounding the TuneUp such as edge drop, different nodes, edge splits, and evaluation criteria were hard to implement and manage means of computation limits. In general, the paper is lacking in explicit details for parallel implementation with the paper.
 
 # 4. Conclusion
 
-Overall, TuneUp comes up with a neat training approach to increase the performance GNNs, independent of the task and context. Looking at the loss graph for the TuneUp training procedure, it can be said that we are further training the network and we were able to implement TuneUp to some extent. However, comparing the results for baseline GCN, we can observe that independent of the model and the training approach, there is a significant difference between the paper and implementation. Clearly, implementation is falling behind. However, this disparity wasn't entirely unexpected, due to ambiguities in the definition of parameters surrounding the training. Tune Up is a neat solution proposal to a complicated problem, however it requires extension of the training by a considerable amount.
+Overall, TuneUp comes up with a neat training approach to increase the performance of GNNs, independent of the task and context. Looking at the loss graph for the TuneUp training procedure, it can be said that we are further training the network and we were able to implement TuneUp to some extent. However, comparing the results for baseline GCN, we can observe that independent of the model and the training approach, there is a significant difference between the paper and implementation. Clearly, implementation is falling behind. However, this disparity wasn't entirely unexpected, due to ambiguities in the definition of parameters surrounding the training. Tune Up is a neat solution proposal to a complicated problem, however, it requires an extension of the training by a considerable amount.
 
 ## Future Work
 
@@ -486,20 +491,7 @@ Currently, the drop edge ratio is static leading to single distribution of degre
 
 According to the given context, the generation of pseudo nodes can be done to give more samples to the network. This can be done by semantic augmentation of nodes' properties and assuming semantically augmented nodes have the same edges as their real counterpart.
 
-@TODO: Discuss the paper in relation to the results in the paper and your results.
 
-  
-
-# 5. References  
-
-[^tuneup]: Hu, W., Cao, K., Huang, K., Huang, E. W., Subbian, K., & Leskovec, J. (2022). TuneUp: A Training Strategy for Improving Generalization of Graph Neural Networks. arXiv preprint arXiv:2210.14843.
-
-[^bpr]: Rendle, S., Freudenthaler, C., Gantner, Z., & Schmidt-Thieme, L. (2012). BPR: Bayesian Personalized Ranking from Implicit Feedback. arXiv preprint arXiv:1205.2618.
-
-[^SAGE]:  William L Hamilton, Rex Ying, and Jure Leskovec. Inductive representation learning on large graphs.
-In Advances in Neural Information Processing Systems (NeurIPS), pp. 1025–1035, 2017.
-
-[^filter]: Wang, X., He, X., Wang, M., Feng, F., & Chua, T.-S. (2019). Neural Graph Collaborative Filtering. In Proceedings of the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval. doi:10.1145/3331184.3331267
 
   
 
@@ -515,3 +507,18 @@ Deniz Germen ([germen.deniz@ceng.metu.edu.tr](germen.deniz@ceng.metu.edu.tr))
   
 
 Ardan Yılmaz ([yilmaz.ardan@ceng.metu.edu.tr](yilmaz.ardan@ceng.metu.edu.tr))
+
+# 5. References  
+
+[^tuneup]: Hu, W., Cao, K., Huang, K., Huang, E. W., Subbian, K., & Leskovec, J. (2022). TuneUp: A Training Strategy for Improving Generalization of Graph Neural Networks. arXiv preprint arXiv:2210.14843.
+
+[^bpr]: Rendle, S., Freudenthaler, C., Gantner, Z., & Schmidt-Thieme, L. (2012). BPR: Bayesian Personalized Ranking from Implicit Feedback. arXiv preprint arXiv:1205.2618.
+
+[^SAGE]:  William L Hamilton, Rex Ying, and Jure Leskovec. Inductive representation learning on large graphs.
+In Advances in Neural Information Processing Systems (NeurIPS), pp. 1025–1035, 2017.
+
+[^filter]: Wang, X., He, X., Wang, M., Feng, F., & Chua, T.-S. (2019). Neural Graph Collaborative Filtering. In Proceedings of the 42nd International ACM SIGIR Conference on Research and Development in Information Retrieval. doi:10.1145/3331184.3331267
+
+  
+
+

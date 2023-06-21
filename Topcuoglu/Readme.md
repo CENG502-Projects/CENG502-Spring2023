@@ -177,7 +177,6 @@ With the pre-trained model (until epoch 34), I have trained the online encoder (
 
 Due to lack of time, I had to increase the learning rate and batch size 8 times. The accuracy (top-1 accuracy) I achieved was 0.1%, which is basically the random guess accuracy. The pre-trained encoder learned nothing with 35 epochs training (should reach 800), but this most probably shows that there is a bug in the code and I received NaN values not arbitrarily. Below I share the expected results for linear probing on ImageNet (from the paper).
 
-![Alt text](results.png)
 <p align="center">
   <img src="imgs/results.png" alt="" style="width: 50%;"><br>
   <em> Table 2: Expected paper results.(from the paper)</em>

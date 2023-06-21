@@ -486,7 +486,7 @@ Currently, the drop edge ratio is static leading to single distribution of degre
 
 According to the given context, the generation of pseudo nodes can be done to give more samples to the network. This can be done by semantic augmentation of nodes' properties and assuming semantically augmented nodes have the same edges as their real counterpart.
 
-@TODO: Discuss the paper in relation to the results in the paper and your results.
+
 
   
 

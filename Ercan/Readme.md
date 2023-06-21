@@ -70,7 +70,8 @@ Authors used DistilBERT [4] for creating embeddings for text search queries. Sea
 <br>
 Since, PinSage which is used for image embeddings is not available publicly, we emplyed another image embedder for this. We used ResNet50 pretrained on ImageNet as image embedder. And also we did not have most frequently used vocabularies. In  order to overcome this usage, we employed hashing trick in this part too. We got numerical IDs for each token by using a hash function. Hash function provided us a value which we used for getting corresponding weigths from weight table W. 
 
-Other parts are implemented as it is in the paper. 
+
+Model is implemented as it is in the paper. 
 
 We did not have a dataset that is used by Pinterest which has around 20 photos per item. So we used amazon dataset, and try to train the model but could not manage to finish it. A sample run is included in the code file.
 

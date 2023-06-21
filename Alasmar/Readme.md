@@ -30,6 +30,7 @@ following policy
 $$ p_j = \frac{1}{1+e^{-w_j}}$$
 
 <a name="equation_1"></a>
+
 $$\begin{equation}
 \pi_{j} = 
   \begin{cases}

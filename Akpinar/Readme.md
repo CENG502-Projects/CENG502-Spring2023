@@ -209,9 +209,10 @@ RadialCTC:
 
 Then, loss as -∑t=0,T-1 ∑s=0,S ln(γ(s,t)/y(s,t))*z(s,t).
 
-But for the calculation of z the paper mentions an s value which is different then the state s above like the fourier series s. I did not understand what to put for s. So, I could not test the radialCTC part.
+But for the calculation of z the paper mentions an s value which is different then the state s above. By checking [9], we can see that it is a scaling value whose value is not given in our paper so I take it as 1.
+I added angular and center regularization. 
 
-I added angular ragularization. 
+In the CTC loss and radial CTC loss calculation at the sum of ln gives "RuntimeError: Function 'LogBackward0' returned nan values in its 0th output." in backward propagation. I could not find a solution for that unfortunately so I could not make the experiments and get the results () you can see the error on the training part of the code but I implement the training and validation steps.
 
 
 
@@ -252,7 +253,7 @@ Our main file is `radialCTC.ipynb` where we declare step-by-step code cells to r
 
 ## 3.3. Results
 
-I could not finish the results part due to the complication with the calculation of the z value. 
+I could not finish the results part due to the complication backpropagation
 
 # 4. Conclusion
 
@@ -277,6 +278,9 @@ I could not compare the results due to having difficulties as I mention above.
 [7] Rabiner, L.R.: A tutorial on hidden markov models and selected applications in speech recognition. Proceedings of the IEEE 77(2), 257–286 (1989)
 
 [8] Zeyer, A., Schl¨uter, R., Ney, H.: Why does ctc result in peaky behavior? arXiv preprint arXiv:2105.14849 (2021)
+
+[9]Wang, H., Wang, Y., Zhou, Z., Ji, X., Gong, D., Zhou, J., Li, Z., Liu, W.: Cosface: Large margin cosine loss for deep face recognition. In: Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition. pp. 5265–5274 (2018)
+
 
 # Contact
 

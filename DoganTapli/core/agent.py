@@ -1,6 +1,5 @@
 import multiprocessing
-from utils.replay_memory import Memory
-from utils.replay_memory import Memory_DAP
+from utils.replay_memory import Memory, Memory_DAP
 from utils.torch import *
 from uap import query_uap
 import math
@@ -40,23 +39,21 @@ def collect_samples(pid, queue, env, policy, custom_reward,
     num_episodes = 0
 
     while num_steps < min_batch_size:
-        env.unwrapped.np_random=np.random
-        state = env.reset()
+        #env.unwrapped.np_random=np.random
+        state, _= env.reset()
         if running_state is not None:
             state = running_state(state)
         reward_episode = 0
 
         for t in range(10000):
             state_var = state_transformer(state.astype(np.float32)).unsqueeze(0)
-            #import pdb; pdb.set_trace()
-            #state_var = tensor(state).unsqueeze(0).float()
             with torch.no_grad():
                 if mean_action:
                     action = policy(state_var)[0][0].numpy()
                 else:
                     action = policy.select_action(state_var)[0].numpy()
             action = int(action) if policy.is_disc_action else action.astype(np.float64)
-            next_state, reward, done, _ = env.step(action)
+            next_state, reward, done, info, _ = env.step(action)
             reward_episode += reward
             if running_state is not None:
                 next_state = running_state(next_state)
@@ -134,7 +131,7 @@ class Agent:
     # Agent is for the attacker network
     # It injects the universal perturbation if the switch head output is greater than 0.5
     # If injected, the victim network decides the step with the perturbed state
-    def collect_DAP_samples(self, min_batch_size, victim_net, max_inject, T, render=False):
+    def collect_DAP_samples(self, hidden, min_batch_size, victim_net, max_inject, T, uap_dict, render=False):
         # policy is the attack network
         log = dict()
         memory = Memory_DAP() # Memory : state, action, switch, mask, next_state, reward, inj_run_out
@@ -149,7 +146,7 @@ class Agent:
         inj_run_out = []
 
         while num_steps < min_batch_size:
-            state = self.env.reset()
+            state, _ = self.env.reset()
             if self.running_state is not None:
                 state = self.running_state(state)
             reward_episode = 0
@@ -160,7 +157,7 @@ class Agent:
                 state_var = state_transformer(state.astype(np.float32)).unsqueeze(0)
                 with torch.no_grad():
                     victim_action = victim_net(state_var)
-                    l_action, switch = self.policy(state_var, victim_action)
+                    l_action, switch, _ = self.policy(state_var, victim_action, hidden)
 
                 if switch > 0.5 and inj_num < max_inject:
                     inj_num += 1
@@ -170,14 +167,14 @@ class Agent:
                     orig_action = torch.argmax(victim_action)
                     lure_action =  torch.argmax(l_action)
 
-                    perturbation = query_uap(orig_action, lure_action)
+                    perturbation = query_uap(uap_dict, orig_action, lure_action)
 
                     state_var += perturbation
 
                 with torch.no_grad():
                     action = torch.argmax(victim_net(state_var))
 
-                next_state, reward, done, _ = self.env.step(action)
+                next_state, reward, done, info, _ = self.env.step(action)
                 reward_episode += reward
                 if self.running_state is not None:
                     next_state = self.running_state(next_state)
@@ -217,8 +214,10 @@ class Agent:
             log['avg_c_reward'] = total_c_reward / num_steps
             log['max_c_reward'] = max_c_reward
             log['min_c_reward'] = min_c_reward
+        
+        batch = memory.sample()
 
-        return memory, log
+        return batch, log
 
 
     def collect_samples(self, min_batch_size, mean_action=False, render=False):

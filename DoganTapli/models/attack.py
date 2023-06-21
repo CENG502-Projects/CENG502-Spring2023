@@ -7,7 +7,7 @@ from torch.autograd import Variable
 # Input: Victim Agent's actions and state
 # Output: Lure action and switch 
 class AttackNetwork(nn.Module):
-    def __init__(self, inp_channel, num_actions, batch_size):
+    def __init__(self, inp_channel, num_actions):
 
         super().__init__()
         self.conv1 = nn.Conv2d(inp_channel, 32, kernel_size=8, stride=4)
@@ -18,16 +18,20 @@ class AttackNetwork(nn.Module):
 
         self.lin3 = nn.Linear(num_actions, 512) # !!
         self.lin4 = nn.Linear(512, 256) # !!
-        self.lstm = nn.LSTM(768, 256) # ... 256 cells ? A3C paper
+        self.lstm = nn.LSTM(input_size=768, hidden_size=128, num_layers=256) # ... 256 cells ? A3C paper
 
         self.relu = nn.ReLU(inplace=True)
         self.flatten = nn.Flatten()
 
-        self.lure_head = nn.Linear(256, num_actions)
-        self.switch_head = nn.Linear(256, 1)
+        self.lure_head = nn.LazyLinear(num_actions)
+        self.switch_head = nn.LazyLinear(1)
+        
+    def init_state(self):
+        return (Variable(torch.zeros(256, 128)),
+                Variable(torch.zeros(256, 128)))
 
 
-    def forward(self, state, victim_policy):
+    def forward(self, state, victim_policy, hidden):
         x1 = self.conv1(state)
         x1 = self.relu(x1)
         x1 = self.conv2(x1)
@@ -46,15 +50,12 @@ class AttackNetwork(nn.Module):
         x2 = self.relu(x2)
 
         x = torch.cat((x1, x2), dim=1)
-        # random hidden and cell states ??
-        h_0 = Variable(torch.zeros(1, batch_size, 256))
-	    c_0 = Variable(torch.zeros(1, batch_size, 256))
 
-        x, (final_hidden_state, _) = self.lstm(x, (h_0, c_0))
+        x, hidden = self.lstm(x, hidden)
         # relu?
 
         # softmax?
-        action = torch.softmax(self.lure_head(final_hidden_state[-1]), dim=1)
-        switch = torch.softmax(self.switch_head(final_hidden_state[-1]), dim=1)
+        action = torch.softmax(self.lure_head(x), dim=1)
+        switch = torch.softmax(self.switch_head(x), dim=1)
 
-        return action, switch
+        return action, switch, hidden

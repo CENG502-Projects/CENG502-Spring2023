@@ -23,6 +23,10 @@ import time
 import pickle
 import json
 
+from uap import query_uap, uap
+
+
+
 from utils import *
 
 
@@ -77,7 +81,7 @@ def get_parameters():
 
     return args
 
-def dppo_step(attack_net, value_net, optimizer_attack, optimizer_value, optim_value_iternum, states, victim_actions,
+def dppo_step(attack_net, hidden, value_net, optimizer_attack, optimizer_value, optim_value_iternum, states, victim_actions,
              returns, advantages, old_switch_log_probs, old_lure_log_probs, clip_epsilon = 0.2, l2_reg = 1e-3):
 
     
@@ -93,7 +97,7 @@ def dppo_step(attack_net, value_net, optimizer_attack, optimizer_value, optim_va
         optimizer_value.step()
 
     
-    action_prob, switch_prob = attack_net(states, victim_actions)
+    action_prob, switch_prob, hidden= attack_net(states, victim_actions, hidden)
 
     """Switch head loss"""
     ratio_sw = torch.exp(torch.log(switch_prob) - old_switch_log_probs)
@@ -118,7 +122,7 @@ def dppo_step(attack_net, value_net, optimizer_attack, optimizer_value, optim_va
 
     optimizer_attack.zero_grad()
     total_loss.backward()
-    torch.nn.utils.clip_grad_norm_(attacker_net.parameters(), 40) # ??
+    torch.nn.utils.clip_grad_norm_(attack_net.parameters(), 40) # ??
     optimizer_attack.step()
 
 
@@ -137,7 +141,7 @@ if __name__ == '__main__':
     action_space = env.action_space.n
 
     running_state = ZFilter(env.observation_space.shape, clip=5)
-    # running_reward = ZFilter((1,), demean=False, clip=10)
+    running_reward = ZFilter((1,), demean=False, clip=10)
     
     """seeding"""
     np.random.seed(args.seed)
@@ -163,7 +167,7 @@ if __name__ == '__main__':
             batch, _ = agent_victim.collect_samples(args.min_batch_size, render=args.render)
             dtype=torch.float32
             states = torch.from_numpy(np.vstack(batch.state)).to(dtype).to(device)
-            actions = torch.from_numpy(np.vstack(batch.action)).to(dtype).to(device)
+            actions = torch.from_numpy(np.vstack(batch.action).flatten()).to(dtype).to(device)
 
             state_collections =  [ [] for _ in range(action_space)]
             for j in range(action_space):
@@ -189,7 +193,7 @@ if __name__ == '__main__':
             uap_dict = json.load(uap_file)
 
     
-    attack_net = AttackNetwork(3, action_space, args.min_batch_size)
+    attack_net = AttackNetwork(3, action_space)
     value_net = Value(512)
     attack_net.to(device)
     value_net.to(device)
@@ -204,39 +208,92 @@ if __name__ == '__main__':
     """create agent"""
     dap_agent = Agent(env, attack_net, device, running_state=running_state, num_threads=args.num_threads)
     
+    # random hidden and cell states ??
+    hidden = attack_net.init_state()
+    
     
     for i_iter in range(args.max_iter_num):
         """generate multiple trajectories that reach the minimum batch_size"""
-        batch, log = dap_agent.collect_DAP_samples(args.min_batch_size, victim_net, args.max_inject_num, args.max_traj_len render=args.render)
+        batch, log = dap_agent.collect_DAP_samples(hidden, args.min_batch_size, victim_net, args.max_inject_num, args.max_traj_len, uap_dict, render=args.render)
         t0 = time.time()
         dtype=torch.float32
         states = torch.from_numpy(np.vstack(batch.state)).to(dtype).to(device)
         actions = torch.from_numpy(np.vstack(batch.action)).to(dtype).to(device)
         switch = torch.from_numpy(np.vstack(batch.switch)).to(dtype).to(device)
         rewards = torch.from_numpy(np.vstack(batch.reward)).to(dtype).to(device)
-        masks = np.vstack(batch.mask)
+        masks = np.vstack(batch.mask).flatten()
         inj_run_out = torch.from_numpy(np.vstack(batch.inj_run_out)).to(dtype).to(device)
 
         # Trajectory padding
         # Repeat the shorter trajectories (l_max/l_n)-1 times
         # trajectory padding here
         # use masks to find l_max and l_n
-        _, indices = np.where(masks == 1)
-        l_max = np.max(indices) + 1
-        for i in range(states.shape[0]):
-            l_n = mask[i].shape[0]
-            if l_n < l_max:
-                states[i].repeat() # ... floor(l_max/l_n)-1 times -> (l_max//l_n)-1
-                # repeat actions switch reward ...
-
+        indices = np.where(masks == 0)[0]
+        if len(indices):
+            if indices[-1] < masks.shape[0]:
+                indices = np.append(indices, np.shape(masks)[0])
+            prev = indices[0]
+            l_max = prev
+            for i in indices[1:]:
+                if (i - prev -1) > l_max:
+                    l_max = i - prev -1
+                prev = i
+            l_max = args.max_traj_len if l_max > args.max_traj_len else l_max
             
-        masks = torch.from_numpy(masks).to(dtype).to(device)
+            masks = torch.from_numpy(masks).unsqueeze(1).to(dtype).to(device)
+
+            prev = -1
+            states_padding = []
+            actions_padding = []
+            switch_padding = []
+            reward_padding = []
+            masks_padding = []
+            inj_run_out_padding = []
+            for i in indices:
+                l_n = i - prev -1
+                if l_n < l_max and l_n and ((l_max//l_n)-1):
+                    temp = states[prev+1:i]
+                    states_padding.append(temp.repeat((l_max//l_n)-1,1,1,1))
+                    temp = actions[prev+1:i]
+                    actions_padding.append(temp.repeat((l_max//l_n)-1,1))
+                    temp = switch[prev+1:i]
+                    switch_padding.append(temp.repeat((l_max//l_n)-1,1))
+                    temp = rewards[prev+1:i]
+                    reward_padding.append(temp.repeat((l_max//l_n)-1,1))
+                    temp = masks[prev+1:i]
+                    masks_padding.append(temp.repeat((l_max//l_n)-1,1))
+                    temp = inj_run_out[prev+1:i]
+                    inj_run_out_padding.append(temp.repeat((l_max//l_n)-1,1))
+                prev = i
+                
+            if len(states_padding):
+                
+                states_padding = torch.cat(states_padding, dim=0)
+                states = torch.cat([states,states_padding], dim=0)
+                
+                actions_padding = torch.cat(actions_padding, dim=0)
+                actions = torch.cat([actions,actions_padding], dim=0)
+                
+                switch_padding = torch.cat(switch_padding, dim=0)
+                switch = torch.cat([switch,switch_padding], dim=0)
+                
+                reward_padding = torch.cat(reward_padding, dim=0)
+                rewards = torch.cat([rewards,reward_padding], dim=0)
+                
+                masks_padding = torch.cat(masks_padding, dim=0)
+                masks = torch.cat([masks,masks_padding], dim=0)
+                
+                inj_run_out_padding = torch.cat(inj_run_out_padding, dim=0)
+                inj_run_out = torch.cat([inj_run_out,inj_run_out_padding], dim=0)
+
+        else:
+            masks = torch.from_numpy(masks).unsqueeze(1).to(dtype).to(device)
 
         with torch.no_grad():
             values = value_net(states)
 
             victim_actions = victim_net(states)
-            aciton_prob, switch_prob = attack_net(states, victim_actions)
+            action_prob, switch_prob, _ = attack_net(states, victim_actions, hidden)
 
             old_switch_log_probs = torch.log(switch_prob)
 
@@ -250,13 +307,13 @@ if __name__ == '__main__':
 
         # Update model weights 
         # batch by batch !!
-        dppo_step(attack_net, value_net, optimizer_attack, optimizer_value, 1, states, victim_actions, returns, advantages, old_switch_log_probs, old_lure_log_probs)
+        dppo_step(attack_net, hidden, value_net, optimizer_attack, optimizer_value, 1, states, victim_actions, returns, advantages, old_switch_log_probs, old_lure_log_probs)
 
         t1 = time.time()
     
         if i_iter % args.log_interval == 0:
-            print('{}\tT_sample {:.4f}\tT_update {:.4f}\tT_eval {:.4f}\ttrain_R_min {:.2f}\ttrain_R_max {:.2f}\ttrain_R_avg {:.2f}\teval_R_avg {:.2f}'.format(
-                i_iter, log['sample_time'], t1-t0, t2-t1, log['min_reward'], log['max_reward'], log['avg_reward'], log_eval['avg_reward']))
+            print('{}\tT_update {:.4f}\ttrain_R_min {:.2f}\ttrain_R_max {:.2f}\ttrain_R_avg {:.2f}'.format(
+                i_iter, t1-t0, log['min_reward'], log['max_reward'], log['avg_reward']))
     
         if args.save_model_interval > 0 and (i_iter+1) % args.save_model_interval == 0:
             to_device(torch.device('cpu'), attack_net, value_net)

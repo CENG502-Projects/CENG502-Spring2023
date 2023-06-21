@@ -29,8 +29,7 @@ class Memory(object):
     def __len__(self):
         return len(self.memory)
 
-Transition_DAP = namedtuple('Transition_DAP', ('state', 'action', 'switch', 'mask', 'next_state',
-                                       'reward', 'inj_run_out'))
+Transition_DAP = namedtuple('Transition_DAP', ('state', 'action', 'switch', 'mask', 'next_state', 'reward', 'inj_run_out'))
 
 
 class Memory_DAP(object):

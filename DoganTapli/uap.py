@@ -56,14 +56,14 @@ def uap(model, data, target_action, action_space, step_size= 0.006, eps = 0.039,
       # num_of_samples += batch_size
       attack_success += np.sum(pred == target_action)
 
-  return perturbation # detach ?
+  return perturbation.detach().tolist() # detach ?
 
 
-def query_uap(orig_action, lure_action):
-  assert orig_action.shape[0] !=lure_action.shape[0]
-  perturb = []
-  for i in range(orig_action.shape[0]):
-    key = '{}_{}'.format(orig_action[i].item(), lure_action[i].item()) # item ?
-    perturb.append(uap_dict.get(key))
+def query_uap(uap_dict, orig_action, lure_action):
+  #assert orig_action.shape[0] !=lure_action.shape[0]
+  #perturb = []
+  #for i in range(orig_action.shape[0]):
+  key = '{}_{}'.format(orig_action.item(), lure_action.item()) # item ?
+  perturb = uap_dict.get(key)
 
-  return torch.as_tensor(perturb)
+  return torch.FloatTensor(perturb) if perturb is not None else torch.zeros(3,84,84)

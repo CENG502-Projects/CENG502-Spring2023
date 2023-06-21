@@ -5,25 +5,7 @@ import torch
 import numpy as np
 import os
 
-#from tensordict.nn import TensorDictModule
-#from tensordict.nn.distributions import NormalParamExtractor
 from torch import nn
-'''from torchrl.collectors import SyncDataCollector
-from torchrl.data.replay_buffers import ReplayBuffer
-from torchrl.data.replay_buffers.samplers import SamplerWithoutReplacement
-from torchrl.data.replay_buffers.storages import LazyTensorStorage
-from torchrl.envs import (
-    Compose,
-    DoubleToFloat,
-    ObservationNorm,
-    StepCounter,
-    TransformedEnv,
-)
-from torchrl.envs.libs.gym import GymEnv
-from torchrl.envs.utils import check_env_specs, set_exploration_mode
-from torchrl.modules import ProbabilisticActor, TanhNormal, ValueOperator
-from torchrl.objectives import ClipPPOLoss
-from torchrl.objectives.value import GAE'''
 from tqdm import tqdm
 
 from models.mlp_critic import Value
@@ -64,8 +46,8 @@ def get_parameters():
                         help='learning rate (default: 3e-4)')
     parser.add_argument('--clip-epsilon', type=float, default=0.2, metavar='N',
                         help='clipping epsilon for PPO')
-    parser.add_argument('--num-threads', type=int, default=4, metavar='N',
-                        help='number of threads for agent (default: 4)')
+    parser.add_argument('--num-threads', type=int, default=1, metavar='N',
+                        help='number of threads for agent (default: 1)')
     parser.add_argument('--seed', type=int, default=1, metavar='N',
                         help='random seed (default: 1)')
     parser.add_argument('--min-batch-size', type=int, default=2048, metavar='N',
@@ -76,11 +58,11 @@ def get_parameters():
                         help='maximal number of main iterations (default: 500)')
     parser.add_argument('--log-interval', type=int, default=1, metavar='N',
                         help='interval between training status logs (default: 10)')
-    parser.add_argument('--save-model-interval', type=int, default=0, metavar='N',
-                        help="interval between saving model (default: 0, means don't save)")
+    parser.add_argument('--save-model-interval', type=int, default=10, metavar='N',
+                        help="interval between saving model (default: 10, means don't save)")
     parser.add_argument('--gpu-index', type=int, default=None, metavar='N')
     args = parser.parse_args()
-    args.env_name = f'{args.env_name}-v0'
+    args.env_name = f'{args.env_name}-v4'
 
     return args
 
@@ -127,11 +109,11 @@ if __name__ == '__main__':
     print(args.env_name)
     env = gym.make(args.env_name)
     env = AtariPreprocessing(env, frame_skip=1, grayscale_obs=False, grayscale_newaxis=True)
-    env.unwrapped.np_random = np.random
+    #env.unwrapped.np_random = np.random
     state_dim = env.observation_space.shape[0]
 
     running_state = ZFilter(env.observation_space.shape, clip=5)
-    # running_reward = ZFilter((1,), demean=False, clip=10)
+    running_reward = ZFilter((1,), demean=False, clip=10)
     
     """seeding"""
     np.random.seed(args.seed)

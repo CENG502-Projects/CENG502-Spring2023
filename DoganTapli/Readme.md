@@ -218,12 +218,12 @@ In conclusion, while reproducing the proposed DAP approach was a challenging tas
 # 5. References
 
 - K. Mo, W. Tang, J. Li and X. Yuan, "Attacking Deep Reinforcement Learning With Decoupled Adversarial Policy," in IEEE Transactions on Dependable and Secure Computing, vol. 20, no. 1, pp. 758-768, 1 Jan.-Feb. 2023, doi: 10.1109/TDSC.2022.3143566.
-- 
-@TODO: Provide your references here.
+
+[X] @TODO: Provide your references here.
 
 # Contact
 
 - Adnan Harun Dogan: [Github](https://github.com/adnanhd) [Twitter](https://twitter.com/adnanharundogan) [Google Scholar](https://scholar.google.com/citations?user=QGaRpqYAAAAJ&hl=en)
 - Merve Tapli: [Github](https://github.com/mtapli)
 
-@TODO: Provide your names & email addresses and any other info with which people can contact you.
+[X] @TODO: Provide your names & email addresses and any other info with which people can contact you.

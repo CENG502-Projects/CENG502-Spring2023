@@ -1,6 +1,6 @@
 # UniVIP: A Unified Framework for Self-Supervised Visual Pre-training
 
-This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.edu.tr/~skalkan/ADL/) project for reproducing a paper without an implementation. See [CENG502 (Spring 20223) Project List](https://github.com/CENG502-Projects/CENG502-Spring2023) for a complete list of all paper reproduction projects.
+This readme file is an outcome of the [CENG502 (Spring 2023)](https://ceng.metu.edu.tr/~skalkan/ADL/) project for reproducing a paper without an implementation. See [CENG502 (Spring 20223) Project List](https://github.com/CENG502-Projects/CENG502-Spring2023) for a complete list of all paper reproduction projects. If you are interested in the commit history, you can find the public repository in my account here: https://github.com/utkutpcgl/UniVIP.
 
 # 1. Introduction
 Self supervised learning aims to train generalizable models without labels by using the data intrinsic learning signals. There is a significant need for labeled data for most computer vision tasks, where object segmentation can be one of the most tedious ones. 

@@ -237,6 +237,7 @@ As can be seen on the figures, mine results approaches the greedy solution quick
 
 ### 3.3.2 Additional Studies:
 
+**1. Link Prediction on Social Network:** 
 Simulation process and function approximation are intensive in terms of computational time. When a new person is added to network, influence of that person should be estimated to reflect the effect of gain in objective function. Considering the real time systems where new incomers constantly joins the network and some users leaves the platform, simulation process should be restarted over again to come up with a true form of appoximating function. Also, simulation process has sthocastic nature, effect of the new nodes might not be directly observable in function. Since the process is already costly and there are constant changes in the network, catching the on time approximation function is impractiable. In order to achive real-time applicable system, link prediction of the new incomers in aproximated function can be used as a solution to reflect the changes in the network.
 
 Graph attention networks [Velickovic et al, 2018](https://arxiv.org/pdf/1710.10903.pdf) have shown good performance on various of the tasks, including node prediction, edge attribute prediction, link prediction etc. In this experiment I designed gnn based model to train a network on approximated function so that new nodes in the network can be predicted whether it can be influenced on existing nodes in function without simulating the process from scratch. Experiment parameters are shown in table below:
@@ -259,6 +260,46 @@ I could not finish the training because of memory constraint in GPU. With more c
 
 Fine tune might be required on parameters especially on embedding Dimension, number of heads and learning rate. These are the next level task to advance the proposed method to make applicable in realistic scenarious. In addition, if node level or edge level features exist in the model, predictions accuracy might be effected in positive way.
 
+**2. Reinforcement Learning Approach on Sensor Placement Problem:** 
+In addition to the original experiment, we conducted an additional experiment to train an agent that makes decisions about whether to add incoming elements to an existing set with different types, while considering a budget constraint. The aim of this experiment was to explore the agent's ability to optimize the objective function by selecting the most suitable items for inclusion in the set and to show that optimal policies can be determined by reinforcement learning unlike the heuristic approach that author present in paper. To complete the setup, we defined RL components with followings:
+
+- State Definition: The state variables $s_t$ in this experiment were defined by the budget at each time step, which represented the capacity of each item type at time t.
+- Action: Action of agent at time t $a_t$ defines adding incoming element to set k with and without the replacement of the existing items in the set considering the budget constraint
+- Reward Function: The reward function $r_t$ was designed to capture two scenarios; when an element was added to the existing set without replacing any element, the reward was the marginal gain of the objective function. On the other hand, when an element was added to the set with the replacement of an existing element, the reward was calculated as the difference between the objective value of the previous set $S_t$ and the new set $S_t+1$.
+
+To train the agent, we employed a value function approximation method using a neural network with two fully connected layers and the ELU activation function. Loss function is defined as below:
+
+![Loss function](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/1e745bbb-2695-4699-879c-da541eed9660)
+
+The gradients of the layers were computed using the Bellman equation as shown below:
+
+![Belman Equation](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/605254be-0841-4270-957c-0da797066d0d)
+
+Where $\gamma$ represents discounted rate of future rewards. 
+
+During the training process, we used an $\epsilon$-greedy strategy to balance exploration and exploitation. The agent would either choose a random action with probability $\epsilon$ or select the action with the highest Q-value according to the learned value function. By iteratively interacting with the environment and updating the neural network parameters, the agent learned to make informed decisions based on the observed rewards.
+
+Hyperparameters for experiment is shown in table below:
+
+*Table 3: Parameters of Deep Q-Network for Sensor Placement Problem*
+Setup Component | Parameters 
+------------ | ------------- 
+Hidden Dimension | 128 
+Gamma | 0.9 
+Learning Rate | 0.001
+Epoch | 1000 
+Budget (B) | 5
+Number of Sensor Types (k) | 3
+
+Objective values over training is shown figure below:
+
+![Results_Q](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/7647d4b2-b969-4449-8661-bba2831a6fe9)
+*Figure 10: Training Progress on Sensor Placement Problem*
+
+As can be seen on figure, objective value has rapid increase in few epochs and after that osilation on the values are observed at remaining epochs. This is due to the unstable gradients. To adress this issue, several approaches exist in the literature such as actor-critic method, experience replay. These techniques can be used to overcome this problem as a continuation study.
+
+Our findings showed that the deep reinforcement learning approach can be used for solving the k-submodular maximization problem with the given budget constraint, particulary on sensor placement problem. By selecting the items with the minimum marginal gain for replacement, the agent demonstrated an ability to adapt and improve the objective value of the set over time. 
+
 # 4. Conclusion
 
 In this project, I  implemented and partially reproduced the results of the paper "Streaming Algorithm for Monotone k-Submodular Maximization with Cardinality Constraints." The paper introduced a novel algorithm for maximizing influence in a social network with cardinality constraints, providing a constant-factor approximation guarantee. We focused on applying this algorithm to the Influence Maximization problem and the Sensor Placement problem.
@@ -269,7 +310,7 @@ In the Sensor Placement problem, we also achieved similar results to those prese
 
 Our implementation confirmed the key findings of the paper and highlighted the effectiveness of the proposed algorithm for both the Influence Maximization and Sensor Placement problems. The project underscores the significance of efficient algorithms for submodular maximization in practical applications such as social network analysis and sensor deployment.
 
-Finally, we set up an experiment to absorve the overhead cost of the approximiting the function on influence maximization problem when new person joins the network. We could not finish the study, however, with the setup, experiment can be completed by running the script.   
+Finally, we set up an additional experiments to absorve the overhead cost of the approximiting the function on influence maximization problem and to highlight the potential of using deep reinforcement learning techniques for decision-making in resource-constrained scenarios.
 
 To wrap up, I enjoyed reproducing this paper and learned a lot during the process. I would like to thank the authors for writing such a great and mostly clear paper and Sinan Hoca for equipping us with the skills to take on this project.
 

@@ -238,6 +238,7 @@ As can be seen on the figures, mine results approaches the greedy solution quick
 ### 3.3.2 Additional Studies:
 
 **1. Link Prediction on Social Network:** 
+
 Simulation process and function approximation are intensive in terms of computational time. When a new person is added to network, influence of that person should be estimated to reflect the effect of gain in objective function. Considering the real time systems where new incomers constantly joins the network and some users leaves the platform, simulation process should be restarted over again to come up with a true form of appoximating function. Also, simulation process has sthocastic nature, effect of the new nodes might not be directly observable in function. Since the process is already costly and there are constant changes in the network, catching the on time approximation function is impractiable. In order to achive real-time applicable system, link prediction of the new incomers in aproximated function can be used as a solution to reflect the changes in the network.
 
 Graph attention networks [Velickovic et al, 2018](https://arxiv.org/pdf/1710.10903.pdf) have shown good performance on various of the tasks, including node prediction, edge attribute prediction, link prediction etc. In this experiment I designed gnn based model to train a network on approximated function so that new nodes in the network can be predicted whether it can be influenced on existing nodes in function without simulating the process from scratch. Experiment parameters are shown in table below:
@@ -261,11 +262,12 @@ I could not finish the training because of memory constraint in GPU. With more c
 Fine tune might be required on parameters especially on embedding Dimension, number of heads and learning rate. These are the next level task to advance the proposed method to make applicable in realistic scenarious. In addition, if node level or edge level features exist in the model, predictions accuracy might be effected in positive way.
 
 **2. Reinforcement Learning Approach on Sensor Placement Problem:** 
+
 In addition to the original experiment, we conducted an additional experiment to train an agent that makes decisions about whether to add incoming elements to an existing set with different types, while considering a budget constraint. The aim of this experiment was to explore the agent's ability to optimize the objective function by selecting the most suitable items for inclusion in the set and to show that optimal policies can be determined by reinforcement learning unlike the heuristic approach that author present in paper. To complete the setup, we defined RL components with followings:
 
 - State Definition: The state variables $s_t$ in this experiment were defined by the budget at each time step, which represented the capacity of each item type at time t.
 - Action: Action of agent at time t $a_t$ defines adding incoming element to set k with and without the replacement of the existing items in the set considering the budget constraint
-- Reward Function: The reward function $r_t$ was designed to capture two scenarios; when an element was added to the existing set without replacing any element, the reward was the marginal gain of the objective function. On the other hand, when an element was added to the set with the replacement of an existing element, the reward was calculated as the difference between the objective value of the previous set $S_t$ and the new set $S_t+1$.
+- Reward Function: The reward function $r_t$ was designed to capture two scenarios; when an element was added to the existing set without replacing any element, the reward was the marginal gain of the objective function. On the other hand, when an element was added to the set with the replacement of an existing element, the reward was calculated as the difference between the objective value of the previous set $S_t$ and the new set $S_{t+1}$.
 
 To train the agent, we employed a value function approximation method using a neural network with two fully connected layers and the ELU activation function. Loss function is defined as below:
 

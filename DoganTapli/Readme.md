@@ -145,7 +145,7 @@ Max_Inject = 21 # for Pong game
 ├── main.py
 ├── ppo_train.py
 ├── uap.py
-├── Readme.md
+└── Readme.md
 ```
 ### Python Package Environment
 
@@ -156,13 +156,14 @@ The table below presents the software libraries and dependencies required for th
 | torch                        | 2.0.1   |
 | torchvision                  | 0.15.2  |
 | numpy                        | 1.25.0  |
+| tqdm                         | 4.65.0  |
 | gym                          | 0.26.2  |
 | gym-notices                  | 0.0.8   |
 | ale-py                       | 0.8.1   |
 | AutoROM                      | 0.4.2   |
 | AutoROM.accept-rom-license   | 0.6.1   |
 
-These libraries encompass a range of functionalities such as deep learning, computer vision, numerical computing, reinforcement learning, and ROM management. By following the provided instructions, you can set up the environment and proceed with the project seamlessly in **Python3.10**.
+These libraries encompass a range of functionalities such as deep learning, computer vision, numerical computing, reinforcement learning, and ROM management. By following the provided instructions, you can set up the environment and proceed with the project seamlessly in **Python3.10**. You have to also install `gym[atari,accept-rom-license]` using pip3.
 
 
 ### 3.2 Running the Code
@@ -179,7 +180,7 @@ python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p --uap-path uap
 ```
 ### Code-level Challenges
 it is important to note that reproducing the proposed DAP approach was a challenging task due to several factors:
-- Firstly, the paper did not provide detailed information on the architecture and configuration of the neural networks used in the approach. This lack of information made it difficult to replicate the approach accurately.
+- First, the paper did not provide detailed information on the architecture and configuration of the neural networks used in the approach. This lack of information made it difficult to replicate the approach accurately.
 - Secondly, the paper did not provide a detailed description of the experimental setup, making it challenging to reproduce the experiments accurately.
 - Thirdly, the paper did not provide information on the specific versions of the software and libraries used in the implementation, leading to compatibility issues with different versions of Python and other dependencies.
 
@@ -195,12 +196,11 @@ The corresponding baseline-DAP comparison in the paper is given below.
 
 ![fig:comp-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/12b67c30-885b-4456-acfe-bdad7e3ceabd)
 
-
 The corresponding clipping time (y-axis) vs the number of training episodes comparison to see the clipping for the DAP Attack and the baseline attack is given in the following figure.
 
 ![fig:injection-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/e0d75828-4295-44ea-9c22-02db9aba2d22)
 
-
+### Results in the paper
 The Results section of the paper presents the experimental evaluation of the proposed DAP approach. The experiments aim to verify the effectiveness of the DAP approach in launching successful attacks on DRL systems and to analyze the effectiveness of different components in learning DAP. The experiments are conducted on four Atari games: Pong, Breakout, Space Invaders, and Seaquest.
 
 The paper compared the proposed DAP approach with existing methods for attacking DRL systems. It demonstrated that the DAP approach outperformed the baseline methods regarding attack success rate and the ability to mislead the victim agents. This comparison provides evidence of the effectiveness of the proposed approach and its potential for practical applications.
@@ -212,6 +212,8 @@ The experimental results demonstrate the effectiveness of the DAP approach in la
 The experimental results also analyze the effectiveness of different components in learning DAP. The ablation studies are performed to analyze the effectiveness of different components, including the trajectory clipping and padding in data pruning and DPPO in optimization. The results show that applying either data pruning or DPPO alone cannot learn the well-performed and stable DAP. In fact, both components follow the same design methodology, which focuses on the specificity of attacking DRL, especially the imbalanced distribution in switch policy and the sampled actions' impacts on the attacker's behaviour.
 
 The experimental results also provide insights into the states where the DAP approach is most effective in launching attacks and injecting perturbations. The results show that the DAP approach is most effective in launching attacks in states where the victim agent's policy is uncertain or unstable. The DAP approach is also shown to be effective in inducing the victim agent to take specific actions that lead to significant rewards for the attacker.
+
+### Results of our reproduction
 
 Overall, the experimental results demonstrate the effectiveness and practicality of the proposed DAP approach in launching successful attacks on DRL systems. The results also provide insights into the effectiveness of different components in learning DAP and the states where the DAP approach is most effective in launching attacks and injecting perturbations. These findings have implications for the development of defence mechanisms against adversarial attacks on DRL systems and contribute to the broader understanding of the vulnerabilities and security challenges in the field of DRL.
 

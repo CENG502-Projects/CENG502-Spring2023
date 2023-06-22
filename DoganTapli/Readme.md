@@ -165,7 +165,7 @@ The table below presents the software libraries and dependencies required for th
 These libraries encompass a range of functionalities such as deep learning, computer vision, numerical computing, reinforcement learning, and ROM management. By following the provided instructions, you can set up the environment and proceed with the project seamlessly in **Python3.10**.
 
 
-### Code Execution
+### 3.2 Running the Code
 We replicated the experiments described in the paper using the provided codebase. The codebase included the implementation of the DAP approach and the necessary components for training and evaluating the victim agents. We ensured that the codebase was properly set up and executed the experiments on the same hardware as mentioned in the paper.
 ```bash
 # To pre-train the PPO model 
@@ -177,20 +177,21 @@ During the experiments, we observed the performance of the DAP approach in terms
 python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p # Optionally: --env-name Pong
 python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p --uap-path uap.json
 ```
+### Code-level Challenges
 
 ## 3.3. Results
-### Challenges
 
-### Reproduction
 The paper summarizes its experiments in the following table below.
 
 ![tab:experiment-summary](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/067594dd-23ca-4eec-bcd6-b6c7cced4753)
 
-Our reproduction covers the
+In our reproduction work, we used the Pong task together with a PPO network, however, it can be extended by changing the environment like Breakout, MsPacman, and Enduro. It is controlled by the parameter `--env-name`. Additionally, the code can be extended by adding a DQN network instead of PPO which is in the `/models/*.py`. Therefore we reproduced the second row of the table above.
 
+The corresponding baseline-DAP comparison in the paper is given below.
 ![fig:comp-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/12b67c30-885b-4456-acfe-bdad7e3ceabd)
 
 
+The corresponding clipping time (y-axis) vs the number of training episodes comparison to see the clipping for the DAP Attack and the baseline attack is given in the following figure.
 ![fig:injection-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/e0d75828-4295-44ea-9c22-02db9aba2d22)
 
 

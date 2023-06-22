@@ -198,20 +198,20 @@ The Results section of the paper presents the experimental evaluation of the pro
 
 The paper summarizes its experiments in the following table below.
 
-![tab:experiment-summary](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/067594dd-23ca-4eec-bcd6-b6c7cced4753)
+<p align="center"><img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/067594dd-23ca-4eec-bcd6-b6c7cced4753" width="500"></p>
+<p align="center"><i>Table 1. Comparison Between the DAP Attack and the Baseline Attack Under the Condition of One Injection Per Cycle (Borrowed from the paper.)</i></p>
 
 The paper compared the proposed DAP approach with existing methods for attacking DRL systems. It demonstrated that the DAP approach outperformed the baseline methods regarding attack success rate and the ability to mislead the victim agents. This comparison provides evidence of the effectiveness of the proposed approach and its potential for practical applications.
 
 The corresponding baseline-DAP comparison in the paper is given below.
 
-![fig:comp-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/12b67c30-885b-4456-acfe-bdad7e3ceabd)
-
+<p align="center"><img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/12b67c30-885b-4456-acfe-bdad7e3ceabd" width="500"></p>
 
 While the DAP approach showed promising results, some limitations should be considered. The experiments were conducted on a limited set of DRL environments, and it would be valuable to evaluate the approach on a wider range of tasks. Additionally, the robustness of the DAP approach against defence mechanisms and countermeasures should be investigated in future work.
 
 The corresponding clipping time (y-axis) vs the number of training episodes comparison to see the clipping for the DAP Attack and the baseline attack is given in the following figure.
 
-![fig:injection-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/e0d75828-4295-44ea-9c22-02db9aba2d22)
+<p align="center"><img src="https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/e0d75828-4295-44ea-9c22-02db9aba2d22" width="500"></p>
 
 ### Results in the paper
 The experimental results demonstrate the effectiveness of the DAP approach in launching successful attacks on DRL systems. The DAP approach is shown to be more efficient and practical than existing methods for attacking DRL systems. The results show that the DAP approach requires fewer perturbation injection times to launch successful attacks compared to comparative methods. The DAP approach is also shown to be more effective in inducing the victim agent to take specific actions, leading to more significant rewards for the attacker.

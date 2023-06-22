@@ -17,8 +17,6 @@ One approach to developing effective defence mechanisms is to understand the vul
 
 The goal of this work is to reproduce the results presented in the paper and evaluate the effectiveness of the proposed method. Reproducing the results is essential for verifying the claims made in the paper and ensuring that the proposed method is reliable and robust. Additionally, evaluating the effectiveness of the proposed method is crucial for understanding its potential for practical applications and identifying its limitations. By reproducing the results and evaluating the proposed method, we can contribute to the development of effective defence mechanisms against adversarial attacks on DRL systems.
 
-- [X] @TODO: Introduce the paper (inc. where it is published) and describe your goal (reproducibility).
-
 ## 1.1. Paper summary
 
 ![image](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/e7a700b3-f53e-4115-a637-8be8ad44eac9)
@@ -86,8 +84,6 @@ The Attack Launching Stage is designed to be efficient and practical by utilizin
 
 Overall, the Attack Launching Stage is a critical component of the DAP approach, as it enables the attacker to induce the victim agent to take specific actions and obtain misleading results. By injecting perturbations into the victim agent's states, the attacker can manipulate the DRL system and compromise its integrity. The DAP approach's effectiveness in launching attacks in the Attack Launching Stage is demonstrated through the experimental results presented in the paper.
 
-- [X] @TODO: Summarize the paper, the method & its contributions in relation to the existing literature.
-
 # 2. The method and my interpretation
 
 ## 2.1. The original method
@@ -97,7 +93,6 @@ The original method known as Decoupled Adversarial Policy (DAP) aims to target D
 To introduce the proposed DAP approach, a convolutional neural network is employed to encode states into a compact one-dimensional feature representation. Additionally, a fully-connected network is utilized to encode policies into another one-dimensional feature representation. These two features are concatenated and passed through an LSTM (Long Short-Term Memory) network to capture sequential patterns. The final stage comprises two branches implemented as fully-connected networks, which generate the switch and lure policies, respectively. The switch policy determines whether launching an attack is warranted, while the lure policy specifies the action the attacker should entice the victim into executing.
 
 In summary, the initial technique called Decoupled Adversarial Policy (DAP) is devised to target Deep Reinforcement Learning (DRL) systems. It involves separating the adversarial policy into two sub-policies: the switch policy and the lure policy. Manipulating the victim's actions through the lure policy enables the attacker to deceive the DRL system. The proposed DAP approach incorporates a convolutional neural network, a fully-connected network, and an LSTM to encode states, policies, and sequential features. Finally, two branches in the form of fully-connected networks generate the switch and lure policies, respectively, determining the attacker's actions and the victim's responses.
-- [X] @TODO: Explain the original method.
 
 ## 2.2. Our interpretation 
 
@@ -110,7 +105,6 @@ Furthermore, we interpreted that the switch policy determines whether an attack 
 Additionally, we considered the implications of the DAP approach in terms of its effectiveness and practicality. We interpreted that the DAP approach offers advantages over existing methods by requiring fewer perturbation injection times to attack DRL systems, thus enhancing its secrecy. This interpretation is based on the experimental results presented in the paper, which demonstrate the efficiency and effectiveness of the DAP approach compared to comparative methods.
 
 Overall, our interpretation of the method focused on filling in the technical details that were not explicitly explained in the original paper. By understanding these details, we gain a more comprehensive understanding of the proposed approach and its potential implications. This interpretation allows us to replicate and evaluate the method accurately, contributing to the reproducibility and reliability of the research.
-- [X] @TODO: Explain the parts that were not clearly explained in the original paper and how you interpreted them.
 
 # 3. Experiments and results
 
@@ -125,8 +119,6 @@ Lambda_r = 0.95 # a hyperparameter in the reward calculation
 T = 1500
 Max_Inject = 21 # for Pong game
 ```
-
-- [X] @TODO: Describe the setup of the original paper and whether you changed any settings.
 
 ## 3.2. Running the code
 
@@ -183,8 +175,6 @@ python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p # Optionally: 
 python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p --uap-path uap.json
 ```
 
-- [X] @TODO: Explain your code & directory structure and how other people can run it.
-
 ## 3.3. Results
 
 The Results section of the paper presents the experimental evaluation of the proposed DAP approach. The experiments aim to verify the effectiveness of the DAP approach in launching successful attacks on DRL systems and to analyze the effectiveness of different components in learning DAP. The experiments are conducted on four Atari games: Pong, Breakout, Space Invaders, and Seaquest.
@@ -201,8 +191,6 @@ The experimental results also provide insights into the states where the DAP app
 
 Overall, the experimental results demonstrate the effectiveness and practicality of the proposed DAP approach in launching successful attacks on DRL systems. The results also provide insights into the effectiveness of different components in learning DAP and the states where the DAP approach is most effective in launching attacks and injecting perturbations. These findings have implications for the development of defence mechanisms against adversarial attacks on DRL systems and contribute to the broader understanding of the vulnerabilities and security challenges in the field of DRL.
 
-- [X] @TODO: Present your results and compare them to the original paper. Please number your figures & tables as if this is a paper.
-
 # 4. Conclusion
 
 In conclusion, it is important to note that reproducing the proposed DAP approach was a challenging task due to several factors. Firstly, the paper did not provide detailed information on the architecture and configuration of the neural networks used in the approach. This lack of information made it difficult to replicate the approach accurately. Secondly, the paper did not provide a detailed description of the experimental setup, making it challenging to reproduce the experiments accurately. Thirdly, the paper did not provide information on the specific versions of the software and libraries used in the implementation, leading to compatibility issues with different versions of Python and other dependencies.
@@ -213,17 +201,13 @@ Despite these challenges, the proposed DAP approach offers a significant contrib
 
 In conclusion, while reproducing the proposed DAP approach was a challenging task, the approach's potential implications for the field of adversarial attacks on DRL systems are significant. The challenges faced in reproducing the approach highlight the importance of providing detailed information on the architecture, configuration, and experimental setup in research papers.
 
-- [X] @TODO: Discuss the paper in relation to the results in the paper and your results.
 
 # 5. References
 
 - K. Mo, W. Tang, J. Li and X. Yuan, "Attacking Deep Reinforcement Learning With Decoupled Adversarial Policy," in IEEE Transactions on Dependable and Secure Computing, vol. 20, no. 1, pp. 758-768, 1 Jan.-Feb. 2023, doi: 10.1109/TDSC.2022.3143566.
 
-[X] @TODO: Provide your references here.
 
 # Contact
 
 - Adnan Harun Dogan: [Github](https://github.com/adnanhd) [Twitter](https://twitter.com/adnanharundogan) [Google Scholar](https://scholar.google.com/citations?user=QGaRpqYAAAAJ&hl=en)
 - Merve Tapli: [Github](https://github.com/mtapli)
-
-[X] @TODO: Provide your names & email addresses and any other info with which people can contact you.

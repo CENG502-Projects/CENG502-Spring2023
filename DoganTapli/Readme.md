@@ -186,27 +186,27 @@ it is important to note that reproducing the proposed DAP approach was a challen
 
 ## 3.3. Results
 
+The Results section of the paper presents the experimental evaluation of the proposed DAP approach. The experiments aim to verify the effectiveness of the DAP approach in launching successful attacks on DRL systems and to analyze the effectiveness of different components in learning DAP. The experiments are conducted on four Atari games: Pong, Breakout, Space Invaders, and Seaquest.
+
+
 The paper summarizes its experiments in the following table below.
 
 ![tab:experiment-summary](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/067594dd-23ca-4eec-bcd6-b6c7cced4753)
 
-In our reproduction work, we used the Pong task together with a PPO network, however, it can be extended by changing the environment like Breakout, MsPacman, and Enduro. It is controlled by the parameter `--env-name`. Additionally, the code can be extended by adding a DQN network instead of PPO which is in the `/models/*.py`. Therefore we reproduced the second row of the table above.
+The paper compared the proposed DAP approach with existing methods for attacking DRL systems. It demonstrated that the DAP approach outperformed the baseline methods regarding attack success rate and the ability to mislead the victim agents. This comparison provides evidence of the effectiveness of the proposed approach and its potential for practical applications.
 
 The corresponding baseline-DAP comparison in the paper is given below.
 
 ![fig:comp-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/12b67c30-885b-4456-acfe-bdad7e3ceabd)
+
+
+While the DAP approach showed promising results, some limitations should be considered. The experiments were conducted on a limited set of DRL environments, and it would be valuable to evaluate the approach on a wider range of tasks. Additionally, the robustness of the DAP approach against defence mechanisms and countermeasures should be investigated in future work.
 
 The corresponding clipping time (y-axis) vs the number of training episodes comparison to see the clipping for the DAP Attack and the baseline attack is given in the following figure.
 
 ![fig:injection-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/e0d75828-4295-44ea-9c22-02db9aba2d22)
 
 ### Results in the paper
-The Results section of the paper presents the experimental evaluation of the proposed DAP approach. The experiments aim to verify the effectiveness of the DAP approach in launching successful attacks on DRL systems and to analyze the effectiveness of different components in learning DAP. The experiments are conducted on four Atari games: Pong, Breakout, Space Invaders, and Seaquest.
-
-The paper compared the proposed DAP approach with existing methods for attacking DRL systems. It demonstrated that the DAP approach outperformed the baseline methods regarding attack success rate and the ability to mislead the victim agents. This comparison provides evidence of the effectiveness of the proposed approach and its potential for practical applications.
-
-While the DAP approach showed promising results, some limitations should be considered. The experiments were conducted on a limited set of DRL environments, and it would be valuable to evaluate the approach on a wider range of tasks. Additionally, the robustness of the DAP approach against defence mechanisms and countermeasures should be investigated in future work.
-
 The experimental results demonstrate the effectiveness of the DAP approach in launching successful attacks on DRL systems. The DAP approach is shown to be more efficient and practical than existing methods for attacking DRL systems. The results show that the DAP approach requires fewer perturbation injection times to launch successful attacks compared to comparative methods. The DAP approach is also shown to be more effective in inducing the victim agent to take specific actions, leading to more significant rewards for the attacker.
 
 The experimental results also analyze the effectiveness of different components in learning DAP. The ablation studies are performed to analyze the effectiveness of different components, including the trajectory clipping and padding in data pruning and DPPO in optimization. The results show that applying either data pruning or DPPO alone cannot learn the well-performed and stable DAP. In fact, both components follow the same design methodology, which focuses on the specificity of attacking DRL, especially the imbalanced distribution in switch policy and the sampled actions' impacts on the attacker's behaviour.
@@ -214,7 +214,9 @@ The experimental results also analyze the effectiveness of different components 
 The experimental results also provide insights into the states where the DAP approach is most effective in launching attacks and injecting perturbations. The results show that the DAP approach is most effective in launching attacks in states where the victim agent's policy is uncertain or unstable. The DAP approach is also shown to be effective in inducing the victim agent to take specific actions that lead to significant rewards for the attacker.
 
 ### Results of our reproduction
+In our reproduction work, we used the Pong task together with a PPO network, however, it can be extended by changing the environment like Breakout, MsPacman, and Enduro. It is controlled by the parameter `--env-name`. Additionally, the code can be extended by adding a DQN network instead of PPO which is in the `/models/*.py`. Therefore we reproduced the second row of the table above.
 
+### In comparison
 Overall, the experimental results demonstrate the effectiveness and practicality of the proposed DAP approach in launching successful attacks on DRL systems. The results also provide insights into the effectiveness of different components in learning DAP and the states where the DAP approach is most effective in launching attacks and injecting perturbations. These findings have implications for the development of defence mechanisms against adversarial attacks on DRL systems and contribute to the broader understanding of the vulnerabilities and security challenges in the field of DRL.
 
 # 4. Conclusion

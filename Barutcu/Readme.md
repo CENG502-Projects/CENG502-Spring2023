@@ -160,6 +160,7 @@ Directory structure
 ├── influence_maximization.ipynb
 ├── sensor_placement.ipynb
 ├── predict_graph.ipynb
+├── q_learning_sensor.ipynb
 └── requirements.txt
 ```
 
@@ -169,6 +170,7 @@ Directory structure
 - influence_maximization.ipynb file contains the influence maximization experiment with data preprocessing functions and k-greedy algorithm implementation
 - sensor_placement.ipynb file contains the sensor placement experiment with data preprocessing functions k-greedy algorithm implementation
 - predict_graph.ipynb file contains gnn based model for link prediction task
+- q_learning_sensor.ipynb file contains the deep reinforcement learning experiment on sensor placement problem with data preprocessing functions
 
 ### 3.2.1 Create Environment
 - conda create -n (env_name)
@@ -321,6 +323,7 @@ To wrap up, I enjoyed reproducing this paper and learned a lot during the proces
 
 - Christian Borgs, Michael Brautbar, Jennifer Chayes, and Brendan Lucier, ["Maximizing Social Influence in Nearly Optimal Time," in Proceedings of the Twenty-Fifth Annual ACM-SIAM Symposium on Discrete Algorithms, 2014, pp. 946-957.](https://arxiv.org/pdf/1212.0884.pdf)
 - David P. Williamson and David B. Shmoys, [*The Design of Approximation Algorithms*. Cambridge University Press, 2010.](http://www.designofapproxalgs.com/)
+- Mnih, V., Kavukcuoglu, K., Silver, D., Graves, A., Antonoglou, I., Wierstra, D., & Riedmiller, M. (2013). [Playing Atari with Deep Reinforcement Learning](https://arxiv.org/pdf/1312.5602.pdf). arXiv preprint arXiv:1312.5602.
 - Naoto Ohsaka and Yuichi Yoshida, ["Monotone k-Submodular Function Maximization with Size Constraints," NeurIPS,2015](https://papers.nips.cc/paper_files/paper/2015/file/f770b62bc8f42a0b66751fe636fc6eb0-Paper.pdf)
 - Rishabh Iyer and Jeff Bilmes, ["Submodular Optimization with Submodular Cover and Submodular Knapsack Constraints," SIAM Journal on Computing (SICOMP), vol. 47, no. 1, pp. 175-203, 2018.](https://proceedings.neurips.cc/paper/2013/file/a1d50185e7426cbb0acad1e6ca74b9aa-Paper.pdf)
 - Stephen Boyd and Lieven Vandenberghe, [*Convex Optimization*. Cambridge University Press, 2004.](https://web.stanford.edu/~boyd/cvxbook/)

@@ -301,7 +301,7 @@ Objective values over training is shown figure below:
 
 *Figure 10: Training Progress on Sensor Placement Problem*
 
-As can be seen on figure, objective value has rapid increase in few epochs and after that oscillation on the values are observed at remaining epochs. This is due to the unstable gradients. To adress this issue, several approaches exist in the literature such as actor-critic method, experience replay. These techniques can be used to overcome this problem as a continuation study.
+As can be seen on figure, objective value has rapid increase in few epochs and after that oscillation on the values are observed at remaining epochs. This is due to the unstable gradients. To adress this issue, several approaches exist in the literature such as actor-critic method, experience replay. These techniques can be used to overcome this problem as a continuation study. Also, fine tuning the hyperparameters can help to increase the performance of the model.
 
 Our findings showed that the deep reinforcement learning approach can be used for solving the k-submodular maximization problem with the given budget constraint, particulary on sensor placement problem. By selecting the items with the minimum marginal gain for replacement, the agent demonstrated an ability to adapt and improve the objective value of the set over time. 
 

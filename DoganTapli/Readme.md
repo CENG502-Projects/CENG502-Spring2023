@@ -43,7 +43,7 @@ This section covers the backbone architecture along with 5 components:
 * Attack Launching Stage
 
 ### Environment
-![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/f03f259e-a63a-4ac4-8abe-bc7f417eda28)
+![environment](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/7dc9c56c-7299-4acc-ba0d-e084649e7960)
 
 The proposed method is tested on 4 different dynamical environments that is used in common for RL-related methods. These are:
 1. Pong
@@ -54,17 +54,17 @@ The proposed method is tested on 4 different dynamical environments that is used
 We tested our implementation only on the Pong environment. Importantly, adversarial attackers have access to the victim's testing environment and the environment supplies the current state `s_t` to the victim agent.
 
 ### Victim Agent
-![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/f419bf42-a44f-4e9e-a970-86845418c9c1)
+![victim-agent](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/f438388e-db58-4b91-b7a6-2c441347725b)
 
 The victim agent is a PPO network that takes its input `s_t` from the environment and returns the attack policy associated with the current state `π(s_t)`. The victim agent aims to learn the optimal policy in such a way that it maximizes the `R` (return of a policy) where R is computed as:
 
-![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/10c83f0e-9e1d-4eca-84af-6c55b7a43326)
+![equation](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/ee937cad-31cc-4a55-bde8-f711a20d93ef)
 
 where  $\gamma \in [0, 1]$ is a discount factor indicating how much the agent values an intermediate reward compared with a future reward.
 
 
 ### Policy Deduction Stage
-![image](https://github.com/yesiltepe-hidir/the3/assets/70890453/a4804b6a-804a-4f18-8db3-0f9a18ee02b3)
+![policy-deduction-stage](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/dbbda990-5650-45ae-9370-8429622df749)
 
 The policy Deduction Stage consists of several backbone components. Attack policy is given to the fully connected layer and the current is given to the 2D convolutional layer and the outputs of the aforementioned two operations are concatenated together as an attempt to be passed to the LSTM network as an input. After successive timesteps in LSTM, the output is given two Fully connected networks: `Lure Policy` and `Switch Policy`. The role of them is given below:
 The Policy Deduction Stage is a crucial component of the proposed DAP approach. It involves several backbone components that work together to generate the switch and lure policies. The attack policy is given to a fully connected layer, while the current state is given to a 2D convolutional layer. The outputs of these two operations are concatenated together to form a one-dimensional feature vector. This feature vector is then passed to an LSTM network as an input. The LSTM network is responsible for capturing sequential features and processing the input over successive timesteps. After processing the input, the output is given to two fully connected networks: the Lure Policy and the Switch Policy.

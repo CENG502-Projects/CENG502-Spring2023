@@ -94,6 +94,9 @@ To introduce the proposed DAP approach, a convolutional neural network is employ
 
 In summary, the initial technique called Decoupled Adversarial Policy (DAP) is devised to target Deep Reinforcement Learning (DRL) systems. It involves separating the adversarial policy into two sub-policies: the switch policy and the lure policy. Manipulating the victim's actions through the lure policy enables the attacker to deceive the DRL system. The proposed DAP approach incorporates a convolutional neural network, a fully-connected network, and an LSTM to encode states, policies, and sequential features. Finally, two branches in the form of fully-connected networks generate the switch and lure policies, respectively, determining the attacker's actions and the victim's responses.
 
+The following algorithm summarizes the part explained above.
+![Screenshot 2023-06-22 at 16-23-33 IEEE Xplore Full-Text PDF](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/b6aa3c32-7bdf-4677-a541-684db0af6f90)
+
 ## 2.2. Our interpretation 
 
 The original paper provides a clear explanation of the proposed method. However, some technical details were not fully explained, such as the architecture of the neural network used to encode the states and policies. We interpreted these details based on our understanding of the related literature and the experimental results presented in the paper.
@@ -176,6 +179,20 @@ python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p --uap-path uap
 ```
 
 ## 3.3. Results
+### Challenges
+
+### Reproduction
+The paper summarizes its experiments in the following table below.
+
+![tab:experiment-summary](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/067594dd-23ca-4eec-bcd6-b6c7cced4753)
+
+Our reproduction covers the
+
+![fig:comp-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/12b67c30-885b-4456-acfe-bdad7e3ceabd)
+
+
+![fig:injection-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/e0d75828-4295-44ea-9c22-02db9aba2d22)
+
 
 The Results section of the paper presents the experimental evaluation of the proposed DAP approach. The experiments aim to verify the effectiveness of the DAP approach in launching successful attacks on DRL systems and to analyze the effectiveness of different components in learning DAP. The experiments are conducted on four Atari games: Pong, Breakout, Space Invaders, and Seaquest.
 

@@ -178,6 +178,9 @@ python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p # Optionally: 
 python3 main.py --victim-path assets/learned_models/Pong-v4_ppo.p --uap-path uap.json
 ```
 ### Code-level Challenges
+The lack of detailed information in the paper made it challenging to reproduce the proposed approach accurately. The implementation of the approach required several assumptions and interpretations, which may have affected the accuracy of the results. Additionally, the compatibility issues with different versions of Python and other dependencies made it challenging to run the code and reproduce the results accurately.
+
+Despite these challenges, the proposed DAP approach offers a significant contribution to the field of adversarial attacks on DRL systems. The approach's effectiveness in launching successful attacks on DRL systems is demonstrated through the experimental results presented in the paper. The approach's potential implications for the development of defence mechanisms against adversarial attacks on DRL systems and the broader understanding of the vulnerabilities and security challenges in the field of DRL are significant.
 
 ## 3.3. Results
 
@@ -188,10 +191,12 @@ The paper summarizes its experiments in the following table below.
 In our reproduction work, we used the Pong task together with a PPO network, however, it can be extended by changing the environment like Breakout, MsPacman, and Enduro. It is controlled by the parameter `--env-name`. Additionally, the code can be extended by adding a DQN network instead of PPO which is in the `/models/*.py`. Therefore we reproduced the second row of the table above.
 
 The corresponding baseline-DAP comparison in the paper is given below.
+
 ![fig:comp-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/12b67c30-885b-4456-acfe-bdad7e3ceabd)
 
 
 The corresponding clipping time (y-axis) vs the number of training episodes comparison to see the clipping for the DAP Attack and the baseline attack is given in the following figure.
+
 ![fig:injection-baseline-and-dap](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/47499605/e0d75828-4295-44ea-9c22-02db9aba2d22)
 
 
@@ -212,10 +217,6 @@ Overall, the experimental results demonstrate the effectiveness and practicality
 # 4. Conclusion
 
 In conclusion, it is important to note that reproducing the proposed DAP approach was a challenging task due to several factors. Firstly, the paper did not provide detailed information on the architecture and configuration of the neural networks used in the approach. This lack of information made it difficult to replicate the approach accurately. Secondly, the paper did not provide a detailed description of the experimental setup, making it challenging to reproduce the experiments accurately. Thirdly, the paper did not provide information on the specific versions of the software and libraries used in the implementation, leading to compatibility issues with different versions of Python and other dependencies.
-
-The lack of detailed information in the paper made it challenging to reproduce the proposed approach accurately. The implementation of the approach required several assumptions and interpretations, which may have affected the accuracy of the results. Additionally, the compatibility issues with different versions of Python and other dependencies made it challenging to run the code and reproduce the results accurately.
-
-Despite these challenges, the proposed DAP approach offers a significant contribution to the field of adversarial attacks on DRL systems. The approach's effectiveness in launching successful attacks on DRL systems is demonstrated through the experimental results presented in the paper. The approach's potential implications for the development of defence mechanisms against adversarial attacks on DRL systems and the broader understanding of the vulnerabilities and security challenges in the field of DRL are significant.
 
 In conclusion, while reproducing the proposed DAP approach was a challenging task, the approach's potential implications for the field of adversarial attacks on DRL systems are significant. The challenges faced in reproducing the approach highlight the importance of providing detailed information on the architecture, configuration, and experimental setup in research papers.
 

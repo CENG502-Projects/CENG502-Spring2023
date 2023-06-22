@@ -294,6 +294,7 @@ Number of Sensor Types (k) | 3
 Objective values over training is shown figure below:
 
 ![Results_Q](https://github.com/CENG502-Projects/CENG502-Spring2023/assets/84293711/7647d4b2-b969-4449-8661-bba2831a6fe9)
+
 *Figure 10: Training Progress on Sensor Placement Problem*
 
 As can be seen on figure, objective value has rapid increase in few epochs and after that osilation on the values are observed at remaining epochs. This is due to the unstable gradients. To adress this issue, several approaches exist in the literature such as actor-critic method, experience replay. These techniques can be used to overcome this problem as a continuation study.
@@ -310,7 +311,7 @@ In the Sensor Placement problem, we also achieved similar results to those prese
 
 Our implementation confirmed the key findings of the paper and highlighted the effectiveness of the proposed algorithm for both the Influence Maximization and Sensor Placement problems. The project underscores the significance of efficient algorithms for submodular maximization in practical applications such as social network analysis and sensor deployment.
 
-Finally, we set up an additional experiments to absorve the overhead cost of the approximiting the function on influence maximization problem and to highlight the potential of using deep reinforcement learning techniques for decision-making in resource-constrained scenarios.
+Finally, we set up additional experiments to absorve the overhead cost of the approximiting the function on influence maximization problem and to highlight the potential of using deep reinforcement learning techniques for decision-making in resource-constrained scenarios.
 
 To wrap up, I enjoyed reproducing this paper and learned a lot during the process. I would like to thank the authors for writing such a great and mostly clear paper and Sinan Hoca for equipping us with the skills to take on this project.
 

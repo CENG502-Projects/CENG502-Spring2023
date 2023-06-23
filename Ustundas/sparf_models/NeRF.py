@@ -14,7 +14,6 @@ class NeRF(torch.nn.Module):
 	def forward(self, x, d):
 
 
-		print(x.shape, d.shape)
 
 
 		t_values = self.sample_t_values()
@@ -126,7 +125,7 @@ class NeRF(torch.nn.Module):
 		pixels = torch.tensor(coords, dtype=torch.float64, device=self.args.device)
 
 		homogen_pixels = torch.cat([pixels, torch.ones_like(pixels[...,:1])], dim=-1).to(self.args.device)
-		homogen_camera_coords = homogen_pixels @ intrinsic.inverse().transpose(-1, -2)
+		homogen_camera_coords = homogen_pixels @ intrinsic.inverse()#.transpose(-1, -2)
 
 		center_3d = torch.zeros_like(homogen_camera_coords)
 

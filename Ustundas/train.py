@@ -77,7 +77,7 @@ def train(args):
 			intrinsic = intrinsic.to(args.device)
 
 			x, d, (coords) = nerf.get_rays_from_pixels(image.shape, pose, intrinsic)
-			
+
 			pixel_values = [image[:, x_coor, y_coor] for (x_coor,y_coor) in coords]
 	
 			pixel_values = torch.stack(pixel_values)
@@ -93,6 +93,11 @@ def train(args):
 
 		I, z = nerf(all_x, all_d)
 
+
+
+
+
+
 		loss_p = loss_photometric(source=all_pixel_values, out=I)
 #		loss_mvc
 #		loss_depth
@@ -104,9 +109,10 @@ def train(args):
 		losses.append(loss_p.item())
 		optimizer.step()
 
-		if cur_iter != 0 and cur_iter % 10000 == 0:
+		if (cur_iter != 0) and (cur_iter % 5000) == 0:
 			lambda_c /= 2.0
 			lambda_d /= 2.0
+			torch.save(nerf.state_dict(), "{}/iter_{}_model.pt".format("SavedModels", cur_iter))
 			np.save("losses/loss_{}.npy".format(cur_iter), losses)
 			plt.plot(losses)
 			plt.xlabel("Iteration")
@@ -120,7 +126,7 @@ if __name__ == '__main__':
 	parser.add_argument("scene", type=str, help="Scene name (e.g scan34)")
 	parser.add_argument("--device", type=str, help="Which device to run")
 	parser.add_argument("--max_iter", type=int, default=200000, help="Number of iterations for training")
-	parser.add_argument("--random_pixel_count", type=int, default=100, help="Number of random pixels to get from each training image")
+	parser.add_argument("--random_pixel_count", type=int, default=1024, help="Number of random pixels to get from each training image")
 	parser.add_argument("--sample_count", type=int, default=256, help="Number of samples along a ray")
 	args = parser.parse_args()
 
